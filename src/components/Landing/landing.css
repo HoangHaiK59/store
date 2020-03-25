@@ -1,0 +1,47 @@
+.landing-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, rgba(255, 0, 0, 0.575), yellow);
+}
+
+.circle-item {
+    position: absolute;
+    border-radius: 50%;
+    width: 30%;
+    height: 30%;
+    top: -10%;
+    left: 10%;
+    background: orange;
+    z-index: 1;
+}
+
+.ellip-item {
+    position: absolute;
+    border-radius: 50%;
+    width: 35%;
+    height: 30%;
+    top: 25%;
+    right: 15%;
+    background: orange;
+    z-index: 1;
+}
+
+.btn-shop-now {
+    position: absolute;
+    border-radius: 500px;
+    background: #1DB954;
+    width: 15%;
+    height: 5%;
+    bottom: 25%;
+    left: 40%;
+    z-index: 2;
+    color: white;
+    font-weight: 700;
+}
+
+button:focus {
+    outline: none;
+}
