@@ -1,0 +1,85 @@
+.store-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.content-header {
+    width: 97%;
+    height: 50%;
+    top: 6%;
+    left: 1.5%;
+    position: absolute;
+    background: #2e2d30;
+}
+
+.content-header__description {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.content-header__description--cover {
+    position: absolute;
+    top: 45%;
+    left: 40%;
+    width: 40%;
+    height: 40%;
+}
+
+.content-header__description--checkoutbtn {
+    position: absolute;
+    top: 60%;
+    left: 39%;
+    width: 15%;
+    height: 10%;
+}
+
+.content-header__description--cover > h2 {
+    color: #a6abad;
+}
+
+.content-header__cover-image {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    right: 0;
+}
+
+.content-header__cover-image>img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+}
+
+.content {
+    position: absolute;
+    top: 60%;
+    left: 2%;
+    width: 96%;
+    height: auto;
+}
+
+.product {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    top: 0;
+    left: 0;
+}
+
+.product-cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.product-cover > img {
+    width: 100%;
+    height: 100%;
+}

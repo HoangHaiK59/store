@@ -42,6 +42,20 @@
     font-weight: 700;
 }
 
+.btn-shop-now:hover {
+    transform: scale(1.2);
+}
+
+.image-landing {
+    position: absolute;
+    bottom: 5%;
+    left: 7%;
+    width: 45%;
+    height: 55%;
+    z-index: 2;
+    opacity: .8;
+}
+
 button:focus {
     outline: none;
 }
