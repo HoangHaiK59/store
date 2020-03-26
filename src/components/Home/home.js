@@ -3,8 +3,10 @@ import './home.css';
 import { Row, Col } from 'antd';
 import { Footer } from '../Footer/footer';
 import { Subscribe } from '../Subscribe/subscribe';
+import { useTitle } from '../../helper/feature';
 
-export const Home = () => {
+export const Home = ({title}) => {
+    useTitle({title: title})
     return <div className="store-container">
         <div className="content-header">
             <div className="content-header__description">
