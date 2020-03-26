@@ -1,0 +1,95 @@
+.error-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.error-notification {
+    position: absolute;
+    top: 35%;
+    left: 40%;
+    width: 30%;
+    height: 45%;
+}
+
+.error-drawer {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.head {
+    position: absolute;
+    border-radius: 50%;
+    top: 10%;
+    left: 15%;
+    width: 25%;
+    height: 28%;
+    background: #bebc2d;
+}
+
+.eye-left {
+    position: absolute;
+    top: 27%;
+    left: 21%;
+    border-radius: 50%;
+    width: 15%;
+    height: 16%;
+    background: #5a590b98;
+    z-index: 2;
+}
+
+.eye-right {
+    position: absolute;
+    top: 27%;
+    right: 21%;
+    border-radius: 50%;
+    width: 15%;
+    height: 16%;
+    background: #5a590b98;
+    z-index: 2;
+}
+
+.pupil {
+    position: absolute;
+    top: 35%;
+    left: 36%;
+    border-radius: 50%;
+    background: black;
+    width: 28%;
+    height: 30%;
+}
+
+.mouth {
+    position: absolute;
+    bottom: 20%;
+    left: 32%;
+    width: 35%;
+    height: 15%;
+    /* border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px; */
+    /* border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px; */
+    border-radius: 150px;
+    background: #B57700;
+    border-bottom: 0;
+}
+
+.notify {
+    position: absolute;
+    width: 70%;
+    height: 30%;
+    bottom: 5%;
+    left: 0;
+}
+
+.notify > h3 {
+    color: rgb(214, 96, 50);
+}
