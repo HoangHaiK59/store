@@ -1,6 +1,6 @@
 import React from 'react';
 import { Landing } from '../components/Landing/landing';
-import { Home } from '../components/Home/home';
+import Home from '../components/Home/home';
 import { Route, Switch } from 'react-router-dom';
 import { Navbar } from '../components/Navbar/navbar';
 import { Error } from '../components/Error/error';
