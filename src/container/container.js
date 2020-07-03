@@ -1,9 +1,9 @@
 import React from 'react';
-import { Landing } from '../components/Landing/landing';
-import Home from '../components/Home/home';
+import { Landing } from '../components/Landing';
+import Home from '../components/Home';
 import { Route, Switch } from 'react-router-dom';
-import { Navbar } from '../components/Navbar/navbar';
-import { Error } from '../components/Error/error';
+import { Navbar } from '../components/Navbar';
+import { Error } from '../components/Error';
 
 export const Container = () => {
     return <div className="root-container">
