@@ -28,35 +28,45 @@ class Home extends React.Component {
         this.state = {
             products: [
                 {
+                    id: 1,
                     name: 'Product 1',
                     cover: 'https://i.imgur.com/GXy9UIG.jpg'
                 },
                 {
+                    id: 2,
                     name: 'Product 2',
                     cover: 'https://i.imgur.com/Wj6dytl.jpg'
                 },
                 {
+                    id: 3,
                     name: 'Product 3',
                     cover: 'https://i.imgur.com/9qf6WyB.jpg'
                 },
                 {
+                    id: 4,
                     name: 'Product 4',
                     cover: 'https://i.imgur.com/ijWScLn.jpg'
                 },
                 {
+                    id: 5,
                     name: 'Product 5',
                     cover: 'https://i.imgur.com/gXTbY7M.jpg'
                 },
                 {
+                    id: 6,
                     name: 'Product 6',
                     cover: 'https://i.imgur.com/qqBB3Dz.jpg'
                 },
                 {
+                    id: 7,
                     name: 'Product 7',
                     cover: 'https://i.imgur.com/ijWScLn.jpg'
                 }
             ]
         };
+    }
+    onMouseDown(id) {
+        this.props.history.push(`product/${id}`);
     }
     componentDidMount() {
         this.props.getProducts();
@@ -102,7 +112,7 @@ class Home extends React.Component {
                 </Row>
                 <Row gutter={[16, 16]} justify="start" style={{ marginTop: '20px' }}>
                     {
-                        this.state.products.map((product, id) => <Col key={id} span={3} className="product">
+                        this.state.products.map((product, id) => <Col onMouseDown={() => this.onMouseDown(product.id)} key={id} span={3} className="product">
                             <div className="product-header">
                                 <div className="product-cover">
                                     <img src={product.cover} alt="productImage" />
