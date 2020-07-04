@@ -84,6 +84,11 @@
     justify-content: flex-start;
 }
 
+.product:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
 .product-header {
     height: 100%;
     position: relative;

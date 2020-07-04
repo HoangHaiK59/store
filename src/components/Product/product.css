@@ -1,0 +1,19 @@
+.product-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    width: 90%;
+    height: 70vh;
+}
+
+.cover {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
