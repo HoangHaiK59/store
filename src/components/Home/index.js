@@ -88,7 +88,7 @@ class Home extends React.Component {
             <div className="content">
                 <Row gutter={[16, 16]} justify="start" align="middle" >
                     {
-                        this.state.products.map((product, id) => <Col key={id} span={3} className="product">
+                        this.state.products.map((product, id) => <Col onMouseDown={() => this.onMouseDown(product.id)} key={id} span={3} className="product">
                                 <div className="product-header">
                                     <div className="product-cover">
                                         <img src={product.cover} alt="productImage" />
@@ -100,7 +100,7 @@ class Home extends React.Component {
                 </Row>
                 <Row gutter={[16, 16]} justify="start" style={{ marginTop: '20px' }}>
                     {
-                        this.state.products.map((product, id) => <Col key={id} span={3} className="product">
+                        this.state.products.map((product, id) => <Col onMouseDown={() => this.onMouseDown(product.id)} key={id} span={3} className="product">
                             <div className="product-header">
                                 <div className="product-cover">
                                     <img src={product.cover} alt="productImage" />
