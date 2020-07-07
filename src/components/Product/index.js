@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, Select, InputNumber, Button } from 'antd';
+import { NAV_BAR_HEIGHT } from '../../helper/calc';
 import './product.css';
 const { Option } = Select;
 class Product extends React.Component {
@@ -45,7 +46,7 @@ class Product extends React.Component {
 
     render() {
         const { product } = this.state;
-        return <div className='product-container'>
+        return <div className='product-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
             <div className='content-product'>
                 <Row gutter={[16, 16]} justify='start' style={{ height: '100%' }}>
                     <Col span={16}>

@@ -2,7 +2,8 @@ import { Constants } from '../constants';
 const initialState = {
     isSuccess: false,
     products: [],
-    error: null
+    error: null,
+    isLanding: true
 };
 export const rootReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -18,6 +19,8 @@ export const rootReducer = (state = initialState, action) => {
             return { ...state, isSuccess: true, products: action.products };
         case Constants.GET_PRODUCT_FAIL:
             return { ...state, error: action.error };
+        case Constants.CHANGE_VIEW:
+            return { ...state, isLanding: action.isLanding };
         default:
             return state
     }
