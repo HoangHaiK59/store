@@ -1,7 +1,6 @@
 import React from 'react';
 import './home.css';
 import { Row, Col } from 'antd';
-import { Footer } from '../Footer';
 import { useTitle } from '../../helper/feature';
 import { connect } from 'react-redux';
 import { storeActions } from '../../store/actions/store.action';
@@ -65,7 +64,7 @@ class Home extends React.Component {
             ]
         };
     }
-    onMouseDown(id) {
+    handleClick(id) {
         this.props.history.push(`product/${id}`);
     }
     componentDidMount() {
@@ -73,22 +72,26 @@ class Home extends React.Component {
     }
     render() {
         return <div className="store-container">
-            <div className="content-header">
-                <div className="content-header__description">
-                    <div className="content-header__description--cover">
-                        <h2>Style us</h2>
+
+            <Row gutter={[16, 16]} style={{ height: 500 }} justify="start" align="middle" >
+                <Col span={12} >
+                    <div className="content-header__description">
+                        <div className="content-header__description--cover">
+                            <h2>Style us</h2>
+                        </div>
+                        <button className="content-header__description--checkoutbtn">
+                        </button>
                     </div>
-                    <button className="content-header__description--checkoutbtn">
-                    </button>
-                </div>
-                <div className="content-header__cover-image">
-                    <img src="https://i.imgur.com/9qf6WyB.jpg" alt="cover" />
-                </div>
-            </div>
-            <div className="content">
-                <Row gutter={[16, 16]} justify="start" align="middle" >
-                    {
-                        this.state.products.map((product, id) => <Col onMouseDown={() => this.onMouseDown(product.id)} key={id} span={3} className="product">
+                </Col>
+                <Col span={12}>
+                    <img src="https://i.imgur.com/9qf6WyB.jpg" alt="cover" style={{ objectFit: 'cover', height: 500, width: '100%' }} />
+                </Col>
+            </Row>
+            <Row gutter={[16, 16]} style={{ marginTop: '15px' }}>
+                <Col span={24}>
+                    <Row gutter={[16, 16]} justify="start" align="middle" >
+                        {
+                            this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
                                 <div className="product-header">
                                     <div className="product-cover">
                                         <img src={product.cover} alt="productImage" />
@@ -96,35 +99,38 @@ class Home extends React.Component {
                                 </div>
                                 <h5 className="product-name">{product.name}</h5>
                             </Col>)
-                    }
-                </Row>
-                <Row gutter={[16, 16]} justify="start" style={{ marginTop: '20px' }}>
-                    {
-                        this.state.products.map((product, id) => <Col onMouseDown={() => this.onMouseDown(product.id)} key={id} span={3} className="product">
-                            <div className="product-header">
-                                <div className="product-cover">
-                                    <img src={product.cover} alt="productImage" />
+                        }
+                    </Row>
+                </Col>
+                <Col span={24}>
+                    <Row gutter={[16, 16]} justify="start" style={{ marginTop: '20px' }}>
+                        {
+                            this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
+                                <div className="product-header">
+                                    <div className="product-cover">
+                                        <img src={product.cover} alt="productImage" />
+                                    </div>
                                 </div>
-                            </div>
-                            <h5 className="product-name">{product.name}</h5>
-                        </Col>)
-                    }
-                </Row>
-                <Row gutter={[16, 16]} justify="start" style={{ marginTop: '20px' }}>
-                    {
-                        this.state.products.map((product, id) => <Col onMouseDown={() => this.onMouseDown(product.id)} key={id} span={3} className="product">
-                            <div className="product-header">
-                                <div className="product-cover">
-                                    <img src={product.cover} alt="productImage" />
+                                <h5 className="product-name">{product.name}</h5>
+                            </Col>)
+                        }
+                    </Row>
+                </Col>
+                <Col span={24}>
+                    <Row gutter={[16, 16]} justify="start" style={{ marginTop: '20px' }}>
+                        {
+                            this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
+                                <div className="product-header">
+                                    <div className="product-cover">
+                                        <img src={product.cover} alt="productImage" />
+                                    </div>
                                 </div>
-                            </div>
-                            <h5 className="product-name">{product.name}</h5>
-                        </Col>)
-                    }
-                </Row>
-                <Contact cover="https://i.imgur.com/Wj6dytl.jpg"/>
-            </div>
-            <Footer />
+                                <h5 className="product-name">{product.name}</h5>
+                            </Col>)
+                        }
+                    </Row>
+                </Col>
+            </Row>
         </div>
     }
 }

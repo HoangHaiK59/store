@@ -10,7 +10,7 @@ export const Subscribe = (props) => (
             <Form.Item
                 name="email"
                 rules={[{ required: true, message: 'Please input your email!' }]}>
-                <Input type="email" placeholder="Email Address" style={{ backgroundColor: 'transparent' }} />
+                <Input type="email" placeholder="Email Address" style={{ backgroundColor: 'transparent', color: '#fff' }} />
             </Form.Item>
             <Form.Item>
                 <Button style={{ width: '100%', color: '#636566', backgroundColor: '#fff' }} htmlType="submit">
