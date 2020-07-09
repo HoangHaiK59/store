@@ -1,11 +1,9 @@
 import React from 'react';
 import './home.css';
-import { Row, Col } from 'antd';
+import { Row, Col, Carousel } from 'antd';
 import { useTitle } from '../../helper/feature';
 import { connect } from 'react-redux';
 import { storeActions } from '../../store/actions/store.action';
-import Contact from '../Contact';
-
 
 const useFetching = (callback) => {
     // const [data, setData] = React.useState({});
@@ -60,36 +58,51 @@ class Home extends React.Component {
                     id: 7,
                     name: 'Product 7',
                     cover: 'https://i.imgur.com/ijWScLn.jpg'
+                },
+                {
+                    id: 7,
+                    name: 'Product 7',
+                    cover: 'https://i.imgur.com/ijWScLn.jpg'
                 }
             ]
         };
+        document.title = 'Home';
     }
     handleClick(id) {
         this.props.history.push(`product/${id}`);
     }
     componentDidMount() {
-        this.props.getProducts();
+        //this.props.getProducts();
     }
+    //     <Col span={12} >
+    //     <div className="content-header__description">
+    //         <div className="content-header__description--cover">
+    //             <h2>Style us</h2>
+    //         </div>
+    //         <button className="content-header__description--checkoutbtn">
+    //         </button>
+    //     </div>
+    // </Col>
     render() {
         return <div className="store-container">
 
-            <Row gutter={[16, 16]} style={{ height: 500 }} justify="start" align="middle" >
-                <Col span={12} >
-                    <div className="content-header__description">
-                        <div className="content-header__description--cover">
-                            <h2>Style us</h2>
-                        </div>
-                        <button className="content-header__description--checkoutbtn">
-                        </button>
-                    </div>
-                </Col>
-                <Col span={12}>
-                    <img src="https://i.imgur.com/9qf6WyB.jpg" alt="cover" style={{ objectFit: 'cover', height: 500, width: '100%' }} />
+            <Row gutter={[16, 16]} style={{ height: '500px' }} justify="start" align="middle" >
+                <Col span={24}>
+                    <Carousel autoplay effect={'fade'} speed={2}>
+                        {
+                            this.state.products.map((product, id) => <div key={id} style={{ height: 500 }}>
+                                <img src={product.cover} alt="cover" style={{ objectFit: 'cover', height: 500, width: '100%' }} />
+                            </div>)
+                        }
+                    </Carousel>
                 </Col>
             </Row>
             <Row gutter={[16, 16]} style={{ marginTop: '15px' }}>
                 <Col span={24}>
-                    <Row gutter={[16, 16]} justify="start" align="middle" >
+                    <h5>Collection 1</h5>
+                </Col>
+                <Col span={24}>
+                    <Row gutter={[16, 16]} justify="start" align="middle">
                         {
                             this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
                                 <div className="product-header">
@@ -103,7 +116,10 @@ class Home extends React.Component {
                     </Row>
                 </Col>
                 <Col span={24}>
-                    <Row gutter={[16, 16]} justify="start" style={{ marginTop: '20px' }}>
+                    <h5>Collection 2</h5>
+                </Col>
+                <Col span={24}>
+                    <Row gutter={[16, 16]} justify="start" style={{ marginTop: '10px' }}>
                         {
                             this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
                                 <div className="product-header">
@@ -117,7 +133,10 @@ class Home extends React.Component {
                     </Row>
                 </Col>
                 <Col span={24}>
-                    <Row gutter={[16, 16]} justify="start" style={{ marginTop: '20px' }}>
+                    <h5>Collection 3</h5>
+                </Col>
+                <Col span={24}>
+                    <Row gutter={[16, 16]} justify="start" style={{ marginTop: '10px' }}>
                         {
                             this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
                                 <div className="product-header">
