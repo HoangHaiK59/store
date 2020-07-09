@@ -109,7 +109,11 @@
 }
 
 .product-name {
-    color: #fff;
+    /* color: #fff; */
     padding: 5px;
     font-size: 14px;
+}
+
+.slick-list {
+    height: 500px;
 }

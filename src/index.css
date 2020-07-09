@@ -1,3 +1,11 @@
+::-webkit-scrollbar {
+  width: 13px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #858282;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -21,7 +29,7 @@ html, body {
 }
 
 body {
-  background-color: rgba(20, 20, 20, 0.959);
+  background-color: #fff;
 }
 
 #root, .root-container {
@@ -45,10 +53,8 @@ body {
   position: fixed;
   width: 100%;
   height: 50px;
-  margin-top: 4px;
   z-index: 3;
-  background-color: transparent;
-  color: #fafaff;
+  color: white;
 }
 
 .root-content {

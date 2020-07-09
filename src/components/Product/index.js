@@ -55,24 +55,24 @@ class Product extends React.Component {
                     <Col span={6}>
                         <Row justify='start'>
                             <Col span={24}>
-                                <h5 style={{ color: '#fff' }}>{product.name}</h5>
+                                <h5 >{product.name}</h5>
                             </Col>
                         </Row>
                         <Row justify='start'>
                             <Col span={24}>
-                                <p style={{ color: '#fff' }}>A description for product</p>
+                                <p >A description for product</p>
                             </Col>
                         </Row>
                         <Row justify='start' style={{ marginTop: 30 }}>
                             <Col span={24}>
-                                <p style={{ color: '#fff' }}>{this.formater.format(product.price)}</p>
+                                <p >{this.formater.format(product.price)}</p>
                             </Col>
                         </Row>
                         <Row justify='start' style={{ marginTop: 50 }}>
                             <Col span={24}>
                                 <Row justify='start'>
                                     <Col span={24}>
-                                        <h5 style={{ color: '#fff' }}>Color</h5>
+                                        <h5 >Color</h5>
                                     </Col>
                                 </Row>
                                 <Row justify='start'>
@@ -91,7 +91,7 @@ class Product extends React.Component {
                                 </Select>
                             </Col>
                             <Col style={{ marginLeft: 15 }} span={11}>
-                                <InputNumber style={{ width: '100%' }} value={this.state.qty} onChange={this.handleChangeQty.bind(this)}></InputNumber>
+                                <InputNumber min={1} max={10} style={{ width: '100%' }} value={this.state.qty} onChange={this.handleChangeQty.bind(this)}></InputNumber>
                             </Col>
                         </Row>
                         <Row justify='start' style={{ marginTop: 20 }}>

@@ -10,12 +10,19 @@ import { connect } from 'react-redux';
 import Contact from '../components/Contact';
 import Collection from '../components/Collection';
 import Women from '../components/Women';
+import Spring from '../components/Collection/spring';
+import Autumn from '../components/Collection/autumn';
+import Summer from '../components/Collection/summer';
+import Winter from '../components/Collection/winter';
+import Accessories from '../components/Accessories';
 
 const Container = (props) => {
     return <div className="root-container">
         <div className="root-mainview">
-            <header className="root-navbar">
-                <Navbar />
+            <header className="root-navbar" style={props.isLanding ? {  backgroundColor: 'transparent' }: {  backgroundColor: '#000' }}>
+                {
+                    !props.isLanding && <Navbar/>
+                }
             </header>
             <main className="root-content">
                 <Switch>
@@ -23,7 +30,12 @@ const Container = (props) => {
                     <Route exact path="/store" render={(props) => <Home {...props} title="Store" />} />
                     <Route exact path="/product/:id" render={(props) => <Product {...props} />} />
                     <Route exact path="/collection" render={(props) => <Collection {...props} />} />
+                    <Route exact path="/collection/spring" render={(props) => <Spring {...props} />} />
+                    <Route exact path="/collection/autumn" render={(props) => <Autumn {...props} />} />
+                    <Route exact path="/collection/summer" render={(props) => <Summer {...props} />} />
+                    <Route exact path="/collection/winter" render={(props) => <Winter {...props} />} />
                     <Route exact path="/women" render={(props) => <Women {...props} />} />
+                    <Route exact path="/accessories" render={(props) => <Accessories {...props} />} />
                 </Switch>
             </main>
             <footer>
