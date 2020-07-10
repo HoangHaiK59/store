@@ -56,17 +56,24 @@ export default class Autumn extends React.Component {
         const { products } = this.state;
         return (
             <div className='collection-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
-                <Row gutter={[16, 16]} justify="start" >
-                    {
-                        products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
-                            <div className="product-header">
-                                <div className="product-cover">
-                                    <img src={product.cover} alt="productImage" />
-                                </div>
-                            </div>
-                            <h5 className="product-name">{product.name}</h5>
-                        </Col>)
-                    }
+                <Row gutter={[16, 16]} justify="start" style={{ width: '100%' }}>
+                    <Col span={24}></Col>
+                    <Col span={24}>
+                        <div className='items-container'>
+                            <Row gutter={[16, 16]} justify="start" style={{ width: '100%' }}>
+                                {
+                                    products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={4} className="product">
+                                        <div className="product-header">
+                                            <div className="product-cover">
+                                                <img src={product.cover} alt="productImage" />
+                                            </div>
+                                        </div>
+                                        <h5 className="product-name">{product.name}</h5>
+                                    </Col>)
+                                }
+                            </Row>
+                        </div>
+                    </Col>
                 </Row>
             </div>
         )

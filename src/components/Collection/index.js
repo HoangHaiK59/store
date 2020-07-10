@@ -10,7 +10,7 @@ export default class Collection extends React.Component {
 
     render() {
         return <div className='collection-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
-            <h5 style={{ color: '#fff' }}> Collection work </h5>
+            <h5 style={{ color: '#000' }}> Collection work </h5>
         </div>
     }
 }

@@ -60,8 +60,8 @@ class Home extends React.Component {
                     cover: 'https://i.imgur.com/ijWScLn.jpg'
                 },
                 {
-                    id: 7,
-                    name: 'Product 7',
+                    id: 8,
+                    name: 'Product 8',
                     cover: 'https://i.imgur.com/ijWScLn.jpg'
                 }
             ]
@@ -99,55 +99,82 @@ class Home extends React.Component {
             </Row>
             <Row gutter={[16, 16]} style={{ marginTop: '15px' }}>
                 <Col span={24}>
-                    <h5>Collection 1</h5>
-                </Col>
-                <Col span={24}>
-                    <Row gutter={[16, 16]} justify="start" align="middle">
-                        {
-                            this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
-                                <div className="product-header">
-                                    <div className="product-cover">
-                                        <img src={product.cover} alt="productImage" />
-                                    </div>
-                                </div>
-                                <h5 className="product-name">{product.name}</h5>
-                            </Col>)
-                        }
+                    <Row gutter={[16, 16]} justify="start">
+                        <Col span={12}>
+                            <h5>Collection 1</h5>
+                        </Col>
+                        <Col span={12} style={{ textAlign: 'right' }}>
+                            <h5>View all</h5>
+                        </Col>
                     </Row>
                 </Col>
                 <Col span={24}>
-                    <h5>Collection 2</h5>
+                    <div className='items-container'>
+                        <Row gutter={[16, 16]} justify="start" align="middle" style={{ width: '95%' }}>
+                            {
+                                this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
+                                    <div className="product-header">
+                                        <div className="product-cover">
+                                            <img src={product.cover} alt="productImage" />
+                                        </div>
+                                    </div>
+                                    <h5 className="product-name">{product.name}</h5>
+                                </Col>)
+                            }
+                        </Row>
+                    </div>
                 </Col>
                 <Col span={24}>
-                    <Row gutter={[16, 16]} justify="start" style={{ marginTop: '10px' }}>
-                        {
-                            this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
-                                <div className="product-header">
-                                    <div className="product-cover">
-                                        <img src={product.cover} alt="productImage" />
-                                    </div>
-                                </div>
-                                <h5 className="product-name">{product.name}</h5>
-                            </Col>)
-                        }
+                    <Row gutter={[16, 16]} justify="start">
+                        <Col span={12}>
+                            <h5>Collection 2</h5>
+                        </Col>
+                        <Col span={12} style={{ textAlign: 'right' }}>
+                            <h5>View all</h5>
+                        </Col>
                     </Row>
                 </Col>
                 <Col span={24}>
-                    <h5>Collection 3</h5>
+                    <div className='items-container' style={{ marginTop: '10px' }}>
+                        <Row gutter={[16, 16]} justify="start" align="middle" style={{ width: '95%' }}>
+                            {
+                                this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
+                                    <div className="product-header">
+                                        <div className="product-cover">
+                                            <img src={product.cover} alt="productImage" />
+                                        </div>
+                                    </div>
+                                    <h5 className="product-name">{product.name}</h5>
+                                </Col>)
+                            }
+                        </Row>
+                    </div>
                 </Col>
                 <Col span={24}>
-                    <Row gutter={[16, 16]} justify="start" style={{ marginTop: '10px' }}>
-                        {
-                            this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
-                                <div className="product-header">
-                                    <div className="product-cover">
-                                        <img src={product.cover} alt="productImage" />
-                                    </div>
-                                </div>
-                                <h5 className="product-name">{product.name}</h5>
-                            </Col>)
-                        }
+                    <Row gutter={[16, 16]} justify="start">
+                        <Col span={12}>
+                            <h5>Collection 3</h5>
+                        </Col>
+                        <Col span={12} style={{ textAlign: 'right' }}>
+                            <h5>View all</h5>
+                        </Col>
                     </Row>
+                </Col>
+                <Col span={24}>
+                    <div className='items-container' style={{ marginTop: '10px' }}>
+                        <Row gutter={[16, 16]} justify="start" align="middle" style={{ width: '95%' }}>
+                            {
+                                this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
+                                    <div className="product-header">
+                                        <div className="product-cover">
+                                            <img src={product.cover} alt="productImage" />
+                                        </div>
+                                    </div>
+                                    <h5 className="product-name">{product.name}</h5>
+                                </Col>)
+                            }
+                        </Row>
+                    </div>
                 </Col>
             </Row>
         </div>

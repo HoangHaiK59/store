@@ -35,7 +35,7 @@ export const Navbar = () => (
             <div>
                 <div className="header-navbar_item">
                     <Dropdown overlay={collectionMenu}>
-                        <Link className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                        <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
                             Collection
                         </Link>
                     </Dropdown>
