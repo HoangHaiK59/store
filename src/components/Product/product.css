@@ -16,7 +16,12 @@
 }
 
 .product-color {
-    border-radius: 50%;
-    width: 30px;
-    height: 20px;
+    width: 40px;
+    height: 30px;
+}
+
+.btn-cart {
+    width: 100%; 
+    background-color: #000;
+    color: #fff;
 }

@@ -11,7 +11,7 @@ export default class Accessories extends React.Component {
 
     render() {
         return <div className='accessories-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
-            <h5 style={{ color: '#fff' }}>Accessories work</h5>
+            <h5 style={{ color: '#000' }}>Accessories work</h5>
         </div>
     }
 }

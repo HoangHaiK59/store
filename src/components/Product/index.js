@@ -10,7 +10,23 @@ class Product extends React.Component {
             product: {
                 id: 5,
                 name: 'Product 5',
-                cover: 'https://i.imgur.com/gXTbY7M.jpg',
+                images: [
+                    {
+                        color: 'red',
+                        url: 'https://i.imgur.com/gXTbY7M.jpg',
+                        active: true,
+                    },
+                    {
+                        color: 'pink',
+                        url: 'https://i.imgur.com/GXy9UIG.jpg',
+                        active: false
+                    },
+                    {
+                        color: '#3e88b3',
+                        url: 'https://i.imgur.com/ijWScLn.jpg',
+                        active: false
+                    }
+                ],
                 price: 300000,
                 size: ['S', 'M', 'L', 'XL'],
                 colors: ['red', 'pink', '#3e88b3']
@@ -32,6 +48,11 @@ class Product extends React.Component {
         this.setState({ qty });
     }
 
+    handleChangeColor(color) {
+        const images = this.state.product.images.map(image => image.color === color ? ({ ...image, active: true }): ({ ...image, active: false }));
+        this.setState(state =>({ product: {...state.product, images} }))
+    }
+
     addToCart() {
 
     }
@@ -50,7 +71,9 @@ class Product extends React.Component {
             <div className='content-product'>
                 <Row gutter={[16, 16]} justify='start' style={{ height: '100%' }}>
                     <Col span={16}>
-                        <img src={product.cover} alt="" className='cover' />
+                        {
+                            product.images.map((image, id) => image.active ? <img key={id} src={image.url} alt="" className='cover' />: null)
+                        }
                     </Col>
                     <Col span={6}>
                         <Row justify='start'>
@@ -77,7 +100,12 @@ class Product extends React.Component {
                                 </Row>
                                 <Row justify='start'>
                                     {
-                                        product.colors.map((color, id) => <Col key={id} span={1} className='product-color' style={{ backgroundColor: color, marginLeft: id > 0 ? '5px' : 0 }}></Col>)
+                                        product.colors.map((color, id) => <Button 
+                                        key={id}
+                                        span={1}
+                                        className='product-color'
+                                        onClick={() => this.handleChangeColor(color)}
+                                        style={{ backgroundColor: color, marginLeft: id > 0 ? '5px' : 0 }}></Button>)
                                     }
                                 </Row>
                             </Col>
@@ -96,7 +124,7 @@ class Product extends React.Component {
                         </Row>
                         <Row justify='start' style={{ marginTop: 20 }}>
                             <Col span={24}>
-                                <Button style={{ width: '100%' }} onClick={this.addToCart.bind(this)}>
+                                <Button className='btn-cart' onClick={this.addToCart.bind(this)}>
                                     ADD TO CART
                                 </Button>
                             </Col>

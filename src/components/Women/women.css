@@ -1,4 +1,35 @@
 .women-container {
     width: 100%;
     height: auto;
+    padding: 24px 64px;
+}
+
+.info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    opacity: .75;
+    width: 100%;
+    height: 100%;
+    padding: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-view {
+    border-radius: 500px;
+    background: #000;
+    width: 140px;
+    height: 50px;
+    color: #fff;
+    font-weight: 700;
+    border: none;
+    font-size: 1rem;
+}
+
+.btn-view:hover {
+    transform: scale(1.1);
 }
