@@ -55,7 +55,7 @@ export const Navbar = () => (
         <div className="header-widget margin-left">
             <div>
                 <div className="header-navbar_item">
-                    <div className="header-navbar_item-style">Profile</div>
+                    <Link to='/login' className="header-navbar_item-style">Login</Link>
                 </div>
             </div>
         </div>
