@@ -15,6 +15,7 @@ import Autumn from '../components/Collection/autumn';
 import Summer from '../components/Collection/summer';
 import Winter from '../components/Collection/winter';
 import Accessories from '../components/Accessories';
+import Login from '../components/Login';
 
 const Container = (props) => {
     return <div className="root-container">
@@ -36,6 +37,7 @@ const Container = (props) => {
                     <Route exact path="/collection/winter" render={(props) => <Winter {...props} />} />
                     <Route exact path="/women" render={(props) => <Women {...props} />} />
                     <Route exact path="/accessories" render={(props) => <Accessories {...props} />} />
+                    <Route exact path="/login" render={(props) => <Login {...props} />} />
                 </Switch>
             </main>
             <footer>
