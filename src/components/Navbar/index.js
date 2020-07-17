@@ -2,6 +2,8 @@ import React from 'react';
 import { Menu, Dropdown } from 'antd';
 import './navbar.css';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Constants } from '../../store/constants';
 
 const collectionMenu = (
     <Menu>
@@ -23,8 +25,11 @@ const collectionMenu = (
     </Menu>
 )
 
-export const Navbar = () => (
-    <div className="header">
+const Navbar = (props) => {
+    const handleLogout = () => {
+        props.setAuth(false);
+    }
+   return(<div className="header">
         <div className="header-brand">Brand icon</div>
         <div className="header-navbar">
             <div>
@@ -55,9 +60,25 @@ export const Navbar = () => (
         <div className="header-widget margin-left">
             <div>
                 <div className="header-navbar_item">
-                    <Link to='/login' className="header-navbar_item-style">Login</Link>
+                    {
+                        props.isAuth? <button onClick={handleLogout} style={{ backgroundColor: 'transparent', border: 'none' }} className="header-navbar_item-style">Logout</button>
+                        :<Link to='/login' className="header-navbar_item-style">Login</Link>
+                    }
                 </div>
             </div>
         </div>
     </div>
-)
+)}
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        setAuth: (isAuth) => dispatch({ type: Constants.AUTH, isAuth }) 
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

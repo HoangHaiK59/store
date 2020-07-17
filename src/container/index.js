@@ -2,7 +2,7 @@ import React from 'react';
 import Landing from '../components/Landing';
 import Home from '../components/Home';
 import { Route, Switch } from 'react-router-dom';
-import { Navbar } from '../components/Navbar';
+import Navbar from '../components/Navbar';
 import { Error } from '../components/Error';
 import Product from '../components/Product';
 import { Footer } from '../components/Footer';
@@ -22,7 +22,7 @@ const Container = (props) => {
         <div className="root-mainview">
             <header className="root-navbar" style={props.isLanding ? {  backgroundColor: 'transparent' }: {  backgroundColor: '#000' }}>
                 {
-                    !props.isLanding && <Navbar/>
+                    !props.isLanding && <Navbar isAuth = {props.isAuth}/>
                 }
             </header>
             <main className="root-content">
@@ -54,7 +54,8 @@ const Container = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isLanding: state.isLanding
+        isLanding: state.isLanding,
+        isAuth: state.isAuth
     }
 }
 

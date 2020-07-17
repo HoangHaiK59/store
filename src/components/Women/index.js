@@ -11,50 +11,47 @@ class Women extends React.Component {
                 {
                     id: 1,
                     name: 'Product 1',
-                    cover: 'https://i.imgur.com/GXy9UIG.jpg',
-                    active: false
+                    cover: 'https://i.imgur.com/GXy9UIG.jpg'
                 },
                 {
                     id: 2,
                     name: 'Product 2',
-                    cover: 'https://i.imgur.com/Wj6dytl.jpg',
-                    active: false
+                    cover: 'https://i.imgur.com/Wj6dytl.jpg'
                 },
                 {
                     id: 3,
                     name: 'Product 3',
-                    cover: 'https://i.imgur.com/9qf6WyB.jpg',
-                    active: false
+                    cover: 'https://i.imgur.com/9qf6WyB.jpg'
                 },
                 {
                     id: 4,
                     name: 'Product 4',
-                    cover: 'https://i.imgur.com/ijWScLn.jpg',
-                    active: false
+                    cover: 'https://i.imgur.com/ijWScLn.jpg'
                 },
                 {
                     id: 5,
                     name: 'Product 5',
-                    cover: 'https://i.imgur.com/gXTbY7M.jpg',
-                    active: false
+                    cover: 'https://i.imgur.com/gXTbY7M.jpg'
                 },
                 {
                     id: 6,
                     name: 'Product 6',
-                    cover: 'https://i.imgur.com/qqBB3Dz.jpg',
-                    active: false
+                    cover: 'https://i.imgur.com/qqBB3Dz.jpg'
                 },
                 {
                     id: 7,
                     name: 'Product 7',
-                    cover: 'https://i.imgur.com/ijWScLn.jpg',
-                    active: false
+                    cover: 'https://i.imgur.com/Wfm7IHE.jpg'
                 },
                 {
                     id: 8,
-                    name: 'Product 7',
-                    cover: 'https://i.imgur.com/ijWScLn.jpg',
-                    active: false
+                    name: 'Product 8',
+                    cover: 'https://i.imgur.com/lcbpc1a.jpg'
+                },
+                {
+                    id: 9,
+                    name: 'Product 9',
+                    cover: 'https://i.imgur.com/bXrraSH.jpg'
                 }
             ]
         };
@@ -87,7 +84,7 @@ class Women extends React.Component {
                                 style={{ height: '600px', position: 'relative' }}>
                                 <div className="product-header">
                                     <div className="product-cover">
-                                        <img src={product.cover} alt="productImage" />
+                                        <img src={product.cover} alt="productImage" style={{ objectFit: 'cover' }}/>
                                     </div>
                                 </div>
                                 {
@@ -114,7 +111,7 @@ class Women extends React.Component {
                                     style={{ height: '600px', position: 'relative' }}>
                                     <div className="product-header">
                                         <div className="product-cover">
-                                            <img src={product.cover} alt="productImage" />
+                                            <img src={product.cover} alt="productImage" style={{ objectFit: 'cover' }}/>
                                         </div>
                                     </div>
                                     {
