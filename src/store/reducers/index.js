@@ -1,26 +1,16 @@
 import { Constants } from '../constants';
 const initialState = {
-    isSuccess: false,
-    products: [],
     error: null,
-    isLanding: true
+    isLanding: true,
+    isAuth: false,
+    user: null
 };
 export const rootReducer = (state = initialState, action) => {
     switch (action.type) {
-        case Constants.ADD_PRODUCT_REQ:
-            return { ...state, isSuccess: false };
-        case Constants.ADD_PRODUCT_SUCCESS:
-            return { ...state, isSuccess: true };
-        case Constants.ADD_PRODUCT_FAIL:
-            return { ...state, error: action.error };
-        case Constants.GET_PRODUCT_REQ:
-            return { ...state, isSuccess: false };
-        case Constants.GET_PRODUCT_SUCCESS:
-            return { ...state, isSuccess: true, products: action.products };
-        case Constants.GET_PRODUCT_FAIL:
-            return { ...state, error: action.error };
         case Constants.CHANGE_VIEW:
             return { ...state, isLanding: action.isLanding };
+        case Constants.AUTH:
+            return { ...state, isAuth: action.isAuth };
         default:
             return state
     }

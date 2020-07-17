@@ -41,7 +41,17 @@ export default class Spring extends React.Component {
                 {
                     id: 7,
                     name: 'Product 7',
-                    cover: 'https://i.imgur.com/ijWScLn.jpg'
+                    cover: 'https://i.imgur.com/Wfm7IHE.jpg'
+                },
+                {
+                    id: 8,
+                    name: 'Product 8',
+                    cover: 'https://i.imgur.com/lcbpc1a.jpg'
+                },
+                {
+                    id: 9,
+                    name: 'Product 9',
+                    cover: 'https://i.imgur.com/bXrraSH.jpg'
                 }
             ]
         }
@@ -64,7 +74,7 @@ export default class Spring extends React.Component {
                                     products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={4} className="product">
                                         <div className="product-header">
                                             <div className="product-cover">
-                                                <img src={product.cover} alt="productImage" />
+                                                <img src={product.cover} alt="productImage" style={{ objectFit: 'cover' }}/>
                                             </div>
                                         </div>
                                         <h5 className="product-name">{product.name}</h5>
