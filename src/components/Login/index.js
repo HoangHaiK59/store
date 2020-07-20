@@ -14,7 +14,7 @@ class Login extends React.Component {
 
     onFinish = values => {
         console.log('Success:', values);
-        fetch('https://localhost:5001/api/v1/Login', {
+        fetch('https://localhost:5001/api/v1/authorize', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -22,13 +22,24 @@ class Login extends React.Component {
             body: JSON.stringify(values),
         }).then(res => res.json().then(result => {
             if(result.status) {
-                this.props.setAuth(true);
-                this.props.history.push('/store');
+                localStorage.setItem('token', result.token);
+                fetch(`https://localhost:5001/api/v1/user?username=${values.username}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${result.token}`,
+                        'Content-Type': 'application/json;charset=utf-8'
+                    }
+                })
+                .then(response => response.status !== 401 && response.json().then(user => {
+                    this.props.setAuth(user.data , true);
+                    this.props.history.push('/store');
+                }))
+                .catch(error => console.log(error))
             } else {
-                this.props.setAuth(false); 
+                this.props.setAuth(null, false); 
             }
         })).catch(error => {
-            this.props.setAuth(false);
+            this.props.setAuth(null, false);
         })
     };
 
@@ -81,7 +92,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        setAuth: (isAuth) => dispatch({ type: Constants.AUTH, isAuth })
+        setAuth: (user , isAuth) => dispatch({ type: Constants.AUTH, user , isAuth })
     }
 }
 

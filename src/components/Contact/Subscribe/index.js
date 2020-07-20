@@ -1,7 +1,8 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 
-export const Subscribe = (props) => (
+export const Subscribe = (props) => {
+return(
     <div>
         <h5 style={{color: '#636566', textAlign: 'center'}}>Subscribe Form</h5>
         <Form
@@ -20,3 +21,4 @@ export const Subscribe = (props) => (
         </Form>
     </div>
 )
+}

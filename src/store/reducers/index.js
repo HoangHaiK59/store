@@ -10,7 +10,7 @@ export const rootReducer = (state = initialState, action) => {
         case Constants.CHANGE_VIEW:
             return { ...state, isLanding: action.isLanding };
         case Constants.AUTH:
-            return { ...state, isAuth: action.isAuth };
+            return { ...state, isAuth: action.isAuth, user: action.user };
         default:
             return state
     }

@@ -3,6 +3,24 @@ import { Row, Col } from 'antd';
 import { Subscribe } from './Subscribe';
 import { InstagramOutlined, FacebookOutlined } from '@ant-design/icons';
 const Contact = (props) => {
+
+    const onFinish = values => {
+        fetch('https://localhost:5001/api/v1/subscribe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(values)
+        })
+        .then(res => res.status === 200 && res.json().then(data => {
+            console.log('subscribe success')
+        }))
+    }
+
+    const onFinishFailed = errorInfo => {
+        console.log(errorInfo);
+    }
+
     return (
         <Col span={24} style={{ padding: '8px'}}>
             <Row gutter={[16, 16]} style={{ marginTop: '20px', backgroundColor: '#000' }}    >
@@ -22,7 +40,7 @@ const Contact = (props) => {
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}    >
                 <Col span={8} ></Col>
                 <Col span={8} style={{ background: 'transparent' }}>
-                    <Subscribe />
+                    <Subscribe onFinish={onFinish} onFinishFailed={onFinishFailed}/>
                 </Col>
                 <Col span={8} ></Col>
             </Row>
