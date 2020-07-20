@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, Dropdown } from 'antd';
+import { DownOutlined   } from '@ant-design/icons';
 import './navbar.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -28,8 +29,18 @@ const collectionMenu = (
 const Navbar = (props) => {
     const handleLogout = () => {
         props.setAuth(false);
+        localStorage.removeItem('token');
     }
-   return(<div className="header">
+
+    const userMenu = (
+        <Menu>
+            <Menu.Item>
+                <button onClick={handleLogout} style={{ backgroundColor: 'transparent', border: 'none', color: '#000' }} className="header-navbar_item-style">Logout</button>
+            </Menu.Item>
+        </Menu>
+    )
+
+    return (<div className="header">
         <div className="header-brand">Brand icon</div>
         <div className="header-navbar">
             <div>
@@ -61,23 +72,29 @@ const Navbar = (props) => {
             <div>
                 <div className="header-navbar_item">
                     {
-                        props.isAuth? <button onClick={handleLogout} style={{ backgroundColor: 'transparent', border: 'none' }} className="header-navbar_item-style">Logout</button>
-                        :<Link to='/login' className="header-navbar_item-style">Login</Link>
+                        props.isAuth ? <Dropdown overlay={userMenu} trigger={['click']}>
+                            <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                                {props.user.username}  <DownOutlined />
+                                </Link>
+                        </Dropdown>
+                            : <Link to='/login' className="header-navbar_item-style">Login</Link>
                     }
                 </div>
             </div>
         </div>
     </div>
-)}
+    )
+}
 
 const mapStateToProps = (state, ownProps) => {
     return {
+        user: state.user
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        setAuth: (isAuth) => dispatch({ type: Constants.AUTH, isAuth }) 
+        setAuth: (isAuth) => dispatch({ type: Constants.AUTH, isAuth })
     }
 }
 
