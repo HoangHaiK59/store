@@ -13,16 +13,29 @@ import { Constants } from '../../store/constants';
 const Landing = (props) => {
         const history = useHistory();
         useTitle({ title: props.title });
+        const [ landing, setLanding ] = React.useState(null);
+        React.useEffect(() => {
+                fetch(`https://localhost:5001/api/v1/GetLandingPage?ordinal=${1}`, {
+                        method: 'GET',
+                        headers: {
+                                'content-type': 'application/json'
+                        }
+                })
+                .then(response => response.status === 200 && response.json().then(result => {
+                        setLanding(result.data);
+                }))
+                .catch(error => console.log(error))
+        }, [])
         const { changeView } = props;
         React.useLayoutEffect(() => {
                 changeView(true);
         }, [changeView])
         const handleClick = () => {
                 props.changeView(false);
-                history.push('/store') ;  
+                history.push('/store');
         }
-        return <div className="landing-container">
-                <img src="https://i.imgur.com/LWdcr6f.jpg" alt="" className="imageBackdrop" />
+        return landing && <div className="landing-container">
+                <img src={landing.url} alt="" style={{ objectFit: 'cover'}} className="imageBackdrop" />
 
                 <button className="btn-shop-now" onClick={handleClick}>
                         SHOP NOW
