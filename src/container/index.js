@@ -16,16 +16,20 @@ import Summer from '../components/Collection/summer';
 import Winter from '../components/Collection/winter';
 import Accessories from '../components/Accessories';
 import Login from '../components/Login';
+import useSticky from '../utils/sticky';
+import Progress from '../components/ProgressBar';
 
 const Container = (props) => {
-    return <div className="root-container">
+    const { isSticky, element } = useSticky();
+    return <div ref={element} className="root-container">
         <div className="root-mainview">
-            <header className="root-navbar" style={props.isLanding ? {  backgroundColor: 'transparent' }: {  backgroundColor: '#000' }}>
+            <Progress  scroll={props.scrollPosition + '%'} />
+            <header className={isSticky ? "root-navbar-fixed": "root-navbar" } style={props.isLanding ? {  backgroundColor: 'transparent' }: {  backgroundColor: '#000' }}>
                 {
                     !props.isLanding && <Navbar isAuth = {props.isAuth}/>
                 }
             </header>
-            <main className="root-content">
+            <main  className="root-content">
                 <Switch>
                     <Route exact path="/" render={(props) => <Landing {...props} title="Landing" />} />
                     <Route exact path="/store" render={(props) => <Home {...props} title="Store" />} />

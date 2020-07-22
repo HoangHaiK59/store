@@ -49,16 +49,34 @@ body {
   justify-content: flex-start;
 }
 
-.root-navbar {
-  position: fixed;
+.root-navbar-fixed {
   width: 100%;
   height: 50px;
   z-index: 3;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  animation: moveDown 0.5s ease-in-out;
+}
+
+.root-navbar {
+  width: 100%;
+  height: 50px;
   color: white;
 }
 
 .root-content {
   width: 100%;
   height: auto;
+}
+
+@keyframes moveDown {
+  from {
+    transform: translateY(-5rem);
+  }
+  to {
+    transform: translateY(0rem);
+  }
 }
 
