@@ -1,27 +1,52 @@
 import React from 'react';
 import { Menu, Dropdown } from 'antd';
-import { DownOutlined   } from '@ant-design/icons';
+import { DownOutlined } from '@ant-design/icons';
 import './navbar.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Constants } from '../../store/constants';
 
-const collectionMenu = (
+const TopMenu = (
     <Menu>
         <Menu.Item>
-            <Link to='/collection/spring' className="header-navbar_item-style">Spring</Link>
+            <Link to='/collection/jacket' className="header-navbar_item-style">Áo khoác</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/collection/summer' className="header-navbar_item-style">Summer</Link>
+            <Link to='/collection/shirts' className="header-navbar_item-style">Áo sơ mi</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/collection/autumn' className="header-navbar_item-style">Autumn</Link>
+            <Link to='/collection/tshirts' className="header-navbar_item-style">Áo phông</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/collection/winter' className="header-navbar_item-style">Winter</Link>
+            <Link to='/tops' className="header-navbar_item-style">Áo</Link>
+        </Menu.Item>
+    </Menu>
+)
+
+const PantMenu = (
+    <Menu>
+        <Menu.Item>
+            <Link to='/collection/jacket' className="header-navbar_item-style">Quần jean</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/collection' className="header-navbar_item-style">4 Seasons</Link>
+            <Link to='/collection/shirts' className="header-navbar_item-style">Quần áo bộ</Link>
+        </Menu.Item>
+        <Menu.Item>
+            <Link to='/collection/tshirts' className="header-navbar_item-style">Quần đùi</Link>
+        </Menu.Item>
+        <Menu.Item>
+            <Link to='/tops' className="header-navbar_item-style">Quần</Link>
+        </Menu.Item>
+    </Menu>
+)
+
+const adminMenu = (
+    <Menu>
+        <Menu.Item>
+            <Link to='/admin/addproduct' className="header-navbar_item-style">Add product</Link>
+        </Menu.Item>
+        <Menu.Item>
+            <Link to='/admin/addimage' className="header-navbar_item-style">Add image</Link>
         </Menu.Item>
     </Menu>
 )
@@ -45,26 +70,44 @@ const Navbar = (props) => {
         <div className="header-navbar">
             <div>
                 <div className="header-navbar_item">
-                    <Link to='/store' className="header-navbar_item-style">Home</Link>
+                    <Link to='/store' className="header-navbar_item-style">Trang chủ</Link>
                 </div>
             </div>
             <div>
                 <div className="header-navbar_item">
-                    <Dropdown overlay={collectionMenu}>
+                    <Dropdown overlay={TopMenu}>
                         <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                            Collection
+                            Áo
                         </Link>
                     </Dropdown>
                 </div>
             </div>
             <div>
                 <div className="header-navbar_item">
-                    <Link to='/women' className="header-navbar_item-style">Women</Link>
+                    <Dropdown overlay={PantMenu}>
+                        <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                            Quần
+                    </Link>
+                    </Dropdown>
                 </div>
             </div>
             <div>
                 <div className="header-navbar_item">
-                    <Link to='/accessories' className="header-navbar_item-style">Accessories</Link>
+                    <Link to='/category' className="header-navbar_item-style">Thể loại</Link>
+                </div>
+            </div>
+            <div>
+                <div className="header-navbar_item">
+                    <Link to='/accessories' className="header-navbar_item-style">Phụ kiện</Link>
+                </div>
+            </div>
+            <div>
+                <div className="header-navbar_item">
+                    <Dropdown overlay={adminMenu}>
+                        <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                            Admin
+                    </Link>
+                    </Dropdown>
                 </div>
             </div>
         </div>
@@ -75,7 +118,7 @@ const Navbar = (props) => {
                         props.isAuth ? <Dropdown overlay={userMenu} trigger={['click']}>
                             <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
                                 {props.user.username}  <DownOutlined />
-                                </Link>
+                            </Link>
                         </Dropdown>
                             : <Link to='/login' className="header-navbar_item-style">Login</Link>
                     }

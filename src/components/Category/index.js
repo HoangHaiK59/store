@@ -1,8 +1,8 @@
 import React from 'react';
 import { NAV_BAR_HEIGHT } from '../../helper/calc';
 import { Row, Col, Button } from 'antd';
-import './women.css';
-class Women extends React.Component {
+import './category.css';
+class Category extends React.Component {
     constructor(props) {
         super(props);
 
@@ -133,4 +133,4 @@ class Women extends React.Component {
     }
 }
 
-export default Women;
+export default Category;

@@ -1,9 +1,8 @@
 import React from 'react';
-import './collection.css';
 import { NAV_BAR_HEIGHT } from '../../helper/calc';
 import { Row, Col } from 'antd';
 
-export default class Autumn extends React.Component {
+export default class JumpSuit extends React.Component {
 
     constructor(props) {
         super(props);
