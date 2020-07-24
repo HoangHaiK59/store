@@ -9,13 +9,13 @@ import { Constants } from '../../store/constants';
 const TopMenu = (
     <Menu>
         <Menu.Item>
-            <Link to='/collection/jacket' className="header-navbar_item-style">Áo khoác</Link>
+            <Link to='/tops/jacket' className="header-navbar_item-style">Áo khoác</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/collection/shirts' className="header-navbar_item-style">Áo sơ mi</Link>
+            <Link to='/tops/shirts' className="header-navbar_item-style">Áo sơ mi</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/collection/tshirts' className="header-navbar_item-style">Áo phông</Link>
+            <Link to='/tops/tshirts' className="header-navbar_item-style">Áo phông</Link>
         </Menu.Item>
         <Menu.Item>
             <Link to='/tops' className="header-navbar_item-style">Áo</Link>
@@ -26,16 +26,16 @@ const TopMenu = (
 const PantMenu = (
     <Menu>
         <Menu.Item>
-            <Link to='/collection/jacket' className="header-navbar_item-style">Quần jean</Link>
+            <Link to='/pants/jean' className="header-navbar_item-style">Quần jean</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/collection/shirts' className="header-navbar_item-style">Quần áo bộ</Link>
+            <Link to='/pants/jumpsuit' className="header-navbar_item-style">Quần áo bộ</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/collection/tshirts' className="header-navbar_item-style">Quần đùi</Link>
+            <Link to='/pants/short' className="header-navbar_item-style">Quần short</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/tops' className="header-navbar_item-style">Quần</Link>
+            <Link to='/pants' className="header-navbar_item-style">Quần</Link>
         </Menu.Item>
     </Menu>
 )
