@@ -4,7 +4,7 @@ const Progress = ({scroll}) => {
     return (
         <div style={{
             position: 'fixed',
-            background: `rgba(245, 144, 66, .8)`,
+            background: `#685780`,
             width: `${scroll}`,
             height: '4px',
             zIndex: 200,
