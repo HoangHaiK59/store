@@ -5,7 +5,7 @@ import { InstagramOutlined, FacebookOutlined } from '@ant-design/icons';
 const Contact = (props) => {
 
     const onFinish = values => {
-        fetch('https://localhost:5001/api/v1/subscribe', {
+        fetch('https://localhost:44322/api/v1/subscribe', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'

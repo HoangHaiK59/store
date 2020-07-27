@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Row, Col, Select, InputNumber, Button } from 'antd';
 import { NAV_BAR_HEIGHT } from '../../helper/calc';
 import './product.css';
@@ -37,7 +38,7 @@ class Product extends React.Component {
         this.formater = new Intl.NumberFormat('vn', {
             style: 'currency',
             currency: 'VND'
-        })
+        });
     }
 
     handleChangeSize(size) {
@@ -53,12 +54,16 @@ class Product extends React.Component {
         this.setState(state =>({ product: {...state.product, images} }))
     }
 
+    scrollTop() {
+        ReactDOM.findDOMNode(this).scrollIntoView();
+    }
+
     addToCart() {
 
     }
 
     componentDidMount() {
-
+        this.scrollTop();
     }
 
     componentDidUpdate(prevProps, prevState) {

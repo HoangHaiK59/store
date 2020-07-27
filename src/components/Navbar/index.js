@@ -17,9 +17,6 @@ const TopMenu = (
         <Menu.Item>
             <Link to='/tops/tshirts' className="header-navbar_item-style">Áo phông</Link>
         </Menu.Item>
-        <Menu.Item>
-            <Link to='/tops' className="header-navbar_item-style">Áo</Link>
-        </Menu.Item>
     </Menu>
 )
 
@@ -33,9 +30,6 @@ const PantMenu = (
         </Menu.Item>
         <Menu.Item>
             <Link to='/pants/short' className="header-navbar_item-style">Quần short</Link>
-        </Menu.Item>
-        <Menu.Item>
-            <Link to='/pants' className="header-navbar_item-style">Quần</Link>
         </Menu.Item>
     </Menu>
 )
@@ -76,7 +70,7 @@ const Navbar = (props) => {
             <div>
                 <div className="header-navbar_item">
                     <Dropdown overlay={TopMenu}>
-                        <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                        <Link to='/tops' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
                             Áo
                         </Link>
                     </Dropdown>
@@ -85,9 +79,9 @@ const Navbar = (props) => {
             <div>
                 <div className="header-navbar_item">
                     <Dropdown overlay={PantMenu}>
-                        <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                        <Link to='/pants' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
                             Quần
-                    </Link>
+                        </Link>
                     </Dropdown>
                 </div>
             </div>
