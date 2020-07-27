@@ -1,6 +1,9 @@
 import React from 'react';
-import { Form, Button, Input, InputNumber } from 'antd';
+import { Form, Button, Input, InputNumber, Select } from 'antd';
 import './add.css';
+import TextArea from 'antd/lib/input/TextArea';
+
+const { Option } = Select
 
 class AddProduct extends React.Component {
     constructor(props) {
@@ -36,8 +39,8 @@ class AddProduct extends React.Component {
                 <div className='form-add-container'>
                     <Form style={{ width: '700px' }} {...layout} name="nest-messages" onFinish={this.onFinish.bind(this)} validateMessages={validateMessages}>
                         <Form.Item
-                            name={['user', 'name']}
-                            label="Name"
+                            name={['product', 'name']}
+                            label="Tên hàng"
                             rules={[
                                 {
                                     required: true,
@@ -47,8 +50,8 @@ class AddProduct extends React.Component {
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            name={['user', 'email']}
-                            label="Email"
+                            name={['product', 'category']}
+                            label="Loại"
                             rules={[
                                 {
                                     type: 'email',
@@ -58,22 +61,44 @@ class AddProduct extends React.Component {
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            name={['user', 'age']}
-                            label="Age"
+                            name={['product', 'price']}
+                            label="Giá"
                             rules={[
                                 {
                                     type: 'number',
                                     min: 0,
-                                    max: 99,
+                                    max: 2000000
                                 },
                             ]}
                         >
                             <InputNumber />
                         </Form.Item>
-                        <Form.Item name={['user', 'website']} label="Website">
-                            <Input />
+                        <Form.Item
+                            name={['product', 'discount']}
+                            label="Sale"
+                            rules={[
+                                {
+                                    type: 'number',
+                                    min: 0,
+                                    max: 100
+                                },
+                            ]}
+                        >
+                            <InputNumber />
                         </Form.Item>
-                        <Form.Item name={['user', 'introduction']} label="Introduction">
+                        <Form.Item
+                            name={['product', 'description']}
+                            label="Mô tả"
+                        >
+                            <TextArea />
+                        </Form.Item>
+                        <Form.Item name={['product', 'size']} label="Kích thước">
+                            <Select defaultValue="M" style={{ width: 120 }}>
+                                <Option value="S">S</Option>
+                                <Option value="M">M</Option>
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name={['product', 'introduction']} label="Introduction">
                             <Input.TextArea />
                         </Form.Item>
                         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

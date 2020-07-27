@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import Contact from '../components/Contact';
 import Tops from '../components/Tops';
 import Category from '../components/Category';
-import Winter from '../components/Dress/skirt';
+import Skirt from '../components/Dress/skirt';
 import Accessories from '../components/Accessories';
 import Login from '../components/Login';
 import useSticky from '../utils/sticky';
@@ -25,10 +25,39 @@ import JumpSuit from '../components/Pants/jumpsuit';
 
 const Container = (props) => {
     const { isSticky, element } = useSticky();
+    const [scrollPosition, setScrollPosition] = React.useState(0);
+    React.useEffect(() => {
+        function calScrollDistance() {
+            const scrollTop = window.pageYOffset;
+            const windowHeight = window.innerHeight;
+            const docHeight = getDocHeight();
+            const  totalDocScrollLength  =  docHeight  -  windowHeight ;
+            const  scrollPostion  =  Math.floor(scrollTop  /  totalDocScrollLength  *  100);
+            setScrollPosition(scrollPostion)
+          }
+        
+          function getDocHeight () {
+            return Math.max(
+              document.body.scrollHeight,  document.documentElement.scrollHeight,
+              document.body.offsetHeight,  document.documentElement.offsetHeight,
+              document.body.clientHeight,  document.documentElement.clientHeight
+            );
+          }
+        function listenToScrollEvent () {
+            document.addEventListener('scroll', () => {
+              requestAnimationFrame(() => {
+                  calScrollDistance();
+              })
+            })
+          }
+      listenToScrollEvent();
+    }, []);
+  
+  
     return <div ref={element} className="root-container">
         <div className="root-mainview">
-            <Progress  scroll={props.scrollPosition + '%'} />
-            <header className={isSticky ? "root-navbar-fixed": "root-navbar" } style={props.isLanding ? {  backgroundColor: 'transparent' }: {  backgroundColor: '#000' }}>
+            <Progress  scroll={scrollPosition + '%'} />
+            <header className={!props.isLanding? isSticky ? "root-navbar-fixed": "root-navbar": null } style={props.isLanding ? {  backgroundColor: 'transparent' }: {  backgroundColor: '#000' }}>
                 {
                     !props.isLanding && <Navbar isAuth = {props.isAuth}/>
                 }
@@ -42,6 +71,7 @@ const Container = (props) => {
                     <Route exact path="/tops/jacket" render={(props) => <Jacket {...props} />} />
                     <Route exact path="/tops/shirts" render={(props) => <Shirts {...props} />} />
                     <Route exact path="/tops/tshirts" render={(props) => <TShirts {...props} />} />
+                    <Route exact path="/dress/skirt" render={(props) => <Skirt {...props} />} />
                     <Route exact path="/pants/jean" render={(props) => <Jean {...props} />} />
                     <Route exact path="/pants/short" render={(props) => <Shorts {...props} />} />
                     <Route exact path="/pants/jumpsuit" render={(props) => <JumpSuit {...props} />} />

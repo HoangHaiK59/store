@@ -15,7 +15,7 @@ const Landing = (props) => {
         useTitle({ title: props.title });
         const [ landing, setLanding ] = React.useState(null);
         React.useEffect(() => {
-                fetch(`https://localhost:5001/api/v1/GetLandingPage?ordinal=${1}`, {
+                fetch(`https://localhost:44322/api/v1/GetLandingPage?ordinal=${1}`, {
                         method: 'GET',
                         headers: {
                                 'content-type': 'application/json'

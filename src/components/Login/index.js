@@ -14,7 +14,7 @@ class Login extends React.Component {
 
     onFinish = values => {
         console.log('Success:', values);
-        fetch('https://localhost:5001/api/v1/authorize', {
+        fetch('https://localhost:44322/api/v1/authorize', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -23,7 +23,7 @@ class Login extends React.Component {
         }).then(res => res.json().then(result => {
             if(result.status) {
                 localStorage.setItem('token', result.token);
-                fetch(`https://localhost:5001/api/v1/user?username=${values.username}`, {
+                fetch(`https://localhost:44322/api/v1/user?username=${values.username}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${result.token}`,
