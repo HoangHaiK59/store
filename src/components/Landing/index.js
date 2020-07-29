@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useTitle } from '../../helper/feature';
 import { connect } from 'react-redux';
 import { Constants } from '../../store/constants';
+import { instance } from '../../utils/axios';
 
 // <div className="circle-item"></div>
 // <div className="ellip-item">
@@ -15,16 +16,13 @@ const Landing = (props) => {
         useTitle({ title: props.title });
         const [ landing, setLanding ] = React.useState(null);
         React.useEffect(() => {
-                fetch(`https://localhost:44322/api/v1/GetLandingPage?ordinal=${1}`, {
-                        method: 'GET',
-                        headers: {
-                                'content-type': 'application/json'
+                instance.get(`GetLandingPage?ordinal=${1}`)
+                .then(res => {
+                        if(res.data.success) {
+                                const { data } = res.data;
+                                setLanding(data)
                         }
                 })
-                .then(response => response.status === 200 && response.json().then(result => {
-                        setLanding(result.data);
-                }))
-                .catch(error => console.log(error))
         }, [])
         const { changeView } = props;
         React.useLayoutEffect(() => {
