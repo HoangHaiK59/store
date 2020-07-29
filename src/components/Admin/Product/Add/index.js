@@ -1,27 +1,78 @@
 import React from 'react';
-import { Form, Button, Input, InputNumber, Select } from 'antd';
+import { Form, Button, Input, InputNumber, Select, Row, Col, } from 'antd';
 import './add.css';
 import TextArea from 'antd/lib/input/TextArea';
+import { instance } from '../../../../utils/axios';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-const { Option } = Select
+const { Option } = Select;
 
 class AddProduct extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            colors: [],
+            value: undefined,
+            sizes: [],
+            categories: []
+        };
     }
 
     onFinish = values => {
         console.log(values);
     }
 
+    onChange = value => {
+        this.setState({ value })
+    }
+
+    getSizeList() {
+        instance.get('GetSizeList')
+            .then(response => {
+                if (response.data.success) {
+                    const { data } = response.data;
+                    this.setState({ sizes: data })
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
+    getColorList() {
+        instance.get('GetColorList').then(result => {
+            if (result.data.success) {
+                const { data } = result.data;
+                this.setState({ colors: data })
+            }
+        })
+            .catch(err => console.log(err))
+    }
+
+    getCategoryList() {
+        instance.get('GetCategoryList')
+            .then(result => {
+                if (result.data.success) {
+                    const { data } = result.data;
+                    this.setState({ categories: data })
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
+    componentDidMount() {
+        this.getCategoryList();
+        this.getColorList();
+        this.getSizeList();
+    }
+
     render() {
         const layout = {
             labelCol: {
-                span: 8,
+                xs: { span: 24 },
+                sm: { span: 4 },
             },
             wrapperCol: {
-                span: 16,
+                xs: { span: 24 },
+                sm: { span: 20 },
             },
         };
         const validateMessages = {
@@ -34,10 +85,16 @@ class AddProduct extends React.Component {
                 range: '${label} must be between ${min} and ${max}',
             },
         };
+        const formItemLayoutWithOutLabel = {
+            wrapperCol: {
+                xs: { span: 24, offset: 0 },
+                sm: { span: 20, offset: 4 },
+            },
+        };
         return (
             <div className='add-product-container'>
                 <div className='form-add-container'>
-                    <Form style={{ width: '700px' }} {...layout} name="nest-messages" onFinish={this.onFinish.bind(this)} validateMessages={validateMessages}>
+                    <Form style={{ width: '900px' }} {...layout} name="nest-messages" onFinish={this.onFinish.bind(this)} validateMessages={validateMessages}>
                         <Form.Item
                             name={['product', 'name']}
                             label="Tên hàng"
@@ -50,15 +107,22 @@ class AddProduct extends React.Component {
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            name={['product', 'category']}
+                            name={['product', 'category_id']}
                             label="Loại"
                             rules={[
                                 {
-                                    type: 'email',
+                                    required: true,
                                 },
                             ]}
                         >
-                            <Input />
+                            <Select
+                                allowClear
+                                placeholder="Chọn loại"
+                                defaultValue={1} style={{ width: '100%' }}>
+                                {
+                                    this.state.categories.map((category, id) => <Option key={id} value={category.id}>{category.name}</Option>)
+                                }
+                            </Select>
                         </Form.Item>
                         <Form.Item
                             name={['product', 'price']}
@@ -67,7 +131,8 @@ class AddProduct extends React.Component {
                                 {
                                     type: 'number',
                                     min: 0,
-                                    max: 2000000
+                                    max: 2000000,
+                                    required: true
                                 },
                             ]}
                         >
@@ -80,7 +145,8 @@ class AddProduct extends React.Component {
                                 {
                                     type: 'number',
                                     min: 0,
-                                    max: 100
+                                    max: 100,
+                                    required: true
                                 },
                             ]}
                         >
@@ -89,22 +155,121 @@ class AddProduct extends React.Component {
                         <Form.Item
                             name={['product', 'description']}
                             label="Mô tả"
+                            rules={[
+                                {
+                                    required: true
+                                }
+                            ]}
                         >
                             <TextArea />
                         </Form.Item>
-                        <Form.Item name={['product', 'size']} label="Kích thước">
-                            <Select defaultValue="M" style={{ width: 120 }}>
-                                <Option value="S">S</Option>
-                                <Option value="M">M</Option>
+                        <Form.Item name={['product', 'size']} label="Kích thước" rules={[{
+                            required: true
+                        }]}>
+                            <Select
+                                mode="multiple"
+                                allowClear
+                                placeholder="Vui lòng chọn kích thước"
+                                defaultValue="S" style={{ width: '100%' }}>
+                                {
+                                    this.state.sizes.map((value, id) => <Option key={id} value={value.size}>{value.name}</Option>)
+                                }
                             </Select>
                         </Form.Item>
-                        <Form.Item name={['product', 'introduction']} label="Introduction">
-                            <Input.TextArea />
-                        </Form.Item>
+                        <Form.List name="color">
+                            {
+                                (fields, { add, remove }) => {
+                                    return (
+                                        <div>
+                                            {
+                                                fields.map((field, index) => (
+                                                    <Form.Item {...(index === 0 ? layout : formItemLayoutWithOutLabel)}
+                                                        label={index === 0 ? 'Màu sắc' : ''}
+                                                        required={true}
+                                                        key={field.key}
+                                                    >
+                                                        <Row gutter={8}>
+                                                            <Col span={8}>
+                                                                <Form.Item
+                                                                    {...field}
+                                                                    validateTrigger={['onChange', 'onBlur']}
+                                                                    rules={[
+                                                                        {
+                                                                            required: true,
+                                                                            whitespace: true,
+                                                                            message: "Vui lòng chọn màu sắc",
+                                                                        },
+                                                                    ]}
+                                                                    noStyle
+                                                                >
+                                                                    <Select
+                                                                        style={{ width: '80%' }}
+                                                                        placeholder="Vui lòng chọn màu"
+                                                                        allowClear
+                                                                        onChange={this.onChange.bind(this)}
+                                                                    >
+                                                                        {
+                                                                            this.state.colors.map((value, id) => <Option key={id} value={value.color} title={value.color_name}>
+                                                                                <Row gutter={[5, 5]}>
+                                                                                    <Col span={12} style={{ backgroundColor: value.color, borderRadius: '200px' }}>
+
+                                                                                    </Col>
+                                                                                    <Col span={12}>{value.color_name}</Col>
+                                                                                </Row>
+                                                                            </Option>)
+                                                                        }
+                                                                    </Select>
+
+                                                                </Form.Item>
+                                                            </Col>
+                                                            <Col span={16}>
+                                                                <Form.Item
+                                                                    onChange={this.onChange.bind(this)}
+                                                                    validateTrigger={['onChange', 'onBlur']}
+                                                                    rules={[
+                                                                        {
+                                                                            required: true,
+                                                                            whitespace: true,
+                                                                            message: "Vui lòng upload hình ảnh",
+                                                                        },
+                                                                    ]}
+                                                                >
+                                                                    <Input placeholder="Upload link" />
+                                                                </Form.Item>
+                                                            </Col>
+                                                        </Row>
+                                                        {fields.length > 1 ? (
+                                                            <MinusCircleOutlined
+                                                                className="dynamic-delete-button"
+                                                                style={{ margin: '0 8px' }}
+                                                                onClick={() => {
+                                                                    remove(field.name);
+                                                                }}
+                                                            />
+                                                        ) : null}
+                                                    </Form.Item>
+                                                ))
+                                            }
+                                            <Form.Item style={{ textAlign: 'center' }}>
+                                                <Button
+                                                    type="dashed"
+                                                    onClick={() => {
+                                                        add();
+                                                    }}
+                                                    style={{ width: '60%' }}
+                                                >
+                                                    <PlusOutlined /> Thêm màu
+                                            </Button>
+                                            </Form.Item>
+                                        </div>
+                                    )
+                                }
+                            }
+                        </Form.List>
                         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                             <Button type="primary" htmlType="submit">
                                 Submit
-                        </Button>
+                            </Button>
                         </Form.Item>
                     </Form>
                 </div>

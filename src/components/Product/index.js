@@ -33,7 +33,8 @@ class Product extends React.Component {
                 colors: ['red', 'pink', '#3e88b3']
             },
             qty: 1,
-            size: ''
+            size: '',
+            colors: []
         }
         this.formater = new Intl.NumberFormat('vn', {
             style: 'currency',

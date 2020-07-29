@@ -3,6 +3,7 @@ import './login.css';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { Constants } from '../../store/constants';
 import { connect } from 'react-redux';
+import { instance } from '../../utils/axios';
 
 class Login extends React.Component {
     constructor(props) {
@@ -14,31 +15,28 @@ class Login extends React.Component {
 
     onFinish = values => {
         console.log('Success:', values);
-        fetch('https://localhost:44322/api/v1/authorize', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(values),
-        }).then(res => res.json().then(result => {
-            if(result.status) {
-                localStorage.setItem('token', result.token);
-                fetch(`https://localhost:44322/api/v1/user?username=${values.username}`, {
-                    method: 'GET',
+        instance.post('authorize', JSON.stringify(values))
+        .then(result => {
+            if(result.data.success) {
+                localStorage.setItem('token', result.data.token);
+                instance.get(`user?username=${values.username}`, {
                     headers: {
-                        'Authorization': `Bearer ${result.token}`,
+                        'Authorization': `Bearer ${result.data.token}`,
                         'Content-Type': 'application/json;charset=utf-8'
                     }
                 })
-                .then(response => response.status !== 401 && response.json().then(user => {
-                    this.props.setAuth(user.data , true);
-                    this.props.history.push('/store');
-                }))
+                .then(response => {
+                    if(response.data.success) {
+                        const { data } = response.data
+                        this.props.setAuth(data , true);
+                        this.props.history.push('/store');
+                    }
+                })
                 .catch(error => console.log(error))
             } else {
                 this.props.setAuth(null, false); 
             }
-        })).catch(error => {
+        }).catch(error => {
             this.props.setAuth(null, false);
         })
     };
