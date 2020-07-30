@@ -11,6 +11,7 @@ import Contact from '../components/Contact';
 import Tops from '../components/Tops';
 import Category from '../components/Category';
 import Skirt from '../components/Dress/skirt';
+import Dress from '../components/Dress';
 import Accessories from '../components/Accessories';
 import Login from '../components/Login';
 import useSticky from '../utils/sticky';
@@ -72,6 +73,7 @@ const Container = (props) => {
                     <Route exact path="/tops/shirts" render={(props) => <Shirts {...props} />} />
                     <Route exact path="/tops/tshirts" render={(props) => <TShirts {...props} />} />
                     <Route exact path="/dress/skirt" render={(props) => <Skirt {...props} />} />
+                    <Route exact path="/dress" render={(props) => <Dress {...props} />} />
                     <Route exact path="/pants/jean" render={(props) => <Jean {...props} />} />
                     <Route exact path="/pants/short" render={(props) => <Shorts {...props} />} />
                     <Route exact path="/pants/jumpsuit" render={(props) => <JumpSuit {...props} />} />
