@@ -6,6 +6,17 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Constants } from '../../store/constants';
 
+const DressMenu = (
+    <Menu>
+        <Menu.Item>
+            <Link to='/dress/skirt' className="header-navbar_item-style">Chân váy</Link>
+        </Menu.Item>
+        <Menu.Item>
+            <Link to='/dress' className="header-navbar_item-style">Váy liền</Link>
+        </Menu.Item>
+    </Menu>
+)
+
 const TopMenu = (
     <Menu>
         <Menu.Item>
@@ -65,6 +76,15 @@ const Navbar = (props) => {
             <div>
                 <div className="header-navbar_item">
                     <Link to='/store' className="header-navbar_item-style">Trang chủ</Link>
+                </div>
+            </div>
+            <div>
+                <div className="header-navbar_item">
+                    <Dropdown overlay={DressMenu}>
+                        <Link to='/dress' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                            Váy
+                        </Link>
+                    </Dropdown>
                 </div>
             </div>
             <div>

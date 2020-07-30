@@ -7,6 +7,101 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
+const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors }) => {
+    return (
+        <Form.List name="image_url">
+            {
+                (fields, { add, remove }) => {
+                    return (
+                        <div>
+                            {
+                                fields.map((field, index) => (
+                                    <Form.Item {...(index === 0 ? layout : formItemLayoutWithOutLabel)}
+                                        label={index === 0 ? 'Màu sắc' : ''}
+                                        required={true}
+                                        key={field.key}
+                                    >
+                                        <Row gutter={8}>
+                                            <Col span={8}>
+                                                <Form.Item
+                                                    {...field}
+                                                    validateTrigger={['onChange', 'onBlur']}
+                                                    name={[index, "color"]}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            whitespace: true,
+                                                            message: "Vui lòng chọn màu sắc",
+                                                        },
+                                                    ]}
+                                                    noStyle
+                                                >
+                                                    <Select
+                                                        style={{ width: '80%' }}
+                                                        placeholder="Vui lòng chọn màu"
+                                                        allowClear
+                                                    >
+                                                        {
+                                                            colors.map((value, id) => <Option key={id} value={value.color} title={value.color_name}>
+                                                                <Row gutter={[5, 5]}>
+                                                                    <Col span={12} style={{ backgroundColor: value.color, borderRadius: '200px' }}>
+
+                                                                    </Col>
+                                                                    <Col span={12}>{value.color_name}</Col>
+                                                                </Row>
+                                                            </Option>)
+                                                        }
+                                                    </Select>
+
+                                                </Form.Item>
+                                            </Col>
+                                            <Col span={16}>
+                                                <Form.Item
+                                                    name={[index, "url"]}
+                                                    validateTrigger={['onChange', 'onBlur']}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            whitespace: true,
+                                                            message: "Vui lòng upload hình ảnh",
+                                                        },
+                                                    ]}
+                                                >
+                                                    <Input placeholder="Upload link" />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        {fields.length > 1 ? (
+                                            <MinusCircleOutlined
+                                                className="dynamic-delete-button"
+                                                style={{ margin: '0 8px' }}
+                                                onClick={() => {
+                                                    remove(field.name);
+                                                }}
+                                            />
+                                        ) : null}
+                                    </Form.Item>
+                                ))
+                            }
+                            <Form.Item style={{ textAlign: 'center' }}>
+                                <Button
+                                    type="dashed"
+                                    onClick={() => {
+                                        add();
+                                    }}
+                                    style={{ width: '60%' }}
+                                >
+                                    <PlusOutlined /> Thêm màu
+                                </Button>
+                            </Form.Item>
+                        </div>
+                    )
+                }
+            }
+        </Form.List>
+    )
+}
+
 class AddProduct extends React.Component {
     constructor(props) {
         super(props);
@@ -20,6 +115,20 @@ class AddProduct extends React.Component {
 
     onFinish = values => {
         console.log(values);
+        const { product } = values;
+        let productAdd = {...product, id: 0};
+        const data = {...values, product: productAdd}
+        instance.post(`AddProduct`, data , {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        .then(result => {
+            if(result.data.success) {
+                console.log('ok')
+            }
+        })
+        .catch(error => console.log(error))
     }
 
     onChange = value => {
@@ -176,96 +285,10 @@ class AddProduct extends React.Component {
                                 }
                             </Select>
                         </Form.Item>
-                        <Form.List name="color">
-                            {
-                                (fields, { add, remove }) => {
-                                    return (
-                                        <div>
-                                            {
-                                                fields.map((field, index) => (
-                                                    <Form.Item {...(index === 0 ? layout : formItemLayoutWithOutLabel)}
-                                                        label={index === 0 ? 'Màu sắc' : ''}
-                                                        required={true}
-                                                        key={field.key}
-                                                    >
-                                                        <Row gutter={8}>
-                                                            <Col span={8}>
-                                                                <Form.Item
-                                                                    {...field}
-                                                                    validateTrigger={['onChange', 'onBlur']}
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            whitespace: true,
-                                                                            message: "Vui lòng chọn màu sắc",
-                                                                        },
-                                                                    ]}
-                                                                    noStyle
-                                                                >
-                                                                    <Select
-                                                                        style={{ width: '80%' }}
-                                                                        placeholder="Vui lòng chọn màu"
-                                                                        allowClear
-                                                                        onChange={this.onChange.bind(this)}
-                                                                    >
-                                                                        {
-                                                                            this.state.colors.map((value, id) => <Option key={id} value={value.color} title={value.color_name}>
-                                                                                <Row gutter={[5, 5]}>
-                                                                                    <Col span={12} style={{ backgroundColor: value.color, borderRadius: '200px' }}>
-
-                                                                                    </Col>
-                                                                                    <Col span={12}>{value.color_name}</Col>
-                                                                                </Row>
-                                                                            </Option>)
-                                                                        }
-                                                                    </Select>
-
-                                                                </Form.Item>
-                                                            </Col>
-                                                            <Col span={16}>
-                                                                <Form.Item
-                                                                    onChange={this.onChange.bind(this)}
-                                                                    validateTrigger={['onChange', 'onBlur']}
-                                                                    rules={[
-                                                                        {
-                                                                            required: true,
-                                                                            whitespace: true,
-                                                                            message: "Vui lòng upload hình ảnh",
-                                                                        },
-                                                                    ]}
-                                                                >
-                                                                    <Input placeholder="Upload link" />
-                                                                </Form.Item>
-                                                            </Col>
-                                                        </Row>
-                                                        {fields.length > 1 ? (
-                                                            <MinusCircleOutlined
-                                                                className="dynamic-delete-button"
-                                                                style={{ margin: '0 8px' }}
-                                                                onClick={() => {
-                                                                    remove(field.name);
-                                                                }}
-                                                            />
-                                                        ) : null}
-                                                    </Form.Item>
-                                                ))
-                                            }
-                                            <Form.Item style={{ textAlign: 'center' }}>
-                                                <Button
-                                                    type="dashed"
-                                                    onClick={() => {
-                                                        add();
-                                                    }}
-                                                    style={{ width: '60%' }}
-                                                >
-                                                    <PlusOutlined /> Thêm màu
-                                            </Button>
-                                            </Form.Item>
-                                        </div>
-                                    )
-                                }
-                            }
-                        </Form.List>
+                        <DynamicFields
+                            colors={this.state.colors}
+                            layout={layout}
+                            formItemLayoutWithOutLabel={formItemLayoutWithOutLabel} />
                         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                             <Button type="primary" htmlType="submit">
                                 Submit
