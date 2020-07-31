@@ -18,10 +18,10 @@ class Login extends React.Component {
         instance.post('authorize', JSON.stringify(values))
         .then(result => {
             if(result.data.success) {
-                localStorage.setItem('token', result.data.token);
+                localStorage.setItem('token', JSON.stringify(result.data.token));
                 instance.get(`user?username=${values.username}`, {
                     headers: {
-                        'Authorization': `Bearer ${result.data.token}`,
+                        'Authorization': `Bearer ${result.data.token.access_token}`,
                         'Content-Type': 'application/json;charset=utf-8'
                     }
                 })

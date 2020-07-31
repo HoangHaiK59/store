@@ -116,19 +116,20 @@ class AddProduct extends React.Component {
     onFinish = values => {
         console.log(values);
         const { product } = values;
-        let productAdd = {...product, id: 0};
-        const data = {...values, product: productAdd}
-        instance.post(`AddProduct`, data , {
+        let productAdd = { ...product, id: 0 };
+        const data = { ...values, product: productAdd }
+        instance.post(`AddProduct`, data, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('token')?.access_token)}`
             }
         })
-        .then(result => {
-            if(result.data.success) {
-                console.log('ok')
-            }
-        })
-        .catch(error => console.log(error))
+            .then(result => {
+                if (result.data.success) {
+                    console.log('ok');
+                    this.props.back();
+                }
+            })
+            .catch(error => console.log(error))
     }
 
     onChange = value => {
@@ -283,6 +284,17 @@ class AddProduct extends React.Component {
                                 {
                                     this.state.sizes.map((value, id) => <Option key={id} value={value.size}>{value.name}</Option>)
                                 }
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name={['product', 'status']} label="Trạng thái" rules={[{
+                            required: true
+                        }]}>
+                            <Select
+                                allowClear
+                                placeholder="Trạng thái"
+                                defaultValue={1} style={{ width: '100%' }}>
+                                    <Option value={0}>Hết hàng</Option>
+                                    <Option value={1}>Còn hàng</Option>
                             </Select>
                         </Form.Item>
                         <DynamicFields

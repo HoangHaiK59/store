@@ -31,8 +31,8 @@ class Product extends React.Component {
     }
 
     handleChangeColor(color) {
-        const image_url = this.state.product.image_url.map(image => image.color === color ? ({ ...image, active: true }): ({ ...image, active: false }));
-        this.setState(state =>({ product: {...state.product, image_url} }))
+        const images = this.state.product.images.map(image => image.color === color ? ({ ...image, active: true }): ({ ...image, active: false }));
+        this.setState(state =>({ product: {...state.product, images} }))
     }
 
     scrollTop() {
@@ -52,7 +52,7 @@ class Product extends React.Component {
         .then(result => {
             if(result.data.success) {
                 const { data } = result.data;
-                let product = {...data, image_url: data.image_url.split(';').map((value, id) => {
+                let product = {...data, images: data.images.split(';').map((value, id) => {
                     if (id ===0) {
                         return {...JSON.parse(value), active: true} 
                     } else {
@@ -82,7 +82,7 @@ class Product extends React.Component {
                 <Row gutter={[16, 16]} justify='start' style={{ height: '100%' }}>
                     <Col span={16}>
                         {
-                            this.state.product.image_url.map((image, id) => image.active ? <img key={id} src={image.url} alt="" className='cover' />: null)
+                            this.state.product.images.map((image, id) => image.active ? <img key={id} src={image.url} alt="" className='cover' />: null)
                         }
                     </Col>
                     <Col span={6}>
@@ -110,7 +110,7 @@ class Product extends React.Component {
                                 </Row>
                                 <Row justify='start'>
                                     {
-                                        this.state.product.image_url.map((image, id) => <Button 
+                                        this.state.product.images.map((image, id) => <Button 
                                         key={id}
                                         span={1}
                                         className='product-color'
