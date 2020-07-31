@@ -9,6 +9,8 @@ import { history } from './helper/history';
 import configStore from './store/configStore';
 import { Provider } from 'react-redux';
 import {loadState, saveState} from './persitor';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 const persitedState = loadState();
 

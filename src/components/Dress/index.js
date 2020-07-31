@@ -22,7 +22,7 @@ export default class Dress extends React.Component {
         .then(result => {
             if(result.data.success) {
                 const { data } = result.data;
-                let dresses = data.map(item => ({...item, image_url: item.image_url.split(';').map(value => JSON.parse(value) )}));
+                let dresses = data.map(item => ({...item, images: item.images.split(';').map(value => JSON.parse(value) )}));
                 //console.log(data, dresses)
                 this.setState({ dresses })
             }
@@ -48,7 +48,7 @@ export default class Dress extends React.Component {
                                     dresses.map((dress, id) => <Col onClick={() => this.handleClick(dress.id)} key={id} span={4} className="product">
                                         <div className="product-header">
                                             <div className="product-cover">
-                                                <img src={dress.image_url[0].url} alt="productImage" style={{ objectFit: 'cover' }}/>
+                                                <img width="1242" height="1554" src={dress.images[0].url} alt="productImage" style={{ objectFit: 'cover' }}/>
                                             </div>
                                         </div>
                                         <h5 className="product-name">{dress.name}</h5>

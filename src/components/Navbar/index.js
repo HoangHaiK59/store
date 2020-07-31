@@ -45,16 +45,6 @@ const PantMenu = (
     </Menu>
 )
 
-const adminMenu = (
-    <Menu>
-        <Menu.Item>
-            <Link to='/admin/addproduct' className="header-navbar_item-style">Add product</Link>
-        </Menu.Item>
-        <Menu.Item>
-            <Link to='/admin/addimage' className="header-navbar_item-style">Add image</Link>
-        </Menu.Item>
-    </Menu>
-)
 
 const Navbar = (props) => {
     const handleLogout = () => {
@@ -117,11 +107,9 @@ const Navbar = (props) => {
             </div>
             <div>
                 <div className="header-navbar_item">
-                    <Dropdown overlay={adminMenu}>
-                        <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                            Admin
+                    <Link to='/admin' className="header-navbar_item-style" >
+                        Admin
                     </Link>
-                    </Dropdown>
                 </div>
             </div>
         </div>

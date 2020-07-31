@@ -23,6 +23,7 @@ import TShirts from '../components/Tops/tshirts';
 import Jean from '../components/Pants/jean';
 import Shorts from '../components/Pants/shorts';
 import JumpSuit from '../components/Pants/jumpsuit';
+import Admin from '../components/Admin';
 
 const Container = (props) => {
     const { isSticky, element } = useSticky();
@@ -80,7 +81,7 @@ const Container = (props) => {
                     <Route exact path="/category" render={(props) => <Category {...props} />} />
                     <Route exact path="/accessories" render={(props) => <Accessories {...props} />} />
                     <Route exact path="/login" render={(props) => <Login {...props} />} />
-                    <Route exact path="/admin/addproduct" render={(props) => <AddProduct {...props} />} />
+                    <Route exact path="/admin" render={(props) => <Admin {...props} />} />
                 </Switch>
             </main>
             <footer>
