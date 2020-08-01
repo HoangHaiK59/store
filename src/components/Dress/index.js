@@ -18,7 +18,7 @@ export default class Dress extends React.Component {
 
     getDressPage() {
         const offSet = 0;
-        instance.get(`GetDressPage?offSet=${offSet}&category_id=${0}`)
+        instance.get(`GetDressPage?offSet=${offSet}&category_id=${1}`)
         .then(result => {
             if(result.data.success) {
                 const { data } = result.data;

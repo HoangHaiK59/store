@@ -4,7 +4,6 @@ import { Row, Col, Select, InputNumber, Button } from 'antd';
 import { NAV_BAR_HEIGHT } from '../../helper/calc';
 import './product.css';
 import { instance } from '../../utils/axios';
-import { useRouteMatch } from 'react-router-dom';
 const { Option } = Select;
 class Product extends React.Component {
     constructor(props) {

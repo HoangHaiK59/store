@@ -9,7 +9,7 @@ const { Option } = Select;
 
 const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors }) => {
     return (
-        <Form.List name="image_url">
+        <Form.List name="images">
             {
                 (fields, { add, remove }) => {
                     return (
@@ -111,6 +111,7 @@ class AddProduct extends React.Component {
             sizes: [],
             categories: []
         };
+        this.formRef = React.createRef();
     }
 
     onFinish = values => {
@@ -120,7 +121,7 @@ class AddProduct extends React.Component {
         const data = { ...values, product: productAdd }
         instance.post(`AddProduct`, data, {
             headers: {
-                Authorization: `Bearer ${JSON.parse(localStorage.getItem('token')?.access_token)}`
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('token')).access_token}`
             }
         })
             .then(result => {
@@ -172,6 +173,26 @@ class AddProduct extends React.Component {
         this.getCategoryList();
         this.getColorList();
         this.getSizeList();
+        if(this.props.product) {
+            const { product } = this.props;
+            const item = {...product, size: product.size.split(','), images: product.images.split(';').map((value, id) => JSON.parse(value))}
+            this.formRef.current.setFieldsValue({
+                product: {
+                    name: item.name,
+                    categoryId: item.categoryId,
+                    price: item.price,
+                    discount: item.discount,
+                    description: item.description,
+                    size: item.size,
+                    image: item.image,
+                    status: item.status
+                },
+                images: item.images
+            })
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
     }
 
     render() {
@@ -186,13 +207,13 @@ class AddProduct extends React.Component {
             },
         };
         const validateMessages = {
-            required: '${label} is required!',
+            required: "'${name}' is required!",
             types: {
-                email: '${label} is not validate email!',
-                number: '${label} is not a validate number!',
+                email: "'${name}' is not validate email!",
+                number: "'${name}' is not a validate number!",
             },
             number: {
-                range: '${label} must be between ${min} and ${max}',
+                range: "'${name}' must be between ${min} and ${max}",
             },
         };
         const formItemLayoutWithOutLabel = {
@@ -204,7 +225,7 @@ class AddProduct extends React.Component {
         return (
             <div className='add-product-container'>
                 <div className='form-add-container'>
-                    <Form style={{ width: '900px' }} {...layout} name="nest-messages" onFinish={this.onFinish.bind(this)} validateMessages={validateMessages}>
+                    <Form ref={this.formRef} style={{ width: '900px' }} {...layout} name="nest-messages" onFinish={this.onFinish.bind(this)} validateMessages={validateMessages}>
                         <Form.Item
                             name={['product', 'name']}
                             label="Tên hàng"
@@ -214,10 +235,10 @@ class AddProduct extends React.Component {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input placeholder='Tên sản phẩm' />
                         </Form.Item>
                         <Form.Item
-                            name={['product', 'category_id']}
+                            name={['product', 'categoryId']}
                             label="Loại"
                             rules={[
                                 {
@@ -228,7 +249,7 @@ class AddProduct extends React.Component {
                             <Select
                                 allowClear
                                 placeholder="Chọn loại"
-                                defaultValue={1} style={{ width: '100%' }}>
+                                style={{ width: '100%' }}>
                                 {
                                     this.state.categories.map((category, id) => <Option key={id} value={category.id}>{category.name}</Option>)
                                 }
@@ -246,7 +267,7 @@ class AddProduct extends React.Component {
                                 },
                             ]}
                         >
-                            <InputNumber />
+                            <InputNumber placeholder='Giá sản phẩm' />
                         </Form.Item>
                         <Form.Item
                             name={['product', 'discount']}
@@ -260,7 +281,11 @@ class AddProduct extends React.Component {
                                 },
                             ]}
                         >
-                            <InputNumber />
+                            <InputNumber
+                                formatter={value => `${value}%`}
+                                parser={value => value.replace('%', '')}
+                                placeholder="Chiết khấu"
+                            />
                         </Form.Item>
                         <Form.Item
                             name={['product', 'description']}
@@ -271,7 +296,7 @@ class AddProduct extends React.Component {
                                 }
                             ]}
                         >
-                            <TextArea />
+                            <TextArea placeholder='Mô tả sản phẩm' />
                         </Form.Item>
                         <Form.Item name={['product', 'size']} label="Kích thước" rules={[{
                             required: true
@@ -280,11 +305,16 @@ class AddProduct extends React.Component {
                                 mode="multiple"
                                 allowClear
                                 placeholder="Vui lòng chọn kích thước"
-                                defaultValue="S" style={{ width: '100%' }}>
+                                style={{ width: '100%' }}>
                                 {
                                     this.state.sizes.map((value, id) => <Option key={id} value={value.size}>{value.name}</Option>)
                                 }
                             </Select>
+                        </Form.Item>
+                        <Form.Item name={['product', 'image']} label="Ảnh cover" rules={[{
+                            required: true
+                        }]}>
+                            <Input placeholder="Upload link ảnh cover" />
                         </Form.Item>
                         <Form.Item name={['product', 'status']} label="Trạng thái" rules={[{
                             required: true
@@ -292,20 +322,32 @@ class AddProduct extends React.Component {
                             <Select
                                 allowClear
                                 placeholder="Trạng thái"
-                                defaultValue={1} style={{ width: '100%' }}>
-                                    <Option value={0}>Hết hàng</Option>
-                                    <Option value={1}>Còn hàng</Option>
+                                style={{ width: '100%' }}>
+                                <Option value={false}>Hết hàng</Option>
+                                <Option value={true}>Còn hàng</Option>
                             </Select>
                         </Form.Item>
                         <DynamicFields
                             colors={this.state.colors}
                             layout={layout}
                             formItemLayoutWithOutLabel={formItemLayoutWithOutLabel} />
-                        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                            </Button>
-                        </Form.Item>
+                        <Row gutter={[8, 8]} justify="center">
+                            <Col span={3}>
+                                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                                    <Button type="primary" htmlType="submit">
+                                        Submit
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                            <Col span={3}>
+                                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                                    <Button type="ghost" onClick={this.props.back}>
+                                        Quay lại
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+
                     </Form>
                 </div>
             </div>
