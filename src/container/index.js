@@ -16,7 +16,6 @@ import Accessories from '../components/Accessories';
 import Login from '../components/Login';
 import useSticky from '../utils/sticky';
 import Progress from '../components/ProgressBar';
-import AddProduct from '../components/Admin/Product/Add';
 import Jacket from '../components/Tops/jacket';
 import Shirts from '../components/Tops/shirts';
 import TShirts from '../components/Tops/tshirts';
