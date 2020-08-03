@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Input, InputNumber, Select, Row, Col, } from 'antd';
+import { Form, Button, Input, InputNumber, Select, Row, Col, message } from 'antd';
 import './add.css';
 import TextArea from 'antd/lib/input/TextArea';
 import { instance } from '../../../../utils/axios';
@@ -117,7 +117,12 @@ class AddProduct extends React.Component {
     onFinish = values => {
         console.log(values);
         const { product } = values;
-        let productAdd = { ...product, id: 0 };
+        let productAdd;
+        if(this.props.product) {
+            productAdd = { ...product, id: this.props.product.id };
+        } else {
+            productAdd = { ...product, id: 0 };
+        }
         const data = { ...values, product: productAdd }
         instance.post(`AddProduct`, data, {
             headers: {
@@ -126,11 +131,13 @@ class AddProduct extends React.Component {
         })
             .then(result => {
                 if (result.data.success) {
-                    console.log('ok');
+                    message.success(result.data.message);
                     this.props.back();
                 }
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                message.error('Thất bại')
+            })
     }
 
     onChange = value => {

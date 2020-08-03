@@ -1,20 +1,22 @@
 import React from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, message } from 'antd';
 import { Subscribe } from './Subscribe';
 import { InstagramOutlined, FacebookOutlined } from '@ant-design/icons';
+import { instance } from '../../utils/axios';
 const Contact = (props) => {
 
     const onFinish = values => {
-        fetch('https://localhost:44322/api/v1/subscribe', {
-            method: 'POST',
+        instance.post('subscribe', values,  {
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify(values)
         })
-        .then(res => res.status === 200 && res.json().then(data => {
-            console.log('subscribe success')
-        }))
+        .then(response => {
+            if(response.data.success) {
+                message.success('Subscribe thành công')
+            }
+        })
+        .catch(error => message.error(error))
     }
 
     const onFinishFailed = errorInfo => {

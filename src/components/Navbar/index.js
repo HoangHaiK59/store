@@ -1,6 +1,6 @@
 import React from 'react';
-import { Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Menu, Dropdown, Drawer, Tree, Button } from 'antd';
+import { DownOutlined, MenuOutlined, HomeOutlined, SmileOutlined, MehOutlined, FrownOutlined } from '@ant-design/icons';
 import './navbar.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -45,11 +45,44 @@ const PantMenu = (
     </Menu>
 )
 
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+        width,
+        height
+    };
+}
+
+function useDimensions() {
+    const [dimensions, setDimensions] = React.useState(getWindowDimensions())
+    React.useEffect(() => {
+        function handleResize() {
+            setDimensions(getWindowDimensions())
+        }
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+    return dimensions;
+}
+
 
 const Navbar = (props) => {
+    const [visible, setVisible] = React.useState(false);
+    const [mobile, setMobile] = React.useState(false);
+    const { width, height } = useDimensions();
     const handleLogout = () => {
         props.setAuth(false);
         localStorage.removeItem('token');
+    }
+
+
+    const showMobileNav = () => {
+        setVisible(true);
+    }
+
+    const onClose = () => {
+        setVisible(false);
     }
 
     const userMenu = (
@@ -60,74 +93,120 @@ const Navbar = (props) => {
         </Menu>
     )
 
-    return (<div className="header">
-        <div className="header-brand">Brand icon</div>
-        <div className="header-navbar">
-            <div>
-                <div className="header-navbar_item">
-                    <Link to='/store' className="header-navbar_item-style">Trang chủ</Link>
-                </div>
-            </div>
-            <div>
-                <div className="header-navbar_item">
-                    <Dropdown overlay={DressMenu}>
-                        <Link to='/dress' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                            Váy
+    const treeData = [
+        {
+            title: 'Home',
+            key: '0',
+            icon: <HomeOutlined />
+        },
+        {
+            title: 'parent 1',
+            key: '1',
+            icon: <SmileOutlined />,
+            children: [
+                {
+                    title: 'leaf',
+                    key: '1-0',
+                    icon: <MehOutlined />,
+                },
+                {
+                    title: 'leaf',
+                    key: '1-1',
+                    icon: ({ selected }) => (selected ? <FrownOutlined /> : <FrownOutlined />),
+                },
+            ],
+        },
+    ];
+
+    return (
+        (width > 800 && height > 600) ?
+            <div className="header">
+                <div className="header-brand">Brand icon</div>
+                <div className="header-navbar">
+                    <div>
+                        <div className="header-navbar_item">
+                            <Link to='/store' className="header-navbar_item-style">Trang chủ</Link>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="header-navbar_item">
+                            <Dropdown overlay={DressMenu}>
+                                <Link to='/dress' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                                    Váy
                         </Link>
-                    </Dropdown>
-                </div>
-            </div>
-            <div>
-                <div className="header-navbar_item">
-                    <Dropdown overlay={TopMenu}>
-                        <Link to='/tops' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                            Áo
+                            </Dropdown>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="header-navbar_item">
+                            <Dropdown overlay={TopMenu}>
+                                <Link to='/tops' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                                    Áo
                         </Link>
-                    </Dropdown>
-                </div>
-            </div>
-            <div>
-                <div className="header-navbar_item">
-                    <Dropdown overlay={PantMenu}>
-                        <Link to='/pants' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                            Quần
+                            </Dropdown>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="header-navbar_item">
+                            <Dropdown overlay={PantMenu}>
+                                <Link to='/pants' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                                    Quần
                         </Link>
-                    </Dropdown>
-                </div>
-            </div>
-            <div>
-                <div className="header-navbar_item">
-                    <Link to='/category' className="header-navbar_item-style">Thể loại</Link>
-                </div>
-            </div>
-            <div>
-                <div className="header-navbar_item">
-                    <Link to='/accessories' className="header-navbar_item-style">Phụ kiện</Link>
-                </div>
-            </div>
-            <div>
-                <div className="header-navbar_item">
-                    <Link to='/admin' className="header-navbar_item-style" >
-                        Admin
+                            </Dropdown>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="header-navbar_item">
+                            <Link to='/category' className="header-navbar_item-style">Thể loại</Link>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="header-navbar_item">
+                            <Link to='/accessories' className="header-navbar_item-style">Phụ kiện</Link>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="header-navbar_item">
+                            <Link to='/admin' className="header-navbar_item-style" >
+                                Admin
                     </Link>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div className="header-widget margin-left">
-            <div>
-                <div className="header-navbar_item">
-                    {
-                        props.isAuth ? <Dropdown overlay={userMenu} trigger={['click']}>
-                            <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                                {props.user.username}  <DownOutlined />
-                            </Link>
-                        </Dropdown>
-                            : <Link to='/login' className="header-navbar_item-style">Login</Link>
-                    }
+                <div className="header-widget margin-left">
+                    <div>
+                        <div className="header-navbar_item">
+                            {
+                                props.isAuth ? <Dropdown overlay={userMenu} trigger={['click']}>
+                                    <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                                        {props.user.username}  <DownOutlined />
+                                    </Link>
+                                </Dropdown>
+                                    : <Link to='/login' className="header-navbar_item-style">Login</Link>
+                            }
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
+            </div> :
+            <>
+                <Button icon={<MenuOutlined style={{ color: '#fff' }} />} type="default" style={{ backgroundColor: '#000', border: 'none' }} onClick={showMobileNav}>
+                </Button>
+                <Drawer
+                    title="Basic Drawer"
+                    placement="left"
+                    closable={false}
+                    onClose={onClose}
+                    visible={visible}
+                >
+                    <Tree
+                        showIcon
+                        defaultExpandAll={false}
+                        defaultSelectedKeys={['0']}
+                        switcherIcon={<DownOutlined />}
+                        treeData={treeData}
+                    />
+                </Drawer>
+            </>
     )
 }
 

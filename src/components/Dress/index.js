@@ -1,6 +1,6 @@
 import React from 'react';
 import { NAV_BAR_HEIGHT } from '../../helper/calc';
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import { instance } from '../../utils/axios';
 
 export default class Dress extends React.Component {
@@ -10,6 +10,7 @@ export default class Dress extends React.Component {
         this.state = {
             dresses: []
         }
+        document.title = 'Váy liền'
     }
 
     handleClick(id) {
@@ -36,8 +37,8 @@ export default class Dress extends React.Component {
 
     render() {
         const { dresses } = this.state;
-        console.log(dresses)
         return (
+            dresses.length > 0 ?
             <div className='collection-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
                 <Row gutter={[16, 16]} justify="start" style={{ width: '100%' }}>
                     <Col span={24}></Col>
@@ -48,7 +49,7 @@ export default class Dress extends React.Component {
                                     dresses.map((dress, id) => <Col onClick={() => this.handleClick(dress.id)} key={id} span={4} className="product">
                                         <div className="product-header">
                                             <div className="product-cover">
-                                                <img width="1242" height="1554" src={dress.images[0].url} alt="productImage" style={{ objectFit: 'cover' }}/>
+                                                <img width="1242" height="1554" src={dress.image} alt="productImage" style={{ objectFit: 'cover' }}/>
                                             </div>
                                         </div>
                                         <h5 className="product-name">{dress.name}</h5>
@@ -58,7 +59,8 @@ export default class Dress extends React.Component {
                         </div>
                     </Col>
                 </Row>
-            </div>
+            </div>: 
+            <Spin />
         )
     }
 }
