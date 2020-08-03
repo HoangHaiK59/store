@@ -2,11 +2,11 @@ import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import './admin.css';
 import { instance } from '../../utils/axios';
-import { Button, Tooltip } from 'antd';
+import { Button, Tooltip, Popconfirm, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import AddProduct from './Product/Add';
 import BtnCellRenderer from './buttonRenderer';
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 export default class Admin extends React.Component {
     constructor(props) {
         super(props);
@@ -18,12 +18,15 @@ export default class Admin extends React.Component {
             frameworkComponents: {
                 btnCellRenderer: BtnCellRenderer,
             },
-            product: null
+            product: null,
+            idDel: -1,
+            visiblePopconfirm: false
         };
         this.formater = new Intl.NumberFormat('vn', {
             style: 'currency',
             currency: 'VND'
         });
+        document.title = 'Quản trị'
     }
 
     getCategoryList() {
@@ -35,6 +38,29 @@ export default class Admin extends React.Component {
                 }
             })
             .catch(err => console.log(err))
+    }
+
+    confirm() {
+        this.setState({ visiblePopconfirm: false });
+        instance.delete(`DeleteProduct?id=${this.state.idDel}`, {
+            headers: {
+                Authorization: JSON.parse(localStorage.getItem('token')).access_token
+            }
+        })
+        .then(response => {
+            if(response.data.success) {
+                message.success('Xóa sản phẩm thành công', 2.5);
+                this.reload();
+            }
+        })
+        .catch(error => {
+            message.error('Xoá không thành công', 2.5)
+        })
+    }
+
+    cancel() {
+        this.setState({visiblePopconfirm: false});
+        message.error('Đã hủy', 2.5);
     }
 
     getAllProduct() {
@@ -73,6 +99,11 @@ export default class Admin extends React.Component {
     editProduct(event) {
         const { rowData } = event;
         this.setState({ product: rowData, visible: true })
+    }
+
+    deleteProduct(event) {
+        const { rowData } = event;
+        this.setState({visiblePopconfirm: true, idDel: rowData.id})
     }
 
     onFirstDataRendered(params) {
@@ -123,6 +154,12 @@ export default class Admin extends React.Component {
                                 label: 'Sửa',
                                 clicked: this.editProduct.bind(this),
                                 icon: <EditOutlined />
+                            }, 
+                            {
+                                type: 'danger',
+                                label: 'Xóa',
+                                clicked: this.deleteProduct.bind(this),
+                                icon: <DeleteOutlined />
                             }
                         ]
                     }
@@ -157,6 +194,17 @@ export default class Admin extends React.Component {
                     }}
                     >
                 </AgGridReact>
+            </div>
+            <div style={{ position: 'absolute', top: '10%', right: 20 }}>
+                <Popconfirm 
+                visible={this.state.visiblePopconfirm}
+                onConfirm={this.confirm.bind(this)}
+                onCancel={this.cancel.bind(this)}
+                title="Bạn có chắc chắn xóa sản phẩm này?"
+                okText="Xóa"
+                cancelText="Không"
+                placement="leftBottom"
+                />
             </div>
         </div>
 
