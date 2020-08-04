@@ -4,6 +4,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { Constants } from '../../store/constants';
 import { connect } from 'react-redux';
 import { instance } from '../../utils/axios';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class Login extends React.Component {
         .then(result => {
             if(result.data.success) {
                 localStorage.setItem('token', JSON.stringify(result.data.token));
-                instance.get(`user?username=${values.username}`, {
+                instance.get(`user?userId=${result.data.userId}`, {
                     headers: {
                         'Authorization': `Bearer ${result.data.token.access_token}`,
                         'Content-Type': 'application/json;charset=utf-8'
@@ -62,18 +63,17 @@ class Login extends React.Component {
                         initialValues={{ remember: true }}
                         onFinish={this.onFinish.bind(this)}
                         onFinishFailed={this.onFinishFailed.bind(this)}
+                        style={{ justifyContent: 'center', alignItems: 'center' }}
                     >
-                        <Form.Item label="Username" name="username" rules={[{ required: true, message: 'Please input your username!' }]}>
-                            <Input placeholder="Username" />
+                        <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email !' }]}>
+                            <Input placeholder="Email" />
                         </Form.Item>
-                        <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
-                            <Input type={'password'} placeholder="Password" />
+                        <Form.Item label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu !' }]}>
+                            <Input type={'password'} placeholder="Mật khẩu" />
                         </Form.Item>
-                        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                            <Checkbox>Remember me</Checkbox>
-                        </Form.Item>
+                        <Link to="/register">Tạo tài khoản</Link>
                         <Form.Item {...tailLayout}>
-                            <Button type="primary" htmlType="submit">Submit</Button>
+                            <Button type="primary" htmlType="submit">Đăng nhập</Button>
                         </Form.Item>
                     </Form>
                 </div>

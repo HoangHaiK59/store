@@ -179,7 +179,7 @@ const Navbar = (props) => {
                             {
                                 props.isAuth ? <Dropdown overlay={userMenu} trigger={['click']}>
                                     <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                                        {props.user.username}  <DownOutlined />
+                                        {props.user.firstName + ' ' + props.user.lastName}  <DownOutlined />
                                     </Link>
                                 </Dropdown>
                                     : <Link to='/login' className="header-navbar_item-style">Login</Link>
