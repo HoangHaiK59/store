@@ -2,13 +2,16 @@ import React from 'react';
 import { NAV_BAR_HEIGHT } from '../../helper/calc';
 import { Row, Col, Spin } from 'antd';
 import { instance } from '../../utils/axios';
+import Content from '../Content';
 
 export default class Dress extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            dresses: []
+            dresses: [],
+            offSet: 0,
+            pageSize: 20
         }
         document.title = 'Váy liền'
     }
@@ -18,8 +21,7 @@ export default class Dress extends React.Component {
     }
 
     getDressPage() {
-        const offSet = 0;
-        instance.get(`GetDressPage?offSet=${offSet}&category_id=${1}`)
+        instance.get(`GetDressPage?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&category_id=${1}`)
         .then(result => {
             if(result.data.success) {
                 const { data } = result.data;
@@ -38,28 +40,7 @@ export default class Dress extends React.Component {
     render() {
         const { dresses } = this.state;
         return (
-            dresses.length > 0 ?
-            <div className='collection-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
-                <Row gutter={[16, 16]} justify="start" style={{ width: '100%' }}>
-                    <Col span={24}></Col>
-                    <Col span={24}>
-                        <div className='items-container'>
-                            <Row gutter={[16, 16]} justify="start" style={{ width: '100%' }}>
-                                {
-                                    dresses.map((dress, id) => <Col onClick={() => this.handleClick(dress.id)} key={id} span={4} className="product">
-                                        <div className="product-header">
-                                            <div className="product-cover">
-                                                <img width="1242" height="1554" src={dress.image} alt="productImage" style={{ objectFit: 'cover' }}/>
-                                            </div>
-                                        </div>
-                                        <h5 className="product-name">{dress.name}</h5>
-                                    </Col>)
-                                }
-                            </Row>
-                        </div>
-                    </Col>
-                </Row>
-            </div>: 
+            dresses.length > 0 ? <Content items={dresses} handleClick={this.handleClick.bind(this)}/>: 
             <Spin />
         )
     }
