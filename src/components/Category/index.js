@@ -1,6 +1,6 @@
 import React from 'react';
 import { NAV_BAR_HEIGHT } from '../../helper/calc';
-import { Row, Col, Button } from 'antd';
+import { Row, Col } from 'antd';
 import './category.css';
 class Category extends React.Component {
     constructor(props) {
@@ -118,7 +118,7 @@ class Category extends React.Component {
                                         product.active && <div className='info'>
                                             <Row gutter={[16, 16]}>
                                                 <Col span={24}>
-                                                    <button className='btn-view'>View</button>
+                                                    <button type="ghost" className='btn-view'>View</button>
                                                 </Col>
                                             </Row>
                                         </div>

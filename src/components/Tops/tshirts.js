@@ -19,7 +19,7 @@ export default class TShirts extends React.Component {
 
     getTshirts() {
         const query = queryString.stringify(this.state.filter);
-        instance.get(`GetTShirtPage?${query}`)
+        instance.get(`GetProductByCategory?${query}`)
         .then(response => {
             if(response.data.success) {
                 const { data } = response.data;
