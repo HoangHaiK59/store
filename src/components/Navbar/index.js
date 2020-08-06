@@ -69,7 +69,6 @@ function useDimensions() {
 
 const Navbar = (props) => {
     const [visible, setVisible] = React.useState(false);
-    const [mobile, setMobile] = React.useState(false);
     const { width, height } = useDimensions();
     const handleLogout = () => {
         props.setAuth(false);
@@ -121,7 +120,7 @@ const Navbar = (props) => {
     return (
         (width > 800 && height > 600) ?
             <div className="header">
-                <div className="header-brand">Brand icon</div>
+                <div className="header-brand"><HomeOutlined size={15}/></div>
                 <div className="header-navbar">
                     <div>
                         <div className="header-navbar_item">

@@ -1,6 +1,5 @@
 import React from 'react';
-import { NAV_BAR_HEIGHT } from '../../helper/calc';
-import { Row, Col, Spin } from 'antd';
+import { Spin } from 'antd';
 import { instance } from '../../utils/axios';
 import Content from '../Content';
 
@@ -11,7 +10,8 @@ export default class Dress extends React.Component {
         this.state = {
             dresses: [],
             offSet: 0,
-            pageSize: 20
+            pageSize: 20, 
+            categoryId: 1
         }
         document.title = 'Váy liền'
     }
@@ -21,7 +21,7 @@ export default class Dress extends React.Component {
     }
 
     getDressPage() {
-        instance.get(`GetDressPage?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&category_id=${1}`)
+        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&category_id=${this.state.categoryId}`)
         .then(result => {
             if(result.data.success) {
                 const { data } = result.data;

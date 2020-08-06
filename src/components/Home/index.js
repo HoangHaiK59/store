@@ -1,23 +1,8 @@
 import React from 'react';
 import './home.css';
 import { Row, Col, Carousel } from 'antd';
-import { useTitle } from '../../helper/feature';
 import { connect } from 'react-redux';
 import { storeActions } from '../../store/actions/store.action';
-
-const useFetching = (callback) => {
-    // const [data, setData] = React.useState({});
-    // const [success, setSuccess] = React.useState(false);
-    const ref = React.useRef();
-
-    React.useEffect(() => {
-        ref.current = callback;
-    })
-
-    React.useEffect(() => {
-        ref.current();
-    })
-}
 
 class Home extends React.Component {
     constructor(props) {

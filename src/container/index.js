@@ -3,7 +3,7 @@ import Landing from '../components/Landing';
 import Home from '../components/Home';
 import { Route, Switch } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { Error } from '../components/Error';
+// import { Error } from '../components/Error';
 import Product from '../components/Product';
 import { Footer } from '../components/Footer';
 import { connect } from 'react-redux';

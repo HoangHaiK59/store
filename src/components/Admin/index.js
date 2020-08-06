@@ -2,7 +2,7 @@ import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import './admin.css';
 import { instance } from '../../utils/axios';
-import { Button, Tooltip, Popconfirm, message, Pagination} from 'antd';
+import { Button, Tooltip, Popconfirm, message, Pagination } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import AddProduct from './Product/Add';
 import BtnCellRenderer from './buttonRenderer';
@@ -33,12 +33,12 @@ export default class Admin extends React.Component {
             maxConcurrentDatasourceRequests: 1,
             maxBlocksInCache: 100,
             components: {
-                loadingCellRenderer: function(params) {
-                  if (params.value !== undefined) {
-                    return params.value;
-                  } else {
-                    return '<img src="https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/images/loading.gif">';
-                  }
+                loadingCellRenderer: function (params) {
+                    if (params.value !== undefined) {
+                        return params.value;
+                    } else {
+                        return '<img src="https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/images/loading.gif">';
+                    }
                 },
             },
             total: 0
@@ -210,15 +210,17 @@ export default class Admin extends React.Component {
         const { visible } = this.state;
         return visible ? <AddProduct {...this.props} product={this.state.product} back={this.back.bind(this)} />
             : <div className="admin-container">
-                <div className="ad-100">
                     <div className="row mt-4">
                         <div className="col-12 text-right">
                             <Tooltip title="Thêm sản phẩm">
                                 <Button type="primary" onClick={this.addProduct.bind(this)} icon={<PlusOutlined />}>Thêm sản phẩm</Button>
                             </Tooltip>
+                            <Tooltip className="ml-1" title="Thêm sản phẩm">
+                                <Button type="primary" onClick={this.addProduct.bind(this)} icon={<PlusOutlined />}>Thêm sản phẩm</Button>
+                            </Tooltip>
                         </div>
                     </div>
-                    <div className="ag-theme-alpine" style={{ height: '100%', width: '100%' }}>
+                    <div className="ag-theme-alpine" style={{ height: '55vh', width: '100%' }}>
                         <AgGridReact
                             // rowBuffer={0}
                             // modules={this.state.modules}
@@ -252,15 +254,15 @@ export default class Admin extends React.Component {
                         </AgGridReact>
                     </div>
                     <div className="row">
-                            <div className="col-md-12">
+                        <div className="col-md-12">
                             <Pagination
-                            onChange={this.onChange.bind(this)}
-                            showSizeChanger
-                            onShowSizeChange={this.onShowSizeChange.bind(this)}
-                            defaultCurrent={this.state.offSet + 1}
-                            total={this.state.total}
+                                onChange={this.onChange.bind(this)}
+                                showSizeChanger
+                                onShowSizeChange={this.onShowSizeChange.bind(this)}
+                                defaultCurrent={this.state.offSet + 1}
+                                total={this.state.total}
                             />
-                            </div>
+                        </div>
                     </div>
                     <div style={{ position: 'absolute', top: '10%', right: 20 }}>
                         <Popconfirm
@@ -273,7 +275,6 @@ export default class Admin extends React.Component {
                             placement="leftBottom"
                         />
                     </div>
-                </div>
             </div>
 
     }
