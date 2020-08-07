@@ -5,11 +5,12 @@ import './navbar.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Constants } from '../../store/constants';
+import { instance } from '../../utils/axios';
 
 const DressMenu = (
     <Menu>
         <Menu.Item>
-            <Link to='/dress/skirt' className="header-navbar_item-style">Chân váy</Link>
+            <Link to='/skirt' className="header-navbar_item-style">Chân váy</Link>
         </Menu.Item>
         <Menu.Item>
             <Link to='/dress' className="header-navbar_item-style">Váy liền</Link>
@@ -20,13 +21,13 @@ const DressMenu = (
 const TopMenu = (
     <Menu>
         <Menu.Item>
-            <Link to='/tops/jacket' className="header-navbar_item-style">Áo khoác</Link>
+            <Link to='/jacket' className="header-navbar_item-style">Áo khoác</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/tops/shirts' className="header-navbar_item-style">Áo sơ mi</Link>
+            <Link to='/shirts' className="header-navbar_item-style">Áo sơ mi</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/tops/tshirts' className="header-navbar_item-style">Áo phông</Link>
+            <Link to='/tshirts' className="header-navbar_item-style">Áo phông</Link>
         </Menu.Item>
     </Menu>
 )
@@ -34,13 +35,13 @@ const TopMenu = (
 const PantMenu = (
     <Menu>
         <Menu.Item>
-            <Link to='/pants/jean' className="header-navbar_item-style">Quần jean</Link>
+            <Link to='/jean' className="header-navbar_item-style">Quần jean</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/pants/jumpsuit' className="header-navbar_item-style">Quần áo bộ</Link>
+            <Link to='/jumpsuit' className="header-navbar_item-style">Quần áo bộ</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/pants/short' className="header-navbar_item-style">Quần short</Link>
+            <Link to='/short' className="header-navbar_item-style">Quần short</Link>
         </Menu.Item>
     </Menu>
 )
@@ -70,6 +71,21 @@ function useDimensions() {
 const Navbar = (props) => {
     const [visible, setVisible] = React.useState(false);
     const { width, height } = useDimensions();
+    React.useEffect(() => {
+        const getClientMenu = () => {
+            instance.get('GetClientMenu', {
+                headers: {
+                    Authorization: localStorage.getItem('token') ?'Bearer ' + JSON.parse(localStorage.getItem('token')).access_token : ''
+                }
+            })
+            .then(response => {
+                if(response.data.success) {
+                    console.log(response.data)
+                }
+            })
+        }
+        getClientMenu();
+    }, [])
     const handleLogout = () => {
         props.setAuth(false);
         localStorage.removeItem('token');

@@ -3,66 +3,38 @@ import './home.css';
 import { Row, Col, Carousel } from 'antd';
 import { connect } from 'react-redux';
 import { storeActions } from '../../store/actions/store.action';
+import { instance } from '../../utils/axios';
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: [
-                {
-                    id: 1,
-                    name: 'Product 1',
-                    cover: 'https://i.imgur.com/GXy9UIG.jpg'
-                },
-                {
-                    id: 2,
-                    name: 'Product 2',
-                    cover: 'https://i.imgur.com/Wj6dytl.jpg'
-                },
-                {
-                    id: 3,
-                    name: 'Product 3',
-                    cover: 'https://i.imgur.com/9qf6WyB.jpg'
-                },
-                {
-                    id: 4,
-                    name: 'Product 4',
-                    cover: 'https://i.imgur.com/ijWScLn.jpg'
-                },
-                {
-                    id: 5,
-                    name: 'Product 5',
-                    cover: 'https://i.imgur.com/gXTbY7M.jpg'
-                },
-                {
-                    id: 6,
-                    name: 'Product 6',
-                    cover: 'https://i.imgur.com/qqBB3Dz.jpg'
-                },
-                {
-                    id: 7,
-                    name: 'Product 7',
-                    cover: 'https://i.imgur.com/Wfm7IHE.jpg'
-                },
-                {
-                    id: 8,
-                    name: 'Product 8',
-                    cover: 'https://i.imgur.com/lcbpc1a.jpg'
-                },
-                {
-                    id: 9,
-                    name: 'Product 9',
-                    cover: 'https://i.imgur.com/bXrraSH.jpg'
-                }
-            ]
+            products: [],
+            offSet: 0,
+            pageSize: 20, 
+            categoryId: 1
         };
         document.title = 'Home';
     }
     handleClick(id) {
         this.props.history.push(`product/${id}`);
     }
+
+    getProducts() {
+        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&category_id=${this.state.categoryId}`)
+        .then(result => {
+            if(result.data.success) {
+                const { data } = result.data;
+                let products = data.map(item => ({...item, images: item.images.split(';').map(value => JSON.parse(value) )}));
+                //console.log(data, dresses)
+                this.setState({ products })
+            }
+        })
+        .catch(error => console.log(error))
+    }
+
     componentDidMount() {
-        //this.props.getProducts();
+        this.getProducts();
     }
     //     <Col span={12} >
     //     <div className="content-header__description">
@@ -81,7 +53,7 @@ class Home extends React.Component {
                     <Carousel autoplay effect={'fade'} speed={2}>
                         {
                             this.state.products.map((product, id) => <div key={id} style={{ height: 500 }}>
-                                <img src={product.cover} alt="cover" style={{ objectFit: 'cover', height: 500, width: '100%' }} />
+                                <img src={product.image} alt="cover" style={{ objectFit: 'cover', height: 500, width: '100%' }} />
                             </div>)
                         }
                     </Carousel>
@@ -105,7 +77,7 @@ class Home extends React.Component {
                                 this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
                                     <div className="product-header">
                                         <div className="product-cover">
-                                            <img src={product.cover} alt="productImage" />
+                                            <img src={product.image} alt="productImage" />
                                         </div>
                                     </div>
                                     <h5 className="product-name">{product.name}</h5>
@@ -131,7 +103,7 @@ class Home extends React.Component {
                                 this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
                                     <div className="product-header">
                                         <div className="product-cover">
-                                            <img src={product.cover} alt="productImage" />
+                                            <img src={product.image} alt="productImage" />
                                         </div>
                                     </div>
                                     <h5 className="product-name">{product.name}</h5>
@@ -157,7 +129,7 @@ class Home extends React.Component {
                                 this.state.products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={3} className="product">
                                     <div className="product-header">
                                         <div className="product-cover">
-                                            <img src={product.cover} alt="productImage" />
+                                            <img src={product.image} alt="productImage" />
                                         </div>
                                     </div>
                                     <h5 className="product-name">{product.name}</h5>
