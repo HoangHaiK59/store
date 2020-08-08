@@ -7,45 +7,6 @@ import { connect } from 'react-redux';
 import { Constants } from '../../store/constants';
 import { instance } from '../../utils/axios';
 
-const DressMenu = (
-    <Menu>
-        <Menu.Item>
-            <Link to='/skirt' className="header-navbar_item-style">Chân váy</Link>
-        </Menu.Item>
-        <Menu.Item>
-            <Link to='/dress' className="header-navbar_item-style">Váy liền</Link>
-        </Menu.Item>
-    </Menu>
-)
-
-const TopMenu = (
-    <Menu>
-        <Menu.Item>
-            <Link to='/jacket' className="header-navbar_item-style">Áo khoác</Link>
-        </Menu.Item>
-        <Menu.Item>
-            <Link to='/shirts' className="header-navbar_item-style">Áo sơ mi</Link>
-        </Menu.Item>
-        <Menu.Item>
-            <Link to='/tshirts' className="header-navbar_item-style">Áo phông</Link>
-        </Menu.Item>
-    </Menu>
-)
-
-const PantMenu = (
-    <Menu>
-        <Menu.Item>
-            <Link to='/jean' className="header-navbar_item-style">Quần jean</Link>
-        </Menu.Item>
-        <Menu.Item>
-            <Link to='/jumpsuit' className="header-navbar_item-style">Quần áo bộ</Link>
-        </Menu.Item>
-        <Menu.Item>
-            <Link to='/short' className="header-navbar_item-style">Quần short</Link>
-        </Menu.Item>
-    </Menu>
-)
-
 function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
     return {
@@ -71,21 +32,25 @@ function useDimensions() {
 const Navbar = (props) => {
     const [visible, setVisible] = React.useState(false);
     const { width, height } = useDimensions();
+    const [menus, setMenus] = React.useState([]);
     React.useEffect(() => {
         const getClientMenu = () => {
-            instance.get('GetClientMenu', {
+            instance.get(`GetClientMenu?userId=${props.user ? props.user.userId : ''}`, {
                 headers: {
-                    Authorization: localStorage.getItem('token') ?'Bearer ' + JSON.parse(localStorage.getItem('token')).access_token : ''
+                    Authorization: localStorage.getItem('token') ? 'Bearer ' + JSON.parse(localStorage.getItem('token')).access_token : ''
                 }
             })
-            .then(response => {
-                if(response.data.success) {
-                    console.log(response.data)
-                }
-            })
+                .then(response => {
+                    if (response.data.success) {
+                        const { data } = response.data;
+                        let menusTmp = data.map(menu => ({ ...menu, submenus: menu.submenus !== ''? menu.submenus.split(';').map(value => JSON.parse(value)): menu.submenus }))
+                        menusTmp = menusTmp.sort((a, b) => a.ordinal - b.ordinal)
+                        setMenus(menusTmp);
+                    }
+                })
         }
         getClientMenu();
-    }, [])
+    }, [props])
     const handleLogout = () => {
         props.setAuth(false);
         localStorage.removeItem('token');
@@ -99,6 +64,41 @@ const Navbar = (props) => {
     const onClose = () => {
         setVisible(false);
     }
+
+    const DressMenu = (
+        <Menu>
+            <Menu.Item>
+                <Link to='/skirt' className="header-navbar_item-style">Chân váy</Link>
+            </Menu.Item>
+            <Menu.Item>
+                <Link to='/dress' className="header-navbar_item-style">Váy liền</Link>
+            </Menu.Item>
+        </Menu>
+    )
+
+    const TopMenu = (
+        <Menu>
+            <Menu.Item>
+                <Link to='/jacket' className="header-navbar_item-style">Áo khoác</Link>
+            </Menu.Item>
+            <Menu.Item>
+                <Link to='/shirts' className="header-navbar_item-style">Áo sơ mi</Link>
+            </Menu.Item>
+            <Menu.Item>
+                <Link to='/tshirts' className="header-navbar_item-style">Áo phông</Link>
+            </Menu.Item>
+        </Menu>
+    )
+
+    const PantMenu = (
+        <Menu>
+            {
+                menus.map((menu, id) => {
+
+                })
+            }
+        </Menu>
+    )
 
     const userMenu = (
         <Menu>
@@ -136,57 +136,37 @@ const Navbar = (props) => {
     return (
         (width > 800 && height > 600) ?
             <div className="header">
-                <div className="header-brand"><HomeOutlined size={15}/></div>
+                <div className="header-brand"><HomeOutlined size={15} /></div>
                 <div className="header-navbar">
-                    <div>
-                        <div className="header-navbar_item">
-                            <Link to='/store' className="header-navbar_item-style">Trang chủ</Link>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="header-navbar_item">
-                            <Dropdown overlay={DressMenu}>
-                                <Link to='/dress' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                                    Váy
-                        </Link>
-                            </Dropdown>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="header-navbar_item">
-                            <Dropdown overlay={TopMenu}>
-                                <Link to='/tops' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                                    Áo
-                        </Link>
-                            </Dropdown>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="header-navbar_item">
-                            <Dropdown overlay={PantMenu}>
-                                <Link to='/pants' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                                    Quần
-                        </Link>
-                            </Dropdown>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="header-navbar_item">
-                            <Link to='/category' className="header-navbar_item-style">Thể loại</Link>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="header-navbar_item">
-                            <Link to='/accessories' className="header-navbar_item-style">Phụ kiện</Link>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="header-navbar_item">
-                            <Link to='/admin' className="header-navbar_item-style" >
-                                Admin
-                    </Link>
-                        </div>
-                    </div>
+                    {
+                        menus.map((menu, id) => {
+                            if (menu.type === 'link') {
+                                return (
+                                    <div key={id}>
+                                        <div className="header-navbar_item">
+                                            <Link to={menu.path} className="header-navbar_item-style">{menu.name}</Link>
+                                        </div>
+                                    </div>)
+                            } else {
+                                const menuItem = (
+                                    <Menu>
+                                    {
+                                        menu.submenus.map((item, id) => <Menu.Item key={id}>
+                                            <Link to={item.path} className="header-navbar_item-style">{item.name}</Link>
+                                        </Menu.Item>)
+                                    }
+                                </Menu>
+                                )
+                                return (
+                                    <Dropdown key={id} overlay={menuItem}>
+                                        <Link to={menu.path} className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                                            {menu.name}
+                                        </Link>
+                                    </Dropdown>
+                                    )
+                            }
+                        })
+                    }
                 </div>
                 <div className="header-widget margin-left">
                     <div>
