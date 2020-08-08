@@ -67,17 +67,17 @@ const Container = (props) => {
             <main  className="root-content">
                 <Switch>
                     <Route exact path="/" render={(props) => <Landing {...props} title="Landing" />} />
-                    <Route exact path="/store" render={(props) => <Home {...props} title="Store" />} />
+                    <Route exact path="/home" render={(props) => <Home {...props} title="Store" />} />
                     <Route exact path="/product/:id" render={(props) => <Product {...props} />} />
                     <Route exact path="/tops" render={(props) => <Tops {...props} />} />
-                    <Route exact path="/tops/jacket" render={(props) => <Jacket {...props} />} />
-                    <Route exact path="/tops/shirts" render={(props) => <Shirts {...props} />} />
-                    <Route exact path="/tops/tshirts" render={(props) => <TShirts {...props} />} />
-                    <Route exact path="/dress/skirt" render={(props) => <Skirt {...props} />} />
+                    <Route exact path="/jacket" render={(props) => <Jacket {...props} />} />
+                    <Route exact path="/shirts" render={(props) => <Shirts {...props} />} />
+                    <Route exact path="/tshirts" render={(props) => <TShirts {...props} />} />
+                    <Route exact path="/skirt" render={(props) => <Skirt {...props} />} />
                     <Route exact path="/dress" render={(props) => <Dress {...props} />} />
-                    <Route exact path="/pants/jean" render={(props) => <Jean {...props} />} />
-                    <Route exact path="/pants/short" render={(props) => <Shorts {...props} />} />
-                    <Route exact path="/pants/jumpsuit" render={(props) => <JumpSuit {...props} />} />
+                    <Route exact path="/jean" render={(props) => <Jean {...props} />} />
+                    <Route exact path="/short" render={(props) => <Shorts {...props} />} />
+                    <Route exact path="/jumpsuit" render={(props) => <JumpSuit {...props} />} />
                     <Route exact path="/category" render={(props) => <Category {...props} />} />
                     <Route exact path="/accessories" render={(props) => <Accessories {...props} />} />
                     <Route exact path="/login" render={(props) => <Login {...props} />} />

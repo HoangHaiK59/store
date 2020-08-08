@@ -2,6 +2,8 @@ import React from 'react';
 import './login.css';
 import { Form, Input, Button, message } from 'antd';
 import { instance } from '../../utils/axios';
+import { Constants } from '../../store/constants';
+import { connect } from 'react-redux';
 
 const Register = (props) => {
     const [ password, setPassword ] = React.useState('')
@@ -33,17 +35,18 @@ const Register = (props) => {
                             .then(res => {
                                 if(res.data.success) {
                                     const { data } = res.data
-                                    this.props.setAuth(data , true);
+                                    props.setAuth(data , true);
                                     message.success(response.data.message)
                                     form.resetFields()
+                                    props.history.push('/home');
                                 }
                             })
                             .catch(error => console.log(error))
                         } else {
-                            this.props.setAuth(null, false); 
+                            props.setAuth(null, false); 
                         }
                     }).catch(error => {
-                        this.props.setAuth(null, false);
+                        props.setAuth(null, false);
                     })
                 } else {
                     message.error(response.data.error)
@@ -73,6 +76,7 @@ const Register = (props) => {
         <div className='login-container'>
             <div className='box-login'>
                 <Form
+                    form={form}
                     {...layout}
                     name="basic"
                     initialValues={{ remember: true }}
@@ -109,4 +113,16 @@ const Register = (props) => {
     )
 }
 
-export default Register;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        setAuth: (user , isAuth) => dispatch({ type: Constants.AUTH, user , isAuth })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

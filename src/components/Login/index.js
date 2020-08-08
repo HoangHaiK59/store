@@ -30,7 +30,7 @@ class Login extends React.Component {
                     if(response.data.success) {
                         const { data } = response.data
                         this.props.setAuth(data , true);
-                        this.props.history.push('/store');
+                        this.props.history.push('/home');
                     }
                 })
                 .catch(error => console.log(error))
