@@ -79,7 +79,7 @@ class Product extends React.Component {
         return this.state.product && <div ref={this.productRef} className='product-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
             <div className='content-product'>
                 <Row gutter={[16, 16]} justify='start' style={{ height: '100%' }}>
-                    <Col span={16}>
+                    <Col span={12}>
                         {
                             this.state.product.images.map((image, id) => image.active ? <img key={id} src={image.url} alt="" className='cover' />: null)
                         }

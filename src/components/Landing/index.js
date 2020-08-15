@@ -30,7 +30,7 @@ const Landing = (props) => {
         }, [changeView])
         const handleClick = () => {
                 props.changeView(false);
-                history.push('/store');
+                history.push('/home');
         }
         return landing && <div className="landing-container">
                 <img src={landing.url} alt="" style={{ objectFit: 'cover'}} className="imageBackdrop" />
