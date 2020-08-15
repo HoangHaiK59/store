@@ -1,6 +1,5 @@
 import React from 'react';
 import './accessories.css'
-import { NAV_BAR_HEIGHT } from '../../helper/calc';
 import { instance } from '../../utils/axios';
 import Content from '../Content';
 import { Spin } from 'antd';

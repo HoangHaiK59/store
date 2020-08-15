@@ -11,10 +11,10 @@ const Register = (props) => {
     const [form] = Form.useForm();
     const layout = {
         labelCol: { span: 8 },
-        wrapperCol: { span: 16 },
+        wrapperCol: { span: 22 },
     };
     const tailLayout = {
-        wrapperCol: { offset: 8, span: 16 },
+        wrapperCol: { offset: 8, span: 20 },
     };
 
     const onFinish = values => {
@@ -74,7 +74,9 @@ const Register = (props) => {
     }
     return (
         <div className='login-container'>
-            <div className='box-login'>
+        <img style={{position: 'absolute', width: '100%'}}  src={`${require('../../assets/cover.jpg')}`} alt="cover" />
+            <div className='box-login' style={{ position: 'absolute' }}>
+                <h5>Đăng ký</h5>
                 <Form
                     form={form}
                     {...layout}
@@ -82,26 +84,27 @@ const Register = (props) => {
                     initialValues={{ remember: true }}
                     onFinish={onFinish.bind(this)}
                     onFinishFailed={onFinishFailed.bind(this)}
+                    style={{ justifyContent: 'center', alignItems: 'center', width: '100%' }}
                 >
-                    <Form.Item label="Họ" name="firstname" rules={[{ required: true, message: 'Vui lòng nhập họ !' }]}>
+                    <Form.Item name="firstname" rules={[{ required: true, message: 'Vui lòng nhập họ !' }]}>
                         <Input placeholder="Họ" />
                     </Form.Item>
-                    <Form.Item label="Tên" name="lastname" rules={[{ required: true, message: 'Vui lòng nhập tên !' }]}>
+                    <Form.Item name="lastname" rules={[{ required: true, message: 'Vui lòng nhập tên !' }]}>
                         <Input placeholder="Tên" />
                     </Form.Item>
-                    <Form.Item label="Địa chỉ" name="address" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ !' }]}>
+                    <Form.Item  name="address" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ !' }]}>
                         <Input placeholder="Địa chỉ" />
                     </Form.Item>
-                    <Form.Item label="Số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}>
+                    <Form.Item  name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}>
                         <Input placeholder="Số điện thoại" />
                     </Form.Item>
-                    <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email !' }]}>
+                    <Form.Item  name="email" rules={[{ required: true, message: 'Vui lòng nhập email !' }]}>
                         <Input placeholder="Địa chỉ thư điện tử" type='email'/>
                     </Form.Item>
-                    <Form.Item label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu !' }]}>
+                    <Form.Item  name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu !' }]}>
                         <Input type={'password'} placeholder="Mật khẩu" onChange={changePassword} />
                     </Form.Item>
-                    <Form.Item label="Xác nhận" name="confirm" rules={[{ required: true, message: 'Vui lòng nhập lại mật khẩu !' }]}>
+                    <Form.Item  name="confirm" rules={[{ required: true, message: 'Vui lòng nhập lại mật khẩu !' }]}>
                         <Input type={'password'} placeholder="Xác nhận mật khẩu" onChange={comparePassword}/>
                     </Form.Item>
                     <Form.Item {...tailLayout}>

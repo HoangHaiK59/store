@@ -65,41 +65,6 @@ const Navbar = (props) => {
         setVisible(false);
     }
 
-    const DressMenu = (
-        <Menu>
-            <Menu.Item>
-                <Link to='/skirt' className="header-navbar_item-style">Chân váy</Link>
-            </Menu.Item>
-            <Menu.Item>
-                <Link to='/dress' className="header-navbar_item-style">Váy liền</Link>
-            </Menu.Item>
-        </Menu>
-    )
-
-    const TopMenu = (
-        <Menu>
-            <Menu.Item>
-                <Link to='/jacket' className="header-navbar_item-style">Áo khoác</Link>
-            </Menu.Item>
-            <Menu.Item>
-                <Link to='/shirts' className="header-navbar_item-style">Áo sơ mi</Link>
-            </Menu.Item>
-            <Menu.Item>
-                <Link to='/tshirts' className="header-navbar_item-style">Áo phông</Link>
-            </Menu.Item>
-        </Menu>
-    )
-
-    const PantMenu = (
-        <Menu>
-            {
-                menus.map((menu, id) => {
-
-                })
-            }
-        </Menu>
-    )
-
     const userMenu = (
         <Menu>
             <Menu.Item>
