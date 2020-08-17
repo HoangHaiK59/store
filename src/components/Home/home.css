@@ -83,6 +83,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    text-align: center;
 }
 
 .product:hover {
@@ -111,8 +112,13 @@
 
 .product-name {
     /* color: #fff; */
-    padding: 5px;
-    font-size: 14px;
+    font-size: 1rem;
+}
+
+.product-price {
+    /* color: #fff; */
+    font-size: 1rem;
+    color: rgba(160, 11, 11, 0.884);
 }
 
 .slick-list {

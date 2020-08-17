@@ -25,7 +25,7 @@ const Landing = (props) => {
                 })
         }, [])
         const { changeView } = props;
-        React.useLayoutEffect(() => {
+        React.useEffect(() => {
                 changeView(true);
         }, [changeView])
         const handleClick = () => {

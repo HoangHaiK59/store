@@ -12,6 +12,7 @@ class Login extends React.Component {
         super(props);
         this.state = {
         }
+        this.form = React.createRef();
     }
 
 
@@ -31,6 +32,7 @@ class Login extends React.Component {
                             if (response.data.success) {
                                 const { data } = response.data
                                 this.props.setAuth(data, true);
+                                this.form.current.resetFields();
                                 this.props.history.push('/home');
                             }
                         })
@@ -61,6 +63,7 @@ class Login extends React.Component {
                 <div className='box-login' style={{position: 'absolute'}}>
                     <h5>Đăng nhập</h5>
                     <Form
+                        ref={this.form}
                         {...layout}
                         name="basic"
                         className="login-form"
