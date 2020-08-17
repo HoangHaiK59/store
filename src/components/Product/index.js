@@ -78,13 +78,13 @@ class Product extends React.Component {
     render() {
         return this.state.product && <div ref={this.productRef} className='product-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
             <div className='content-product'>
-                <Row gutter={[16, 16]} justify='start' style={{ height: '100%' }}>
-                    <Col span={12}>
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify='start' style={{ height: '100%' }}>
+                    <Col xs={{span: 9, offset: 1, pull: 1}} md={{span: 14}}>
                         {
                             this.state.product.images.map((image, id) => image.active ? <img key={id} src={image.url} alt="" className='cover' />: null)
                         }
                     </Col>
-                    <Col span={6}>
+                    <Col xs={{span: 5, pull: 1}} md={{span: 6}}>
                         <Row justify='start'>
                             <Col span={24}>
                                 <h5 >{this.state.product.name}</h5>

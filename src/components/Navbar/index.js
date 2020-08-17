@@ -1,33 +1,14 @@
 import React from 'react';
-import { Menu, Dropdown, Drawer, Tree, Button } from 'antd';
+import { Menu, Dropdown, Drawer, Button } from 'antd';
 import { DownOutlined, MenuOutlined, HomeOutlined, SmileOutlined, MehOutlined, FrownOutlined } from '@ant-design/icons';
 import './navbar.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Constants } from '../../store/constants';
 import { instance } from '../../utils/axios';
-
-function getWindowDimensions() {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-        width,
-        height
-    };
-}
-
-function useDimensions() {
-    const [dimensions, setDimensions] = React.useState(getWindowDimensions())
-    React.useEffect(() => {
-        function handleResize() {
-            setDimensions(getWindowDimensions())
-        }
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize)
-    }, [])
-    return dimensions;
-}
-
+import LeftMenu from './leftMenu';
+import RightMenu from './rightMenu';
+import useDimensions from '../../utils/dimensions';
 
 const Navbar = (props) => {
     const [visible, setVisible] = React.useState(false);
@@ -72,31 +53,6 @@ const Navbar = (props) => {
             </Menu.Item>
         </Menu>
     )
-
-    const treeData = [
-        {
-            title: 'Home',
-            key: '0',
-            icon: <HomeOutlined />
-        },
-        {
-            title: 'parent 1',
-            key: '1',
-            icon: <SmileOutlined />,
-            children: [
-                {
-                    title: 'leaf',
-                    key: '1-0',
-                    icon: <MehOutlined />,
-                },
-                {
-                    title: 'leaf',
-                    key: '1-1',
-                    icon: ({ selected }) => (selected ? <FrownOutlined /> : <FrownOutlined />),
-                },
-            ],
-        },
-    ];
 
     return (
         (width > 800 && height > 600) ?
@@ -152,19 +108,14 @@ const Navbar = (props) => {
                 <Button icon={<MenuOutlined style={{ color: '#fff' }} />} type="default" style={{ backgroundColor: '#000', border: 'none' }} onClick={showMobileNav}>
                 </Button>
                 <Drawer
-                    title="Basic Drawer"
+                    style={{ minHeight: '100vh'}}
                     placement="left"
                     closable={false}
                     onClose={onClose}
                     visible={visible}
                 >
-                    <Tree
-                        showIcon
-                        defaultExpandAll={false}
-                        defaultSelectedKeys={['0']}
-                        switcherIcon={<DownOutlined />}
-                        treeData={treeData}
-                    />
+                <LeftMenu />
+                <RightMenu />
                 </Drawer>
             </>
     )
