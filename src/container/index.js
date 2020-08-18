@@ -15,6 +15,7 @@ import Dress from '../components/Dress';
 import Accessories from '../components/Accessories';
 import Login from '../components/Login';
 import useSticky from '../utils/sticky';
+import useDimensions from '../utils/dimensions';
 import Progress from '../components/ProgressBar';
 import Jacket from '../components/Tops/jacket';
 import Shirts from '../components/Tops/shirts';
@@ -28,6 +29,7 @@ import Cart from '../components/Cart';
 
 const Container = (props) => {
     const { isSticky, element } = useSticky();
+    const { width, height } = useDimensions();
     const [scrollPosition, setScrollPosition] = React.useState(0);
     React.useEffect(() => {
         function calScrollDistance() {
@@ -60,31 +62,31 @@ const Container = (props) => {
     return <div ref={element} className="root-container">
         <div className="root-mainview">
             <Progress  scroll={scrollPosition + '%'} />
-            <header className={!props.isLanding? isSticky ? "root-navbar-fixed": "root-navbar": null } style={props.isLanding ? {  backgroundColor: 'transparent' }: {  backgroundColor: '#000' }}>
+            <header className={!props.isLanding? (isSticky ? "root-navbar-fixed": "root-navbar"): null } style={props.isLanding ? {  backgroundColor: 'transparent' }: {  backgroundColor: '#000' }}>
                 {
-                    !props.isLanding && <Navbar isAuth = {props.isAuth}/>
+                    !props.isLanding && <Navbar isMobile={width> 800 ? false: true} isAuth = {props.isAuth}/>
                 }
             </header>
             <main  className="root-content">
                 <Switch>
-                    <Route exact path="/" render={(props) => <Landing {...props} title="Landing" />} />
-                    <Route exact path="/home" render={(props) => <Home {...props} title="Store" />} />
-                    <Route exact path="/product/:id" render={(props) => <Product {...props} />} />
-                    <Route exact path="/tops" render={(props) => <Tops {...props} />} />
-                    <Route exact path="/jacket" render={(props) => <Jacket {...props} />} />
-                    <Route exact path="/shirts" render={(props) => <Shirts {...props} />} />
-                    <Route exact path="/tshirts" render={(props) => <TShirts {...props} />} />
-                    <Route exact path="/skirt" render={(props) => <Skirt {...props} />} />
-                    <Route exact path="/dress" render={(props) => <Dress {...props} />} />
-                    <Route exact path="/jean" render={(props) => <Jean {...props} />} />
-                    <Route exact path="/short" render={(props) => <Shorts {...props} />} />
-                    <Route exact path="/jumpsuit" render={(props) => <JumpSuit {...props} />} />
-                    <Route exact path="/category" render={(props) => <Category {...props} />} />
-                    <Route exact path="/accessories" render={(props) => <Accessories {...props} />} />
-                    <Route exact path="/login" render={(props) => <Login {...props} />} />
-                    <Route exact path="/register" render={(props) => <Register {...props} />} />
-                    <Route exact path="/admin" render={(props) => <Admin {...props} />} />
-                    <Route exact path="/cart" render={(props) => <Cart {...props} />} />
+                    <Route exact path="/" render={(props) => <Landing isMobile={width> 800 ? false: true} {...props} title="Landing" />} />
+                    <Route exact path="/home" render={(props) => <Home isMobile={width> 800 ? false: true} {...props} title="Store" />} />
+                    <Route exact path="/product/:id" render={(props) => <Product isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/tops" render={(props) => <Tops {...props} isMobile={width> 800 ? false: true} />} />
+                    <Route exact path="/jacket" render={(props) => <Jacket isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/shirts" render={(props) => <Shirts isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/tshirts" render={(props) => <TShirts isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/skirt" render={(props) => <Skirt isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/dress" render={(props) => <Dress isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/jean" render={(props) => <Jean isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/short" render={(props) => <Shorts isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/jumpsuit" render={(props) => <JumpSuit isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/category" render={(props) => <Category isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/accessories" render={(props) => <Accessories isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/login" render={(props) => <Login isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/register" render={(props) => <Register isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/admin" render={(props) => <Admin isMobile={width> 800 ? false: true} {...props} />} />
+                    <Route exact path="/cart" render={(props) => <Cart isMobile={width> 800 ? false: true} {...props} />} />
                 </Switch>
             </main>
             <footer>

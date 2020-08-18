@@ -12,7 +12,11 @@ class Home extends React.Component {
             products: [],
             offSet: 0,
             pageSize: 20, 
-            categoryId: 1
+            categoryId: 1,
+            dimension: {
+                width: 0,
+                height: 0
+            }
         };
         document.title = 'Home';
         this.formater = new Intl.NumberFormat('vn', {
@@ -40,6 +44,8 @@ class Home extends React.Component {
     componentDidMount() {
         this.getProducts();
     }
+
+
     //     <Col span={12} >
     //     <div className="content-header__description">
     //         <div className="content-header__description--cover">
@@ -113,9 +119,11 @@ class Home extends React.Component {
 //     </div>
 // </Col>
     render() {
+        console.log(this.props)
         return <div className="store-container">
 
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{ height: '500px' }} justify="start" align="middle" >
+            {
+                (!this.props.isMobile) && <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{ height: '500px' }} justify="start" align="middle" >
                 <Col md={{span: 24}} sm={{span: 16}} xs={{span: 14}}>
                     <Carousel autoplay effect={'fade'} speed={2}>
                         {
@@ -125,7 +133,8 @@ class Home extends React.Component {
                         }
                     </Carousel>
                 </Col>
-            </Row>
+                </Row>
+            }
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{ marginTop: '15px' }}>
                 <Col md={{span: 24}} sm={{span: 16}} xs={{span: 16}}>
                     <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify="start">

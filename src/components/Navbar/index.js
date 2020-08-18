@@ -8,11 +8,9 @@ import { Constants } from '../../store/constants';
 import { instance } from '../../utils/axios';
 import LeftMenu from './leftMenu';
 import RightMenu from './rightMenu';
-import useDimensions from '../../utils/dimensions';
 
 const Navbar = (props) => {
     const [visible, setVisible] = React.useState(false);
-    const { width, height } = useDimensions();
     const [menus, setMenus] = React.useState([]);
     React.useEffect(() => {
         const getClientMenu = () => {
@@ -55,7 +53,7 @@ const Navbar = (props) => {
     )
 
     return (
-        (width > 800 && height > 600) ?
+        (!props.isMobile) ?
             <div className="header">
                 <div className="header-brand"><HomeOutlined size={15} /></div>
                 <div className="header-navbar">
