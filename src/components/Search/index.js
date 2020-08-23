@@ -14,7 +14,7 @@ class Search extends React.Component {
     handleChange = (event) => this.setState({ search: event.target.value });
 
     handleSearch = () => {
-        firebase.firestore().collection('products').
+        
     }
 
     render() {

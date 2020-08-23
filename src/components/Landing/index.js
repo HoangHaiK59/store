@@ -32,7 +32,7 @@ const Landing = (props) => {
                 props.changeView(false);
                 history.push('/home');
         }
-        return landing && <div className="landing-container">
+        return landing && <div className="landing-container" >
                 <img src={landing.url} alt="" style={{ objectFit: 'cover'}} className="imageBackdrop" />
 
                 <button className="btn-shop-now" onClick={handleClick}>

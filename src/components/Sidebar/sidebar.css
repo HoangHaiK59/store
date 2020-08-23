@@ -1,0 +1,42 @@
+.shop-header {
+    padding: 52px 0;
+}
+
+.shop-header ul li:first-child {
+    margin-left: 0;
+}
+
+.shop-menu {
+    overflow: hidden;
+}
+
+.filter-menu {
+    float: right;
+    width: 20%;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.category-menu {
+    float: left;
+    width: 80%;
+    overflow: hidden;
+}
+
+.category-menu li {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.sidebar {
+    transition: opacity 0.5s ease;
+}
+
+.sidebar-inner {
+    padding-top: 20px;
+}
+
+.fade-in {
+    opacity: 1;
+}

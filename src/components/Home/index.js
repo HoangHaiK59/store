@@ -1,6 +1,6 @@
 import React from 'react';
 import './home.css';
-import { Row, Col, Carousel } from 'antd';
+import { Row, Col, Carousel, Breadcrumb } from 'antd';
 import { connect } from 'react-redux';
 import { storeActions } from '../../store/actions/store.action';
 import { instance } from '../../utils/axios';
@@ -122,26 +122,23 @@ class Home extends React.Component {
         console.log(this.props)
         return <div className="store-container">
 
-            {
-                (!this.props.isMobile) && <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{ height: '500px' }} justify="start" align="middle" >
-                <Col md={{span: 24}} sm={{span: 16}} xs={{span: 14}}>
-                    <Carousel autoplay effect={'fade'} speed={2}>
-                        {
-                            this.state.products.map((product, id) => <div key={id} style={{ height: 500, width: '100%' }}>
-                                <img src={product.image} alt="cover" style={{ objectFit: 'cover', height: 500, width: '100%' }} />
-                            </div>)
-                        }
-                    </Carousel>
-                </Col>
-                </Row>
-            }
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{ marginTop: '15px' }}>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify="center" style={{ marginTop: '15px', padding: '0 24px' }}>
                 <Col md={{span: 24}} sm={{span: 16}} xs={{span: 16}}>
-                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify="start">
-                        <Col md={{span: 12}} sm={{span: 8}} xs={{span: 10}} >
-                            <h5>Collection 1</h5>
+                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify="center" style={{padding: '20px 60px', height: 'auto' }}>
+                        <Col md={{span: 16}} sm={{span: 8}} xs={{span: 10}} >
+                            {/* <Breadcrumb style={{fontSize: '1.2rem'}}>
+                                <Breadcrumb.Item>Tất cả</Breadcrumb.Item>
+                                <Breadcrumb.Item>Váy liền</Breadcrumb.Item>
+                                <Breadcrumb.Item>Chân váy</Breadcrumb.Item>
+                                <Breadcrumb.Item>Áo khoác</Breadcrumb.Item>
+                                <Breadcrumb.Item>Áo sơ mi</Breadcrumb.Item>
+                                <Breadcrumb.Item>Áo phông</Breadcrumb.Item>
+                                <Breadcrumb.Item>Quần jean</Breadcrumb.Item>
+                                <Breadcrumb.Item>Quần short</Breadcrumb.Item>
+                                <Breadcrumb.Item>Phụ kiện</Breadcrumb.Item>
+                            </Breadcrumb> */}
                         </Col>
-                        <Col md={{span: 12}} sm={{span: 8}} xs={{span: 8}} style={{ textAlign: 'right' }}>
+                        <Col md={{span: 8}} sm={{span: 8}} xs={{span: 8}} style={{ textAlign: 'right' }}>
                             <h5>View all</h5>
                         </Col>
                     </Row>
