@@ -87,6 +87,9 @@ const Navbar = (props) => {
                         })
                     }
                 </div>
+                <div className="header-logo">
+                    <h5>Test</h5>
+                </div>
                 <div className="header-widget margin-left">
                     <div>
                         <div className="header-navbar_item">
