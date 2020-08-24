@@ -25,6 +25,7 @@ const Contact = (props) => {
     }
 
     return (
+<<<<<<< HEAD
         !props.isMobile ?
         <Col md={24} xs={24} style={{overflow: 'hidden'}}>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{ marginTop: '20px', backgroundColor: '#000' }}    >
@@ -63,6 +64,7 @@ const Contact = (props) => {
                     <img src={props.cover} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </Col>
             </Row>
+
 
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{ marginTop: '20px' }}    >
                 <Col span={8} ></Col>

@@ -13,6 +13,7 @@ export default class Winter extends React.Component {
                     name: 'Product 1',
                     cover: 'https://i.imgur.com/GXy9UIG.jpg',
                     price: 300000
+
                 },
                 {
                     id: 2,
@@ -37,12 +38,14 @@ export default class Winter extends React.Component {
                     name: 'Product 5',
                     cover: 'https://i.imgur.com/gXTbY7M.jpg',
                     price: 300000
+
                 },
                 {
                     id: 6,
                     name: 'Product 6',
                     cover: 'https://i.imgur.com/qqBB3Dz.jpg',
                     price: 300000
+
                 },
                 {
                     id: 7,
@@ -68,6 +71,9 @@ export default class Winter extends React.Component {
             style: 'currency',
             currency: 'VND'
         });
+                
+            
+        
     }
 
     handleClick(id) {
@@ -108,5 +114,5 @@ export default class Winter extends React.Component {
                 </div>
             </div>
         )
-    }
+}
 }
