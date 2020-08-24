@@ -73,62 +73,66 @@ class Category extends React.Component {
     }
 
     render() {
-        return <div className='women-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
-            <Row gutter={[16, 16]} justify='start'>
-                {
-                    this.state.products.map((product, id) => id % 2 === 0 ? <Col key={id} span={24}>
-                        <Row gutter={[16, 16]} justify='start'>
-                            <Col span={12} className='product'
-                                onMouseMove={() => this.onMouseMove(id)}
-                                onMouseLeave={() => this.onMouseLeave(id)}
-                                style={{ height: '600px', position: 'relative' }}>
-                                <div className="product-header">
-                                    <div className="product-cover">
-                                        <img src={product.cover} alt="productImage" style={{ objectFit: 'cover' }}/>
-                                    </div>
-                                </div>
-                                {
-                                    product.active && <div className='info'>
-                                        <Row gutter={[16, 16]}>
-                                            <Col span={24}>
-                                                <button className='btn-view'>View</button>
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                }
-                            </Col>
-                            <Col span={12}></Col>
-                        </Row>
-                    </Col> :
-                        <Col key={id} span={24}>
-                            <Row gutter={[16, 16]} justify='start'>
-                                <Col span={12}>
+        return <div className='women-container'>
+            <div className="nm-row">
+                <Col md={24}>
+                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify='center' style={{ padding: '0px 24px' }}>
+                        {
+                            this.state.products.map((product, id) => id % 2 === 0 ? <Col key={id} span={24}>
+                                <Row gutter={[16, 16]} justify='start'>
+                                    <Col span={12} className='product'
+                                        onMouseMove={() => this.onMouseMove(id)}
+                                        onMouseLeave={() => this.onMouseLeave(id)}
+                                        style={{ height: '600px', position: 'relative' }}>
+                                        <div className="product-header">
+                                            <div className="product-cover">
+                                                <img src={product.cover} alt="productImage" style={{ objectFit: 'cover' }} />
+                                            </div>
+                                        </div>
+                                        {
+                                            product.active && <div className='info'>
+                                                <Row gutter={[16, 16]}>
+                                                    <Col span={24}>
+                                                        <button className='btn-view'>View</button>
+                                                    </Col>
+                                                </Row>
+                                            </div>
+                                        }
+                                    </Col>
+                                    <Col span={12}></Col>
+                                </Row>
+                            </Col> :
+                                <Col key={id} span={24}>
+                                    <Row gutter={[16, 16]} justify='start'>
+                                        <Col span={12}>
 
+                                        </Col>
+                                        <Col span={12} className='product'
+                                            onMouseMove={() => this.onMouseMove(id)}
+                                            onMouseLeave={() => this.onMouseLeave(id)}
+                                            style={{ height: '600px', position: 'relative' }}>
+                                            <div className="product-header">
+                                                <div className="product-cover">
+                                                    <img src={product.cover} alt="productImage" style={{ objectFit: 'cover' }} />
+                                                </div>
+                                            </div>
+                                            {
+                                                product.active && <div className='info'>
+                                                    <Row gutter={[16, 16]}>
+                                                        <Col span={24}>
+                                                            <button type="ghost" className='btn-view'>View</button>
+                                                        </Col>
+                                                    </Row>
+                                                </div>
+                                            }
+                                        </Col>
+                                    </Row>
                                 </Col>
-                                <Col span={12} className='product'
-                                    onMouseMove={() => this.onMouseMove(id)}
-                                    onMouseLeave={() => this.onMouseLeave(id)}
-                                    style={{ height: '600px', position: 'relative' }}>
-                                    <div className="product-header">
-                                        <div className="product-cover">
-                                            <img src={product.cover} alt="productImage" style={{ objectFit: 'cover' }}/>
-                                        </div>
-                                    </div>
-                                    {
-                                        product.active && <div className='info'>
-                                            <Row gutter={[16, 16]}>
-                                                <Col span={24}>
-                                                    <button type="ghost" className='btn-view'>View</button>
-                                                </Col>
-                                            </Row>
-                                        </div>
-                                    }
-                                </Col>
-                            </Row>
-                        </Col>
-                    )
-                }
-            </Row>
+                            )
+                        }
+                    </Row>
+                </Col>
+            </div>
         </div>
     }
 }

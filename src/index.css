@@ -26,6 +26,9 @@ html, body {
   margin:0;
   padding: 0;
   min-width: 768px;
+  font-weight: 400;
+  color: #777;
+  line-height: 2;
 }
 
 body {
@@ -80,3 +83,22 @@ body {
   }
 }
 
+.nm-row {
+  margin: 0 auto;
+  max-width: 1280px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.nm-row::after {
+  clear: both;
+  display: table;
+  content: " ";
+}
+
+.nm-row::before {
+  display: table;
+  content: " ";
+}

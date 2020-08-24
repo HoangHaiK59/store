@@ -91,9 +91,11 @@ const Container = (props) => {
                     !props.isLanding && <Navbar isMobile={isMobile} isAuth = {props.isAuth}/>
                 }
             </header>
-            <main  className="root-content">
-                <Marketing  isMobile={isMobile} />
-                <Sidebar isMobile={isMobile} />
+            <main  className="root-content">     
+                {
+                    // !props.isLanding && <Marketing  isMobile={isMobile} />
+                    !props.isLanding && <Sidebar isMobile={isMobile} />
+                }
                 <Switch>
                     <Route exact path="/" render={(props) => <Landing isMobile={isMobile} {...props} title="Landing" />} />
                     <Route exact path="/home" render={(props) => <Home isMobile={isMobile} {...props} title="Store" />} />
@@ -117,7 +119,7 @@ const Container = (props) => {
             </main>
             <footer>
                 {
-                    !props.isLanding && <Contact cover="https://i.imgur.com/Wj6dytl.jpg" />
+                    !props.isLanding && <Contact isMobile={isMobile} cover="https://i.imgur.com/Wj6dytl.jpg" />
                 }
             </footer>
             {

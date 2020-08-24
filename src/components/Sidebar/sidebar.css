@@ -10,12 +10,31 @@
     overflow: hidden;
 }
 
+.shop-menu ul li:last-child {
+    margin-right: 0;
+}
+
 .filter-menu {
     float: right;
     width: 20%;
     text-align: right;
     white-space: nowrap;
     overflow: hidden;
+}
+
+.filter-menu li {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.filter-menu li a {
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.filter-menu li+li::before {
+    content: "/\00a0";
+    padding: 8px;
 }
 
 .category-menu {
@@ -29,6 +48,16 @@
     vertical-align: middle;
 }
 
+.category-menu li a {
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.category-menu li+li::before {
+    content: "/\00a0";
+    padding: 8px;
+}
+
 .sidebar {
     transition: opacity 0.5s ease;
 }
@@ -40,3 +69,19 @@
 .fade-in {
     opacity: 1;
 }
+
+ul {
+    list-style: none;
+}
+
+ul li a {
+    color: inherit;
+}
+
+.category-item {
+    padding: 0px 10px;
+}
+
+/* .category-item > span {
+    margin-right: 10px;
+} */
