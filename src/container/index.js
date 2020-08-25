@@ -84,11 +84,11 @@ const Container = (props) => {
     return <div ref={element} className="root-container">
         <Layout>
             <Progress scroll={scrollPosition + '%'} />
-            <Header className={!props.isLanding ? isSticky ? "root-navbar-fixed" : "root-navbar" : null} style={props.isLanding ? { backgroundColor: 'transparent' } : { backgroundColor: '#fff' }}>
-                {
-                    !props.isLanding && <Navbar isMobile={isMobile} isAuth={props.isAuth} />
-                }
-            </Header>
+            {
+                !props.isLanding && <Header className={!props.isLanding ? isSticky ? "root-navbar-fixed" : "root-navbar" : null} style={props.isLanding ? { backgroundColor: 'transparent' } : { backgroundColor: '#fff' }}>
+                    <Navbar isMobile={isMobile} isAuth={props.isAuth} />
+                </Header>
+            }
             <Content>
                 {
                     // !props.isLanding && <Marketing />

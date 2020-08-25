@@ -1,6 +1,6 @@
 import React from 'react';
-import { Menu, Dropdown, Drawer, Button } from 'antd';
-import { DownOutlined, MenuOutlined, HomeOutlined, SmileOutlined, MehOutlined, FrownOutlined } from '@ant-design/icons';
+import { Menu, Dropdown, Drawer, Button, Badge } from 'antd';
+import { DownOutlined, MenuOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import './navbar.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -120,7 +120,9 @@ const Navbar = (props) => {
                                                     }
                                                 </div>
                                                 <div className="header-navbar_item">
-                                                    <Link to="/cart" className="header-navbar_item-style">Cart</Link>
+                                                <Badge count={5}>
+                                                    <Link to="/cart" className="header-navbar_item-style"><ShoppingCartOutlined size={18} /></Link>
+                                                </Badge>
                                                 </div>
                                             </div>
                                         </div>

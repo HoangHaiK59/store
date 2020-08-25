@@ -49,6 +49,14 @@ class Login extends React.Component {
         console.log('Failed:', errorInfo);
     };
 
+    componentDidMount() {
+        this.props.changeView(true);
+    }
+
+    componentWillUnmount() {
+        this.props.changeView(false)
+    }
+
     render() {
         const layout = {
             labelCol: { span: 10 },
@@ -96,13 +104,15 @@ class Login extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        setAuth: (user, isAuth) => dispatch({ type: Constants.AUTH, user, isAuth })
+        setAuth: (user, isAuth) => dispatch({ type: Constants.AUTH, user, isAuth }),
+        changeView: (isLanding) => {
+            dispatch({ type: Constants.CHANGE_VIEW, isLanding })
+        }
     }
 }
 

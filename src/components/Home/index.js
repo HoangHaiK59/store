@@ -154,16 +154,11 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        products: state.products,
-        isSuccess: state.isSuccess
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getProducts: () => {
-            dispatch(storeActions.getProducts())
-        }
     }
 }
 

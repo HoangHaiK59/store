@@ -32,10 +32,10 @@
     text-decoration: none;
 }
 
-.filter-menu li+li::before {
+/* .filter-menu li+li::before {
     content: "/\00a0";
     padding: 8px;
-}
+} */
 
 .category-menu {
     float: left;
@@ -51,12 +51,18 @@
 .category-menu li a {
     font-size: 18px;
     text-decoration: none;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 100%;
+    font-weight: 500;
+    line-height: 2;
+    letter-spacing: 1px;
 }
 
-.category-menu li+li::before {
+/* .category-menu li+li::before {
     content: "/\00a0";
     padding: 8px;
-}
+} */
 
 .sidebar {
     transition: opacity 0.5s ease;
