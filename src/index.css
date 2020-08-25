@@ -26,12 +26,9 @@ html, body {
   margin:0;
   padding: 0;
   min-width: 768px;
-<<<<<<< HEAD
   font-weight: 400;
   color: #777;
   line-height: 2;
-=======
->>>>>>> bc58fa1d71824cc81d89dd42a29e41e3a4e71e92
 }
 
 body {
@@ -47,7 +44,7 @@ body {
 
 .root-mainview {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   display: flex;
@@ -59,7 +56,7 @@ body {
   width: 100%;
   height: 50px;
   z-index: 3;
-  color: white;
+  color: #777;
   position: fixed;
   top: 0;
   left: 0;
@@ -68,8 +65,10 @@ body {
 
 .root-navbar {
   width: 100%;
-  height: 50px;
-  color: white;
+  height: auto;
+  color: #777;
+  padding-top: 14px;
+  padding-bottom: 15px;
 }
 
 .root-content {

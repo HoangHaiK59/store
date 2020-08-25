@@ -58,7 +58,6 @@ class Product extends React.Component {
                         return {...JSON.parse(value), active: false}
                     }
                 }), size: data.size.split(',') };
-                console.log(product)
                 this.setState({ product })
             }
         })

@@ -3,12 +3,11 @@
     flex-direction: row;
     flex-flow: wrap;
     justify-content: space-between;
-    min-width: 1264px;
+    min-width: 768px;
     height: 48px;
     align-items: center;
     width: 100%;
     position: relative;
-    padding: 12px 15px;
 }
 
 .header-brand {
@@ -22,6 +21,11 @@
     animation: brand 4s infinite;
 }
 
+.nm-header-inner {
+    position: relative;
+    height: auto;
+}
+
 @keyframes brand {
     0% { transform: scale(0.5); }
     50% { transform: scale(0.8); }
@@ -30,9 +34,10 @@
 
 .header-navbar {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     height: 24px;
     align-items: center;
+    flex: 1;
 }
 
 .header-logo {
@@ -56,7 +61,7 @@
     cursor: pointer;
     text-decoration: inherit;
     padding: 0 18px;
-    color: #fff;
+    color: #777;
 }
 
 .header-widget {

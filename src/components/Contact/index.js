@@ -3,9 +3,7 @@ import { Row, Col, message } from 'antd';
 import { Subscribe } from './Subscribe';
 import { InstagramOutlined, FacebookOutlined } from '@ant-design/icons';
 import { instance } from '../../utils/axios';
-import useDimensions from '../../utils/dimensions';
 const Contact = (props) => {
-    const { width, height } = useDimensions();
     const onFinish = values => {
         instance.post('subscribe', values, {
             headers: {
@@ -25,7 +23,6 @@ const Contact = (props) => {
     }
 
     return (
-<<<<<<< HEAD
         !props.isMobile ?
         <Col md={24} xs={24} style={{overflow: 'hidden'}}>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{ marginTop: '20px', backgroundColor: '#000' }}    >

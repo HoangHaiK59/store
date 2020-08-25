@@ -30,7 +30,6 @@ class Home extends React.Component {
 
     getProducts() {
         instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&category_id=${this.state.categoryId}`)
-<<<<<<< HEAD
             .then(result => {
                 if (result.data.success) {
                     const { data } = result.data;
