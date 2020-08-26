@@ -103,6 +103,11 @@ const Navbar = (props) => {
                                                 <Link to="/category" className="header-navbar_item-style">Pages</Link>
                                             </div>
                                         </div>
+                                        <div>
+                                            <div className="header-navbar_item">
+                                                <Link to="/admin" className="header-navbar_item-style">Admin</Link>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
@@ -120,9 +125,9 @@ const Navbar = (props) => {
                                                     }
                                                 </div>
                                                 <div className="header-navbar_item">
-                                                <Badge count={5}>
-                                                    <Link to="/cart" className="header-navbar_item-style"><ShoppingCartOutlined size={18} /></Link>
-                                                </Badge>
+                                                    <Badge count={5}>
+                                                        <Link to="/cart" className="header-navbar_item-style"><ShoppingCartOutlined size={18} /></Link>
+                                                    </Badge>
                                                 </div>
                                             </div>
                                         </div>

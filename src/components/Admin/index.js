@@ -211,91 +211,96 @@ export default class Admin extends React.Component {
         const { visible } = this.state;
         return visible ? <AddProduct {...this.props} product={this.state.product} back={this.back.bind(this)} />
             : <div className="admin-container">
-                <Tabs defaultActiveKey="1">
-                    <TabPane
-                        tab={
-                            <span>
-                                Sản phẩm
+                <div className="nm-row">
+                    <div className="col-md-12" style={{ padding: '0 48px' }}>
+                        <Tabs defaultActiveKey="1">
+                            <TabPane
+                                tab={
+                                    <span>
+                                        Sản phẩm
                             </span>
-                        }
-                        key="1"
-                    >
-                        <div className="row mt-2">
-                            <div className="col-12 text-right">
-                                <Tooltip title="Thêm sản phẩm">
-                                    <Button type="primary" onClick={this.addProduct.bind(this)} icon={<PlusOutlined />}>Thêm sản phẩm</Button>
-                                </Tooltip>
-                                <Tooltip className="ml-1" title="Thêm sản phẩm">
-                                    <Button type="primary" onClick={this.addProduct.bind(this)} icon={<PlusOutlined />}>Thêm sản phẩm</Button>
-                                </Tooltip>
-                            </div>
-                        </div>
-                        <div className="ag-theme-alpine" style={{ height: '55vh', width: '100%' }}>
-                            <AgGridReact
-                                // rowBuffer={0}
-                                // modules={this.state.modules}
-                                // rowModelType={this.state.rowModelType}
-                                // cacheOverflowSize={this.state.cacheOverflowSize}
-                                // infiniteInitialRowCount={this.state.infiniteInitialRowCount}
-                                // maxBlocksInCache={this.state.maxBlocksInCache}
-                                // maxConcurrentDatasourceRequests={this.state.maxConcurrentDatasourceRequests}
-                                // paginationPageSize={this.state.paginationPageSize}
-                                columnDefs={columnDefs}
-                                rowData={this.state?.products}
-                                onGridReady={this.onGridReady}
-                                components={this.state.components}
-                                animateRows
-                                rowSelection='multiple'
-                                frameworkComponents={this.state.frameworkComponents}
-                                onFirstDataRendered={this.onFirstDataRendered.bind(this)}
-                                domLayout="autoHeight"
-                                defaultColDef={{
-                                    sortable: true,
-                                    filter: true,
-                                    resizable: true,
-                                    flex: 1,
-                                    minWidth: 100,
-                                    headerComponentParams: {
-                                        menuIcon: 'fa-bars'
-                                    },
-                                    cellClass: ['border-right']
-                                }}
+                                }
+                                key="1"
                             >
-                            </AgGridReact>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-12">
-                                <Pagination
-                                    onChange={this.onChange.bind(this)}
-                                    showSizeChanger
-                                    onShowSizeChange={this.onShowSizeChange.bind(this)}
-                                    defaultCurrent={this.state.offSet + 1}
-                                    total={this.state.total}
-                                />
-                            </div>
-                        </div>
-                    </TabPane>
-                    <TabPane
-                        tab={
-                            <span>
-                                Đơn hàng
+                                <div className="row mt-2">
+                                    <div className="col-12 text-right">
+                                        <Tooltip title="Thêm sản phẩm">
+                                            <Button type="primary" onClick={this.addProduct.bind(this)} icon={<PlusOutlined />}>Thêm sản phẩm</Button>
+                                        </Tooltip>
+                                        <Tooltip className="ml-1" title="Thêm sản phẩm">
+                                            <Button type="primary" onClick={this.addProduct.bind(this)} icon={<PlusOutlined />}>Thêm sản phẩm</Button>
+                                        </Tooltip>
+                                    </div>
+                                </div>
+                                <div className="ag-theme-alpine" style={{ height: '55vh', width: '100%' }}>
+                                    <AgGridReact
+                                        // rowBuffer={0}
+                                        // modules={this.state.modules}
+                                        // rowModelType={this.state.rowModelType}
+                                        // cacheOverflowSize={this.state.cacheOverflowSize}
+                                        // infiniteInitialRowCount={this.state.infiniteInitialRowCount}
+                                        // maxBlocksInCache={this.state.maxBlocksInCache}
+                                        // maxConcurrentDatasourceRequests={this.state.maxConcurrentDatasourceRequests}
+                                        // paginationPageSize={this.state.paginationPageSize}
+                                        allowDragFromColumnsToolPanel
+                                        columnDefs={columnDefs}
+                                        rowData={this.state?.products}
+                                        onGridReady={this.onGridReady}
+                                        components={this.state.components}
+                                        animateRows
+                                        rowSelection='multiple'
+                                        frameworkComponents={this.state.frameworkComponents}
+                                        onFirstDataRendered={this.onFirstDataRendered.bind(this)}
+                                        domLayout="autoHeight"
+                                        defaultColDef={{
+                                            sortable: true,
+                                            filter: true,
+                                            resizable: true,
+                                            flex: 1,
+                                            minWidth: 100,
+                                            headerComponentParams: {
+                                                menuIcon: 'fa-bars'
+                                            },
+                                            cellClass: ['border-right']
+                                        }}
+                                    >
+                                    </AgGridReact>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <Pagination
+                                            onChange={this.onChange.bind(this)}
+                                            showSizeChanger
+                                            onShowSizeChange={this.onShowSizeChange.bind(this)}
+                                            defaultCurrent={this.state.offSet + 1}
+                                            total={this.state.total}
+                                        />
+                                    </div>
+                                </div>
+                            </TabPane>
+                            <TabPane
+                                tab={
+                                    <span>
+                                        Đơn hàng
                             </span>
-                        }
-                        key="2"
-                    >
-                        Đơn hàng
+                                }
+                                key="2"
+                            >
+                                Đơn hàng
                     </TabPane>
-                    <TabPane
-                        tab={
-                            <span>
-                                Giao dịch
+                            <TabPane
+                                tab={
+                                    <span>
+                                        Giao dịch
                         </span>
-                        }
-                        key="3"
-                    >
-                        Giao dịch
+                                }
+                                key="3"
+                            >
+                                Giao dịch
                     </TabPane>
-                </Tabs>
+                        </Tabs>
+                    </div>
+                </div>
                 <div style={{ position: 'absolute', top: '10%', right: 20 }}>
                     <Popconfirm
                         visible={this.state.visiblePopconfirm}

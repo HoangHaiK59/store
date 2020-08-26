@@ -235,7 +235,6 @@ class AddProduct extends React.Component {
                     <Form ref={this.formRef} style={{ width: '900px' }} {...layout} name="nest-messages" onFinish={this.onFinish.bind(this)} validateMessages={validateMessages}>
                         <Form.Item
                             name={['product', 'name']}
-                            label="Tên hàng"
                             rules={[
                                 {
                                     required: true,
@@ -246,7 +245,6 @@ class AddProduct extends React.Component {
                         </Form.Item>
                         <Form.Item
                             name={['product', 'categoryId']}
-                            label="Loại"
                             rules={[
                                 {
                                     required: true,
@@ -264,7 +262,6 @@ class AddProduct extends React.Component {
                         </Form.Item>
                         <Form.Item
                             name={['product', 'price']}
-                            label="Giá"
                             rules={[
                                 {
                                     type: 'number',
@@ -278,7 +275,6 @@ class AddProduct extends React.Component {
                         </Form.Item>
                         <Form.Item
                             name={['product', 'discount']}
-                            label="Sale"
                             rules={[
                                 {
                                     type: 'number',
@@ -296,7 +292,6 @@ class AddProduct extends React.Component {
                         </Form.Item>
                         <Form.Item
                             name={['product', 'description']}
-                            label="Mô tả"
                             rules={[
                                 {
                                     required: true
@@ -305,7 +300,7 @@ class AddProduct extends React.Component {
                         >
                             <TextArea placeholder='Mô tả sản phẩm' />
                         </Form.Item>
-                        <Form.Item name={['product', 'size']} label="Kích thước" rules={[{
+                        <Form.Item name={['product', 'size']}  rules={[{
                             required: true
                         }]}>
                             <Select
@@ -318,12 +313,12 @@ class AddProduct extends React.Component {
                                 }
                             </Select>
                         </Form.Item>
-                        <Form.Item name={['product', 'image']} label="Ảnh cover" rules={[{
+                        <Form.Item name={['product', 'image']}  rules={[{
                             required: true
                         }]}>
                             <Input placeholder="Upload link ảnh cover" />
                         </Form.Item>
-                        <Form.Item name={['product', 'status']} label="Trạng thái" rules={[{
+                        <Form.Item name={['product', 'status']} rules={[{
                             required: true
                         }]}>
                             <Select

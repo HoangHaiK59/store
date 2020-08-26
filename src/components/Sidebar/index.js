@@ -1,6 +1,8 @@
 import React from 'react';
 import './sidebar.css';
-import { SearchOutlined, FilterOutlined } from '@ant-design/icons'
+import { SearchOutlined, FilterOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { history } from '../../helper/history';
+import { Link } from 'react-router-dom';
 export default function Sidebar(props) {
     return (
         <div className="shop-header">
@@ -9,50 +11,53 @@ export default function Sidebar(props) {
                     <div className='col-md-12'>
                         <ul className="category-menu">
                             <li className="category-item">
-                                <a href="/home">ALL</a>
+                                <ArrowLeftOutlined onClick={() => history.goBack()}/>
                             </li>
                             <li className="category-item">
-                                <a href="/dress">
+                                <Link to="/home">ALL</Link>
+                            </li>
+                            <li className="category-item">
+                                <Link to="/dress">
                                     Dress
-                                </a>
+                                </Link>
                             </li>
                             <li className="category-item">
-                                <a href="/skirt">
+                                <Link to="/skirt">
                                     Skirt
-                                </a>
+                                </Link>
                             </li>
                             <li className="category-item">
-                                <a href="/shirts">
+                                <Link to="/shirts">
                                     Shirts
-                                </a>
+                                </Link>
                             </li>
                             <li className="category-item">
-                                <a href="/tshirts">
+                                <Link to="/tshirts">
                                     Tshirts
-                                </a>
+                                </Link>
                             </li>
                             <li className="category-item">
-                                <a href="/jean">
+                                <Link to="/jean">
                                     Jean
-                                </a>
+                                </Link>
                             </li>
                             <li className="category-item">
-                                <a href="/short">
+                                <Link to="/short">
                                     Short
-                                </a>
+                                </Link>
                             </li>
                             <li className="category-item">
-                                <a href="/accessories">
+                                <Link to="/accessories">
                                     Accessories
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                         <ul className="filter-menu">
                             <li className="category-item">
-                                <a href="/home"><FilterOutlined /></a>
+                                <Link to="/home"><FilterOutlined /></Link>
                             </li>
                             <li className="category-item">
-                                <a href="/home"><SearchOutlined /></a>
+                                <Link to="/home"><SearchOutlined /></Link>
                             </li>
                         </ul>
                     </div>

@@ -17,9 +17,10 @@
 .filter-menu {
     float: right;
     width: 20%;
-    /* text-align: right; */
+    text-align: right;
     white-space: nowrap;
     overflow: hidden;
+    padding-right: 35px;
 }
 
 .filter-menu li {

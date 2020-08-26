@@ -30,8 +30,8 @@ class Product extends React.Component {
     }
 
     handleChangeColor(color) {
-        const images = this.state.product.images.map(image => image.color === color ? ({ ...image, active: true }): ({ ...image, active: false }));
-        this.setState(state =>({ product: {...state.product, images} }))
+        const images = this.state.product.images.map(image => image.color === color ? ({ ...image, active: true }) : ({ ...image, active: false }));
+        this.setState(state => ({ product: { ...state.product, images } }))
     }
 
     scrollTop() {
@@ -48,20 +48,22 @@ class Product extends React.Component {
     getDetailProduct() {
         const { params } = this.props.match;
         instance.get(`GetDetailProduct?id=${params.id}`)
-        .then(result => {
-            if(result.data.success) {
-                const { data } = result.data;
-                let product = {...data, images: data.images.split(';').map((value, id) => {
-                    if (id ===0) {
-                        return {...JSON.parse(value), active: true} 
-                    } else {
-                        return {...JSON.parse(value), active: false}
-                    }
-                }), size: data.size.split(',') };
-                this.setState({ product })
-            }
-        })
-        .catch(error => console.log(error))
+            .then(result => {
+                if (result.data.success) {
+                    const { data } = result.data;
+                    let product = {
+                        ...data, images: data.images.split(';').map((value, id) => {
+                            if (id === 0) {
+                                return { ...JSON.parse(value), active: true }
+                            } else {
+                                return { ...JSON.parse(value), active: false }
+                            }
+                        }), size: data.size.split(',')
+                    };
+                    this.setState({ product })
+                }
+            })
+            .catch(error => console.log(error))
     }
 
     componentDidMount() {
@@ -75,70 +77,72 @@ class Product extends React.Component {
     }
 
     render() {
-        return this.state.product && <div ref={this.productRef} className='product-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
+        return this.state.product && <div ref={this.productRef} className='product-container'>
             <div className='content-product'>
-                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify='start' style={{ height: '100%' }}>
-                    <Col xs={{span: 9, offset: 1, pull: 1}} md={{span: 14}}>
-                        {
-                            this.state.product.images.map((image, id) => image.active ? <img key={id} src={image.url} alt="" className='cover' />: null)
-                        }
-                    </Col>
-                    <Col xs={{span: 5, pull: 1}} md={{span: 6}}>
-                        <Row justify='start'>
-                            <Col span={24}>
-                                <h5 >{this.state.product.name}</h5>
-                            </Col>
-                        </Row>
-                        <Row justify='start'>
-                            <Col span={24}>
-                                <p >{this.state.product.description}</p>
-                            </Col>
-                        </Row>
-                        <Row justify='start' style={{ marginTop: 30 }}>
-                            <Col span={24}>
-                                <p >{this.formater.format(this.state.product.price)}</p>
-                            </Col>
-                        </Row>
-                        <Row justify='start' style={{ marginTop: 50 }}>
-                            <Col span={24}>
-                                <Row justify='start'>
-                                    <Col span={24}>
-                                        <h5 >Color</h5>
-                                    </Col>
-                                </Row>
-                                <Row justify='start'>
-                                    {
-                                        this.state.product.images.map((image, id) => <Button 
-                                        key={id}
-                                        span={1}
-                                        className='product-color'
-                                        onClick={() => this.handleChangeColor(image.color)}
-                                        style={{ backgroundColor: image.color, marginLeft: id > 0 ? '5px' : 0 }}></Button>)
-                                    }
-                                </Row>
-                            </Col>
-                        </Row>
-                        <Row justify='start' style={{ marginTop: 20 }}>
-                            <Col span={12}>
-                                <Select defaultValue='M' style={{ width: '100%' }} size={"middle"} showAction={['click', 'focus']} showSearch={true} onChange={this.handleChangeSize.bind(this)}>
-                                    {
-                                        this.state.product.size.map((size, id) => <Option key={id} value={size}>{size}</Option>)
-                                    }
-                                </Select>
-                            </Col>
-                            <Col style={{ marginLeft: 15 }} span={11}>
-                                <InputNumber min={1} max={10} style={{ width: '100%' }} value={this.state.qty} onChange={this.handleChangeQty.bind(this)}></InputNumber>
-                            </Col>
-                        </Row>
-                        <Row justify='start' style={{ marginTop: 20 }}>
-                            <Col span={24}>
-                                <Button className='btn-cart' onClick={this.addToCart.bind(this)}>
-                                    ADD TO CART
+                <div className="nm-row">
+                    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify='start' style={{ height: '100%', padding: '0px 56px' }}>
+                        <Col xs={{ span: 12, offset: 1, pull: 1 }} md={{ span: 14 }}>
+                            {
+                                this.state.product.images.map((image, id) => image.active ? <img key={id} src={image.url} alt="" className='cover' /> : null)
+                            }
+                        </Col>
+                        <Col xs={{ span: 9, pull: 1 }} md={{ span: 9 }}>
+                            <Row justify='start'>
+                                <Col span={24}>
+                                    <h5 >{this.state.product.name}</h5>
+                                </Col>
+                            </Row>
+                            <Row justify='start'>
+                                <Col span={24}>
+                                    <p >{this.state.product.description}</p>
+                                </Col>
+                            </Row>
+                            <Row justify='start' style={{ marginTop: 30 }}>
+                                <Col span={24}>
+                                    <p >{this.formater.format(this.state.product.price)}</p>
+                                </Col>
+                            </Row>
+                            <Row justify='start' style={{ marginTop: 50 }}>
+                                <Col span={24}>
+                                    <Row justify='start'>
+                                        <Col span={24}>
+                                            <h5 >Color</h5>
+                                        </Col>
+                                    </Row>
+                                    <Row justify='start'>
+                                        {
+                                            this.state.product.images.map((image, id) => <Button
+                                                key={id}
+                                                span={1}
+                                                className='product-color'
+                                                onClick={() => this.handleChangeColor(image.color)}
+                                                style={{ backgroundColor: image.color, marginLeft: id > 0 ? '5px' : 0 }}></Button>)
+                                        }
+                                    </Row>
+                                </Col>
+                            </Row>
+                            <Row justify='start' style={{ marginTop: 20 }}>
+                                <Col span={12} xs={10}>
+                                    <Select defaultValue='M' style={{ width: '100%' }} size={"middle"} showAction={['click', 'focus']} showSearch={true} onChange={this.handleChangeSize.bind(this)}>
+                                        {
+                                            this.state.product.size.map((size, id) => <Option key={id} value={size}>{size}</Option>)
+                                        }
+                                    </Select>
+                                </Col>
+                                <Col style={{ marginLeft: 15 }} span={11} xs={10}>
+                                    <InputNumber min={1} max={10} style={{ width: '100%' }} value={this.state.qty} onChange={this.handleChangeQty.bind(this)}></InputNumber>
+                                </Col>
+                            </Row>
+                            <Row justify='start' style={{ marginTop: 20 }}>
+                                <Col span={24}>
+                                    <Button className='btn-cart' onClick={this.addToCart.bind(this)}>
+                                        ADD TO CART
                                 </Button>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </div>
             </div>
         </div>
     }

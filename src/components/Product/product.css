@@ -4,8 +4,8 @@
 }
 
 .content-product {
-    width: 90%;
-    height: 70vh;
+    width: 100%;
+    height: auto;
     padding: 8px;
 }
 

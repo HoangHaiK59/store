@@ -3,6 +3,7 @@ import './collection.css';
 import { instance } from '../../utils/axios';
 import queryString from  'querystring'
 import Content from '../Content';
+import { Spin } from 'antd';
 export default class TShirts extends React.Component {
 
     constructor(props) {
@@ -40,7 +41,9 @@ export default class TShirts extends React.Component {
     render() {
         const { tshirts } = this.state;
         return (
-            <Content items={tshirts} handleClick = {this.handleClick.bind(this)} />
+            tshirts.length > 0 ?
+            <Content items={tshirts} handleClick = {this.handleClick.bind(this)} />:
+            <Spin />
         )
     }
 }

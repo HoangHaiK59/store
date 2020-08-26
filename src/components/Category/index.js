@@ -75,7 +75,7 @@ class Category extends React.Component {
     render() {
         return <div className='women-container'>
             <div className="nm-row">
-                <Col md={24}>
+                <Col md={24}  style={{ padding: '0px 48px' }}>
                     <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} justify='center' style={{ padding: '0px 24px' }}>
                         {
                             this.state.products.map((product, id) => id % 2 === 0 ? <Col key={id} span={24}>
