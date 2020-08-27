@@ -1,13 +1,80 @@
 import React from 'react';
-import { Form, Button, Input, InputNumber, Select, Row, Col, message } from 'antd';
+import { Form, Button, Input, InputNumber, Select, Row, Col, message, Upload } from 'antd';
 import './add.css';
 import TextArea from 'antd/lib/input/TextArea';
 import { instance } from '../../../../utils/axios';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined, UploadOutlined} from '@ant-design/icons';
+import { Firebase } from '../../../../firebase';
+import crypto from 'crypto';
 
 const { Option } = Select;
 
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+}
+
+
 const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors }) => {
+    const [imageUrl, setImageUrl] = React.useState('');
+    const generateHashName = () => {
+        const buffer = crypto.randomBytes(16);
+        const sha = crypto.createHash('sha1');
+        sha.update(buffer);
+        const ret = sha.digest('base64');
+        return ret;
+    }
+    const normFile = e => {
+        console.log('Upload event:', e);
+      
+        if (Array.isArray(e)) {
+          return e;
+        }
+      
+        return e && e.fileList;
+      };
+      async function dummyRequest ({ file, onSuccess, onError }) {
+        const storage = Firebase.storage();
+        const metadata = {
+            contentType: 'image/jpeg'
+        }
+        const storageRef = await storage.ref();
+        const imageName = generateHashName();
+        const imgFile = storageRef.child(`Vince Wear/${imageName}.jpg`);
+        try {
+            const image = await imgFile.put(file, metadata);
+            const downloadURL = imgFile.getDownloadURL()
+            .then(url => console.log(url))
+            onSuccess(null, downloadURL);
+        } catch(e) {
+            onError(e);
+        }
+    };
+    const remove = (e) => {
+        console.log(e)
+    }
+    const handleUpload = event => {
+        if (event.file.status === 'done') {
+            getBase64(event.file.originFileObj, imageUrl => setImageUrl(imageUrl));
+        }
+    }
+    const beforeUpload = (file) => {
+        const isImage = file.type.indexOf('image/') === 0;
+        if (!isImage) {
+          message.error('Chỉ upload hình ảnh!');
+        }
+        
+        // You can remove this validation if you want
+        const isLt10M = file.size / 1024 / 1024 < 10;
+        if (!isLt10M) {
+           message.error('Hình ảnh phải nhỏ hơn 10MB!');
+        }
+        return isImage && isLt10M;
+      };
     return (
         <Form.List name="images">
             {
@@ -17,7 +84,7 @@ const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors }) => {
                             {
                                 fields.map((field, index) => (
                                     <Form.Item {...(index === 0 ? layout : formItemLayoutWithOutLabel)}
-                                        label={index === 0 ? 'Màu sắc' : ''}
+                                        label={index === 0 ? '' : ''}
                                         required={true}
                                         key={field.key}
                                     >
@@ -57,17 +124,27 @@ const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors }) => {
                                             </Col>
                                             <Col span={16}>
                                                 <Form.Item
-                                                    name={[index, "url"]}
-                                                    validateTrigger={['onChange', 'onBlur']}
+                                                    name={[index, "image"]}
+                                                    valuePropName="fileList"
+                                                    getValueFromEvent={normFile}
                                                     rules={[
                                                         {
                                                             required: true,
-                                                            whitespace: true,
                                                             message: "Vui lòng upload hình ảnh",
                                                         },
                                                     ]}
                                                 >
-                                                    <Input placeholder="Upload link" />
+                                                <Upload
+                                                beforeUpload={beforeUpload}
+                                                onRemove={remove}
+                                                name="url" 
+                                                onChange={handleUpload} 
+                                                customRequest={dummyRequest} 
+                                                listType="picture">
+                                                <Button>
+                                                  <UploadOutlined /> Click to upload
+                                                </Button>
+                                              </Upload>
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -124,20 +201,20 @@ class AddProduct extends React.Component {
             productAdd = { ...product, id: 0 };
         }
         const data = { ...values, product: productAdd }
-        instance.post(`AddProduct`, data, {
-            headers: {
-                Authorization: `Bearer ${JSON.parse(localStorage.getItem('token')).access_token}`
-            }
-        })
-            .then(result => {
-                if (result.data.success) {
-                    message.success(result.data.message);
-                    this.props.back();
-                }
-            })
-            .catch(error => {
-                message.error('Thất bại')
-            })
+        // instance.post(`AddProduct`, data, {
+        //     headers: {
+        //         Authorization: `Bearer ${JSON.parse(localStorage.getItem('token')).access_token}`
+        //     }
+        // })
+        //     .then(result => {
+        //         if (result.data.success) {
+        //             message.success(result.data.message);
+        //             this.props.back();
+        //         }
+        //     })
+        //     .catch(error => {
+        //         message.error('Thất bại')
+        //     })
     }
 
     onChange = value => {
