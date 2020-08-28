@@ -3,7 +3,7 @@ import { Form, Button, Input, InputNumber, Select, Row, Col, message, Upload } f
 import './add.css';
 import TextArea from 'antd/lib/input/TextArea';
 import { instance } from '../../../../utils/axios';
-import { MinusCircleOutlined, PlusOutlined, UploadOutlined} from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { Firebase } from '../../../../firebase';
 import crypto from 'crypto';
 
@@ -11,51 +11,75 @@ const { Option } = Select;
 
 function getBase64(file) {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
     });
 }
 
 
-const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors }) => {
+const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors, categories, categoryId, handleSetList }) => {
     const [imageUrl, setImageUrl] = React.useState('');
+    const [list, setList] = React.useState([]);
+    const [listName, setListName] = React.useState([]);
     const generateHashName = () => {
-        const buffer = crypto.randomBytes(16);
-        const sha = crypto.createHash('sha1');
+        const buffer = crypto.randomBytes(64);
+        const sha = crypto.createHash('sha256');
         sha.update(buffer);
         const ret = sha.digest('base64');
         return ret;
     }
     const normFile = e => {
-        console.log('Upload event:', e);
-      
+
         if (Array.isArray(e)) {
-          return e;
+            return e;
         }
-      
+
         return e && e.fileList;
-      };
-      async function dummyRequest ({ file, onSuccess, onError }) {
+    };
+    async function dummyRequest({ file, onSuccess, onError }) {
         const storage = Firebase.storage();
         const metadata = {
             contentType: 'image/jpeg'
         }
         const storageRef = await storage.ref();
         const imageName = generateHashName();
-        const imgFile = storageRef.child(`Vince Wear/${imageName}.jpg`);
+        const category = categories.find(category => category.id === categoryId);
+        if (category === null || category === undefined) {
+            message.error('Bạn chưa chọn nhóm!');
+            return;
+        }
+        const imgFile = storageRef.child(`${category.name}/${imageName}.jpg`);
+        setListName([...listName, `${category.name}/${imageName}.jpg`])
         try {
             const image = await imgFile.put(file, metadata);
-            const downloadURL = imgFile.getDownloadURL()
-            .then(url => console.log(url))
-            onSuccess(null, downloadURL);
-        } catch(e) {
+            let urls = [];
+            await imgFile.getDownloadURL()
+                .then(url => {
+                    urls.push(url);
+                });
+            setList([...list, ...urls])
+            handleSetList([...list, ...urls])
+            onSuccess(null, image);
+        } catch (e) {
             onError(e);
         }
     };
-    const remove = (e) => {
-        console.log(e)
+    const removeImage = (index) => {
+        const item = listName.find((value, ind) => ind === index);
+        const listNameTemp = listName.filter((val, ind) => ind !== index);
+        const listTemp = list.filter((val, ind) => ind !== index);
+        setList(listTemp);
+        setListName(listNameTemp);
+        handleSetList(listTemp);
+        if (item) {
+            const storageRef = Firebase.storage().ref();
+            const imgFile = storageRef.child(item);
+            imgFile.delete()
+                .then()
+                .catch(error => console.log(error))
+        }
     }
     const handleUpload = event => {
         if (event.file.status === 'done') {
@@ -65,16 +89,16 @@ const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors }) => {
     const beforeUpload = (file) => {
         const isImage = file.type.indexOf('image/') === 0;
         if (!isImage) {
-          message.error('Chỉ upload hình ảnh!');
+            message.error('Chỉ upload hình ảnh!');
         }
-        
+
         // You can remove this validation if you want
         const isLt10M = file.size / 1024 / 1024 < 10;
         if (!isLt10M) {
-           message.error('Hình ảnh phải nhỏ hơn 10MB!');
+            message.error('Hình ảnh phải nhỏ hơn 10MB!');
         }
         return isImage && isLt10M;
-      };
+    };
     return (
         <Form.List name="images">
             {
@@ -83,7 +107,7 @@ const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors }) => {
                         <div>
                             {
                                 fields.map((field, index) => (
-                                    <Form.Item {...(index === 0 ? layout : formItemLayoutWithOutLabel)}
+                                    <Form.Item {...(index === 0 ? layout : layout)}
                                         label={index === 0 ? '' : ''}
                                         required={true}
                                         key={field.key}
@@ -134,17 +158,17 @@ const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors }) => {
                                                         },
                                                     ]}
                                                 >
-                                                <Upload
-                                                beforeUpload={beforeUpload}
-                                                onRemove={remove}
-                                                name="url" 
-                                                onChange={handleUpload} 
-                                                customRequest={dummyRequest} 
-                                                listType="picture">
-                                                <Button>
-                                                  <UploadOutlined /> Click to upload
+                                                    <Upload
+                                                        beforeUpload={beforeUpload}
+                                                        onRemove={() => removeImage(index)}
+                                                        name="url"
+                                                        onChange={handleUpload}
+                                                        customRequest={dummyRequest}
+                                                        listType="picture">
+                                                        <Button>
+                                                            <UploadOutlined /> Click to upload
                                                 </Button>
-                                              </Upload>
+                                                    </Upload>
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -186,35 +210,116 @@ class AddProduct extends React.Component {
             colors: [],
             value: undefined,
             sizes: [],
-            categories: []
+            categories: [],
+            categoryId: 0,
+            list: [],
+            cover: [],
+            coverName: []
         };
         this.formRef = React.createRef();
     }
 
+    handleSetList(list) {
+        this.setState({ list })
+    }
+
+    generateHashName = () => {
+        const buffer = crypto.randomBytes(64);
+        const sha = crypto.createHash('sha256');
+        sha.update(buffer);
+        const ret = sha.digest('base64');
+        return ret;
+    }
+    normFile = e => {
+
+        if (Array.isArray(e)) {
+            return e;
+        }
+
+        return e && e.fileList;
+    };
+    async dummyRequest({ file, onSuccess, onError }) {
+        const storage = Firebase.storage();
+        const metadata = {
+            contentType: 'image/jpeg'
+        }
+        const storageRef = await storage.ref();
+        const imageName = this.generateHashName();
+        const category = this.state.categories.find(category => category.id === this.state.categoryId);
+        if (category === null || category === undefined) {
+            message.error('Bạn chưa chọn nhóm!');
+            return;
+        }
+        const imgFile = storageRef.child(`${category.name}/${imageName}.jpg`);
+        this.setState(state => ({ coverName: [...state.coverName, `${category.name}/${imageName}.jpg`] }))
+        try {
+            const image = await imgFile.put(file, metadata);
+            let urls = [];
+            await imgFile.getDownloadURL()
+                .then(url => {
+                    urls.push(url);
+                });
+            this.setState(state => ({ cover: [...state.cover, ...urls] }))
+            onSuccess(null, image);
+        } catch (e) {
+            onError(e);
+        }
+    };
+    removeImage = (index) => {
+        const item = this.state.coverName.find((value, ind) => ind === index);
+        if (item) {
+            const storageRef = Firebase.storage().ref();
+            const imgFile = storageRef.child(item);
+            imgFile.delete()
+                .then()
+                .catch(error => console.log(error))
+        }
+        this.setState({cover: [], coverName: []})
+    }
+    handleUpload = event => {
+        if (event.file.status === 'done') {
+            getBase64(event.file.originFileObj);
+        }
+    }
+    beforeUpload = (file) => {
+        const isImage = file.type.indexOf('image/') === 0;
+        if (!isImage) {
+            message.error('Chỉ upload hình ảnh!');
+        }
+
+        // You can remove this validation if you want
+        const isLt10M = file.size / 1024 / 1024 < 10;
+        if (!isLt10M) {
+            message.error('Hình ảnh phải nhỏ hơn 10MB!');
+        }
+        return isImage && isLt10M;
+    };
+
     onFinish = values => {
-        console.log(values);
-        const { product } = values;
+        const { product, images } = values;
+        let imagesTmp;
+        imagesTmp = images.map((obj, id) => ({ ...obj, image: this.state.list[id] }))
         let productAdd;
-        if(this.props.product) {
+        if (this.props.product) {
             productAdd = { ...product, id: this.props.product.id };
         } else {
-            productAdd = { ...product, id: 0 };
+            productAdd = { ...product, image: this.state.cover[0], id: 0 };
         }
-        const data = { ...values, product: productAdd }
-        // instance.post(`AddProduct`, data, {
-        //     headers: {
-        //         Authorization: `Bearer ${JSON.parse(localStorage.getItem('token')).access_token}`
-        //     }
-        // })
-        //     .then(result => {
-        //         if (result.data.success) {
-        //             message.success(result.data.message);
-        //             this.props.back();
-        //         }
-        //     })
-        //     .catch(error => {
-        //         message.error('Thất bại')
-        //     })
+        const data = { images: imagesTmp, product: productAdd };
+        instance.post(`AddProduct`, data, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('token')).access_token}`
+            }
+        })
+            .then(result => {
+                if (result.data.success) {
+                    message.success(result.data.message);
+                    this.props.back();
+                }
+            })
+            .catch(error => {
+                message.error('Thất bại')
+            })
     }
 
     onChange = value => {
@@ -257,9 +362,9 @@ class AddProduct extends React.Component {
         this.getCategoryList();
         this.getColorList();
         this.getSizeList();
-        if(this.props.product) {
+        if (this.props.product) {
             const { product } = this.props;
-            const item = {...product, size: product.size.split(','), images: product.images.split(';').map((value, id) => JSON.parse(value))}
+            const item = { ...product, size: product.size.split(','), images: product.images.split(';').map((value, id) => JSON.parse(value)) }
             this.formRef.current.setFieldsValue({
                 product: {
                     name: item.name,
@@ -277,6 +382,10 @@ class AddProduct extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+    }
+
+    handleSelectCategory(e) {
+        this.setState({ categoryId: e });
     }
 
     render() {
@@ -309,7 +418,13 @@ class AddProduct extends React.Component {
         return (
             <div className='add-product-container'>
                 <div className='form-add-container'>
-                    <Form ref={this.formRef} style={{ width: '900px' }} {...layout} name="nest-messages" onFinish={this.onFinish.bind(this)} validateMessages={validateMessages}>
+                    <Form
+                        ref={this.formRef}
+                        style={{ width: '900px' }}
+                        {...layout}
+                        name="nest-messages"
+                        onFinish={this.onFinish.bind(this)}
+                        validateMessages={validateMessages}>
                         <Form.Item
                             name={['product', 'name']}
                             rules={[
@@ -331,7 +446,9 @@ class AddProduct extends React.Component {
                             <Select
                                 allowClear
                                 placeholder="Chọn loại"
-                                style={{ width: '100%' }}>
+                                style={{ width: '100%' }}
+                                onChange={this.handleSelectCategory.bind(this)}
+                            >
                                 {
                                     this.state.categories.map((category, id) => <Option key={id} value={category.id}>{category.name}</Option>)
                                 }
@@ -377,7 +494,7 @@ class AddProduct extends React.Component {
                         >
                             <TextArea placeholder='Mô tả sản phẩm' />
                         </Form.Item>
-                        <Form.Item name={['product', 'size']}  rules={[{
+                        <Form.Item name={['product', 'size']} rules={[{
                             required: true
                         }]}>
                             <Select
@@ -390,10 +507,27 @@ class AddProduct extends React.Component {
                                 }
                             </Select>
                         </Form.Item>
-                        <Form.Item name={['product', 'image']}  rules={[{
+                        <Form.Item 
+                        name={['product', 'image']} 
+                        rules={[{
                             required: true
-                        }]}>
-                            <Input placeholder="Upload link ảnh cover" />
+                        }]}
+                        valuePropName="fileList"
+                        getValueFromEvent={this.normFile.bind(this)}
+                        >
+                            <Upload
+                                beforeUpload={this.beforeUpload.bind(this)}
+                                onRemove={() => this.removeImage(0)}
+                                name="url"
+                                onChange={this.handleUpload.bind(this)}
+                                customRequest={this.dummyRequest.bind(this)}
+                                listType="picture">
+                                {
+                                    this.state.cover.length < 1 && <Button>
+                                    <UploadOutlined /> Click to upload
+                                    </Button>
+                                }
+                            </Upload>
                         </Form.Item>
                         <Form.Item name={['product', 'status']} rules={[{
                             required: true
@@ -408,6 +542,9 @@ class AddProduct extends React.Component {
                         </Form.Item>
                         <DynamicFields
                             colors={this.state.colors}
+                            categories={this.state.categories}
+                            categoryId={this.state.categoryId}
+                            handleSetList={this.handleSetList.bind(this)}
                             layout={layout}
                             formItemLayoutWithOutLabel={formItemLayoutWithOutLabel} />
                         <Row gutter={[8, 8]} justify="center">
