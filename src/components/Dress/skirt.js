@@ -1,79 +1,39 @@
 import React from 'react';
 import { Spin } from 'antd';
 import Content from '../Content';
+import { instance } from '../../utils/axios';
 
 export default class Winter extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            products: [
-                {
-                    id: 1,
-                    name: 'Product 1',
-                    image: 'https://i.imgur.com/GXy9UIG.jpg',
-                    price: 300000
-
-                },
-                {
-                    id: 2,
-                    name: 'Product 2',
-                    image: 'https://i.imgur.com/Wj6dytl.jpg',
-                    price: 300000
-                },
-                {
-                    id: 3,
-                    name: 'Product 3',
-                    image: 'https://i.imgur.com/9qf6WyB.jpg',
-                    price: 300000
-                },
-                {
-                    id: 4,
-                    name: 'Product 4',
-                    image: 'https://i.imgur.com/ijWScLn.jpg',
-                    price: 300000
-                },
-                {
-                    id: 5,
-                    name: 'Product 5',
-                    image: 'https://i.imgur.com/gXTbY7M.jpg',
-                    price: 300000
-
-                },
-                {
-                    id: 6,
-                    name: 'Product 6',
-                    image: 'https://i.imgur.com/qqBB3Dz.jpg',
-                    price: 300000
-
-                },
-                {
-                    id: 7,
-                    name: 'Product 7',
-                    image: 'https://i.imgur.com/Wfm7IHE.jpg',
-                    price: 300000
-                },
-                {
-                    id: 8,
-                    name: 'Product 8',
-                    image: 'https://i.imgur.com/lcbpc1a.jpg',
-                    price: 300000
-                },
-                {
-                    id: 9,
-                    name: 'Product 9',
-                    image: 'https://i.imgur.com/bXrraSH.jpg',
-                    price: 300000
-                }
-            ]
+            products: [],
+            categoryId: 10,
+            offSet:0,
+            pageSize: 20
         }
         this.formater = new Intl.NumberFormat('vn', {
             style: 'currency',
             currency: 'VND'
-        });
-                
-            
-        
+        }); 
+    }
+
+    getProducts() {
+        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&category_id=${this.state.categoryId}`)
+            .then(result => {
+                if (result.data.success) {
+                    const { data } = result.data;
+                    let products = data.map(item => ({ ...item, images: item.images.split(';').map(value => JSON.parse(value)) }));
+                    //console.log(data, dresses)
+                    this.setState({ products })
+                }
+            })
+            .catch(error => console.log(error))
+    }
+
+    componentDidMount() {
+        this.getProducts();
     }
 
     handleClick(id) {
