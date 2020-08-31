@@ -11,7 +11,7 @@ export default class Dress extends React.Component {
             dresses: [],
             offSet: 0,
             pageSize: 20, 
-            categoryId: 1
+            catId: '2d21b432-dcc5-4a3b-8021-326c81f4c89a'
         }
         document.title = 'Váy liền'
     }
@@ -21,7 +21,7 @@ export default class Dress extends React.Component {
     }
 
     getDressPage() {
-        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&category_id=${this.state.categoryId}`)
+        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&catId=${this.state.catId}`)
         .then(result => {
             if(result.data.success) {
                 const { data } = result.data;

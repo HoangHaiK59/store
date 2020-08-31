@@ -8,6 +8,7 @@ export default class Shirts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            categoryId: '64340A1C-C4A4-4609-B3E5-2980624F7653',
             products: [
                 {
                     id: 1,
@@ -65,6 +66,7 @@ export default class Shirts extends React.Component {
                 }
             ]
         }
+        document.title = 'Sơ mi'
     }
 
     handleClick(id) {

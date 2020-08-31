@@ -11,11 +11,12 @@ export default class TShirts extends React.Component {
         this.state = {
             tshirts: [],
             filter: {
-                category_id: 4,
+                catId: '69bc36f8-ff25-44c9-9f74-e8c9b2cef7e0',
                 offSet: 0,
-                pageSize: 10
+                pageSize: 20
             }
         }
+        document.title = 'Áo phông'
     }
 
     getTshirts() {

@@ -13,13 +13,13 @@ class Home extends React.Component {
             products: [],
             offSet: 0,
             pageSize: 20,
-            categoryId: 1,
+            catId: '2d21b432-dcc5-4a3b-8021-326c81f4c89a',
             dimension: {
                 width: 0,
                 height: 0
             }
         };
-        document.title = 'Home';
+        document.title = 'SHU';
         this.formater = new Intl.NumberFormat('vn', {
             style: 'currency',
             currency: 'VND'
@@ -30,7 +30,7 @@ class Home extends React.Component {
     }
 
     getProducts() {
-        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&category_id=${this.state.categoryId}`)
+        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&catId=${this.state.catId}`)
             .then(result => {
                 if (result.data.success) {
                     const { data } = result.data;

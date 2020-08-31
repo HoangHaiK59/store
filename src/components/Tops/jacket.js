@@ -8,6 +8,7 @@ export default class Jacket extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            categoryId: 'F1C6C6BE-F7B7-4C69-B2E3-BF367475932B',
             products: [
                 {
                     id: 1,

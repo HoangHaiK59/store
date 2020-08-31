@@ -12,8 +12,9 @@ export default class Accessories extends React.Component {
             products: [],
             offset: 0,
             pageSize: 20,
-            categoryId: 8
+            catId: '1f3604a5-5a11-4006-81d8-59fd2f10173d'
         }
+        document.title = 'Phụ kiện'
     }
     
     handleClick(id) {
@@ -21,8 +22,8 @@ export default class Accessories extends React.Component {
     }
 
     getAccessories() {
-        const { offset, pageSize, categoryId } = this.state;
-        instance.get(`GetProductByCategory?offSet=${offset}&pageSize=${pageSize}&category_id=${categoryId}`)
+        const { offset, pageSize, catId } = this.state;
+        instance.get(`GetProductByCategory?offSet=${offset}&pageSize=${pageSize}&catId=${catId}`)
         .then(result => {
             if(result.data.success) {
                 const { data } = result.data;

@@ -45,7 +45,7 @@ const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors, categories,
         }
         const storageRef = await storage.ref();
         const imageName = generateHashName();
-        const category = categories.find(category => category.id === categoryId);
+        const category = categories.find(category => category.id.toLowerCase() === categoryId);
         if (category === null || category === undefined) {
             message.error('Bạn chưa chọn nhóm!');
             return;
@@ -148,7 +148,7 @@ const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors, categories,
                                             </Col>
                                             <Col span={16}>
                                                 <Form.Item
-                                                    name={[index, "image"]}
+                                                    name={[index, "url"]}
                                                     valuePropName="fileList"
                                                     getValueFromEvent={normFile}
                                                     rules={[
@@ -211,7 +211,7 @@ class AddProduct extends React.Component {
             value: undefined,
             sizes: [],
             categories: [],
-            categoryId: 0,
+            catId: '',
             list: [],
             cover: [],
             coverName: []
@@ -245,7 +245,7 @@ class AddProduct extends React.Component {
         }
         const storageRef = await storage.ref();
         const imageName = this.generateHashName();
-        const category = this.state.categories.find(category => category.id === this.state.categoryId);
+        const category = this.state.categories.find(category => category.id.toLowerCase() === this.state.categoryId);
         if (category === null || category === undefined) {
             message.error('Bạn chưa chọn nhóm!');
             return;
@@ -298,7 +298,7 @@ class AddProduct extends React.Component {
     onFinish = values => {
         const { product, images } = values;
         let imagesTmp;
-        imagesTmp = images.map((obj, id) => ({ ...obj, image: this.state.list[id] }))
+        imagesTmp = images.map((obj, id) => ({ ...obj, url: this.state.list[id] }))
         let productAdd;
         if (this.props.product) {
             productAdd = { ...product, id: this.props.product.id };
@@ -306,6 +306,7 @@ class AddProduct extends React.Component {
             productAdd = { ...product, image: this.state.cover[0], id: 0 };
         }
         const data = { images: imagesTmp, product: productAdd };
+        console.log(data);
         instance.post(`AddProduct`, data, {
             headers: {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem('token')).access_token}`
@@ -368,7 +369,7 @@ class AddProduct extends React.Component {
             this.formRef.current.setFieldsValue({
                 product: {
                     name: item.name,
-                    categoryId: item.categoryId,
+                    catId: item.catId,
                     price: item.price,
                     discount: item.discount,
                     description: item.description,
@@ -385,7 +386,7 @@ class AddProduct extends React.Component {
     }
 
     handleSelectCategory(e) {
-        this.setState({ categoryId: e });
+        this.setState({ catId: e });
     }
 
     render() {
@@ -436,7 +437,7 @@ class AddProduct extends React.Component {
                             <Input placeholder='Tên sản phẩm' />
                         </Form.Item>
                         <Form.Item
-                            name={['product', 'categoryId']}
+                            name={['product', 'catId']}
                             rules={[
                                 {
                                     required: true,

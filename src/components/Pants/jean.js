@@ -7,6 +7,7 @@ export default class Jean extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            categoryId: '98BDCFF4-B0F3-4E30-A97F-93D19E279460',
             products: [
                 {
                     id: 1,
@@ -64,6 +65,7 @@ export default class Jean extends React.Component {
                 }
             ]
         }
+        document.title = 'Quần jean'
     }
 
     handleClick(id) {

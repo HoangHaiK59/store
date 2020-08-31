@@ -7,6 +7,7 @@ export default class JumpSuit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            categoryId: '7C62B99C-3920-40CA-9E68-2C54F4985C76',
             products: [
                 {
                     id: 1,

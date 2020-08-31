@@ -8,8 +8,10 @@ import AddProduct from './Product/Add';
 import BtnCellRenderer from './buttonRenderer';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { ModuleRegistry, AllCommunityModules } from '@ag-grid-community/all-modules';
+import { connect } from 'react-redux';
+import { Constants } from '../../store/constants';
 const { TabPane } = Tabs;
-export default class Admin extends React.Component {
+class Admin extends React.Component {
     constructor(props) {
         super(props);
         ModuleRegistry.registerModules(AllCommunityModules);
@@ -95,9 +97,13 @@ export default class Admin extends React.Component {
                 const { data } = response.data;
 
                 this.setState({ products: data.products, total: data.total });
+            } else {
+                this.props.setAuth(null, false)
             }
         })
-            .catch(error => console.log(error))
+            .catch(error => {
+                this.props.setAuth(null, false)
+            })
     }
 
     back() {
@@ -177,9 +183,9 @@ export default class Admin extends React.Component {
             { headerName: 'Mô tả', field: 'description' },
             {
                 headerName: 'Danh mục',
-                field: 'categoryId',
+                field: 'catId',
                 cellRenderer: params => {
-                    return `<p>${this.state.categories.find(category => category.id === params.value)?.name}</p>`
+                    return `<p>${this.state.categories.find(category => category.id.toLowerCase() === params.value)?.name}</p>`
                 }
             },
             { headerName: 'Ngày cập nhật', field: 'created' },
@@ -257,7 +263,7 @@ export default class Admin extends React.Component {
                                             filter: true,
                                             resizable: true,
                                             flex: 1,
-                                            minWidth: 100,
+                                            // minWidth: 90,
                                             headerComponentParams: {
                                                 menuIcon: 'fa-bars'
                                             },
@@ -316,3 +322,17 @@ export default class Admin extends React.Component {
 
     }
 }
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        user: state.user
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        setAuth: (user, isAuth) => dispatch({ type: Constants.AUTH, user, isAuth }),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

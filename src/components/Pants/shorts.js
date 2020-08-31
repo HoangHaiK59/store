@@ -7,6 +7,7 @@ export default class Short extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            categoryId: '3A0B465F-C8D8-4E39-9C56-1515C782AFBB',
             products: [
                 {
                     id: 1,
@@ -64,6 +65,7 @@ export default class Short extends React.Component {
                 }
             ]
         }
+        document.title = 'Quần short'
     }
 
     handleClick(id) {

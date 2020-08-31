@@ -9,18 +9,19 @@ export default class Winter extends React.Component {
         super(props);
         this.state = {
             products: [],
-            categoryId: 10,
+            catId: '0ecdf117-1df9-4413-ac13-b7fe724e47b3',
             offSet:0,
             pageSize: 20
         }
         this.formater = new Intl.NumberFormat('vn', {
             style: 'currency',
             currency: 'VND'
-        }); 
+        });
+        document.title = 'Chân váy'
     }
 
     getProducts() {
-        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&category_id=${this.state.categoryId}`)
+        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&catId=${this.state.catId}`)
             .then(result => {
                 if (result.data.success) {
                     const { data } = result.data;
