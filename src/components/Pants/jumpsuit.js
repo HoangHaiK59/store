@@ -1,61 +1,38 @@
 import React from 'react';
 import { NAV_BAR_HEIGHT } from '../../helper/calc';
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
+import Content from '../Content';
+import { instance } from '../../utils/axios';
 
 export default class JumpSuit extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            categoryId: '7C62B99C-3920-40CA-9E68-2C54F4985C76',
-            products: [
-                {
-                    id: 1,
-                    name: 'Product 1',
-                    cover: 'https://i.imgur.com/GXy9UIG.jpg'
-                },
-                {
-                    id: 2,
-                    name: 'Product 2',
-                    cover: 'https://i.imgur.com/Wj6dytl.jpg'
-                },
-                {
-                    id: 3,
-                    name: 'Product 3',
-                    cover: 'https://i.imgur.com/9qf6WyB.jpg'
-                },
-                {
-                    id: 4,
-                    name: 'Product 4',
-                    cover: 'https://i.imgur.com/ijWScLn.jpg'
-                },
-                {
-                    id: 5,
-                    name: 'Product 5',
-                    cover: 'https://i.imgur.com/gXTbY7M.jpg'
-                },
-                {
-                    id: 6,
-                    name: 'Product 6',
-                    cover: 'https://i.imgur.com/qqBB3Dz.jpg'
-                },
-                {
-                    id: 7,
-                    name: 'Product 7',
-                    cover: 'https://i.imgur.com/Wfm7IHE.jpg'
-                },
-                {
-                    id: 8,
-                    name: 'Product 8',
-                    cover: 'https://i.imgur.com/lcbpc1a.jpg'
-                },
-                {
-                    id: 9,
-                    name: 'Product 9',
-                    cover: 'https://i.imgur.com/bXrraSH.jpg'
-                }
-            ]
+            catId: '7C62B99C-3920-40CA-9E68-2C54F4985C76',
+            products: [],
+            offSet: 0,
+            pageSize: 20
         }
+    }
+
+
+    getJumpSuit() {
+        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&catId=${this.state.catId}`)
+        .then(result => {
+            if(result.data.success) {
+                const { data } = result.data;
+                let products = data.map(item => ({...item, images: item.images.split(';').map(value => JSON.parse(value) )}));
+                //console.log(data, dresses)
+                this.setState({ products })
+            }
+        })
+        .catch(error => console.log(error))
+    }
+
+
+    componentDidMount() {
+        this.getJumpSuit()
     }
 
     handleClick(id) {
@@ -65,27 +42,8 @@ export default class JumpSuit extends React.Component {
     render() {
         const { products } = this.state;
         return (
-            <div className='collection-container' style={{ marginTop: NAV_BAR_HEIGHT }}>
-                <Row gutter={[16, 16]} justify="start" style={{ width: '100%' }}>
-                    <Col span={24}></Col>
-                    <Col span={24}>
-                        <div className='items-container'>
-                            <Row gutter={[16, 16]} justify="start" style={{ width: '100%' }}>
-                                {
-                                    products.map((product, id) => <Col onClick={() => this.handleClick(product.id)} key={id} span={4} className="product">
-                                        <div className="product-header">
-                                            <div className="product-cover">
-                                                <img src={product.cover} alt="productImage" style={{ objectFit: 'cover' }}/>
-                                            </div>
-                                        </div>
-                                        <h5 className="product-name">{product.name}</h5>
-                                    </Col>)
-                                }
-                            </Row>
-                        </div>
-                    </Col>
-                </Row>
-            </div>
+            products.length > 0 ?<Content items={products} handleClick={this.handleClick.bind(this)} />:
+            <Spin />
         )
     }
 }

@@ -19,7 +19,7 @@ function getBase64(file) {
 }
 
 
-const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors, categories, categoryId, handleSetList }) => {
+const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors, categories, catId, handleSetList }) => {
     const [imageUrl, setImageUrl] = React.useState('');
     const [list, setList] = React.useState([]);
     const [listName, setListName] = React.useState([]);
@@ -45,7 +45,7 @@ const DynamicFields = ({ layout, formItemLayoutWithOutLabel, colors, categories,
         }
         const storageRef = await storage.ref();
         const imageName = generateHashName();
-        const category = categories.find(category => category.id.toLowerCase() === categoryId);
+        const category = categories.find(category => category.id === catId);
         if (category === null || category === undefined) {
             message.error('Bạn chưa chọn nhóm!');
             return;
@@ -245,7 +245,7 @@ class AddProduct extends React.Component {
         }
         const storageRef = await storage.ref();
         const imageName = this.generateHashName();
-        const category = this.state.categories.find(category => category.id.toLowerCase() === this.state.categoryId);
+        const category = this.state.categories.find(category => category.id === this.state.catId);
         if (category === null || category === undefined) {
             message.error('Bạn chưa chọn nhóm!');
             return;
@@ -544,7 +544,7 @@ class AddProduct extends React.Component {
                         <DynamicFields
                             colors={this.state.colors}
                             categories={this.state.categories}
-                            categoryId={this.state.categoryId}
+                            catId={this.state.catId}
                             handleSetList={this.handleSetList.bind(this)}
                             layout={layout}
                             formItemLayoutWithOutLabel={formItemLayoutWithOutLabel} />

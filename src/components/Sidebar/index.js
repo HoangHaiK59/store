@@ -37,6 +37,11 @@ export default function Sidebar(props) {
                                 </Link>
                             </li>
                             <li className="category-item">
+                                <Link to="/jumpsuit">
+                                    Jumpsuit
+                                </Link>
+                            </li>
+                            <li className="category-item">
                                 <Link to="/jean">
                                     Jean
                                 </Link>
