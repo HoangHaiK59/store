@@ -28,6 +28,7 @@ import Home from '../components/Home';
 import Marketing from '../components/Marketing';
 import Sidebar from '../components/Sidebar';
 import { Layout } from 'antd';
+import Social from '../components/Social';
 
 const { Header, Content } = Layout;
 
@@ -89,10 +90,13 @@ const Container = (props) => {
                     <Navbar isMobile={isMobile} isAuth={props.isAuth} />
                 </Header>
             }
-            <Content>
+            <Content style={{position: 'relative'}}>
                 {
                     // !props.isLanding && <Marketing />
                     !props.isLanding && <Sidebar />
+                }
+                {
+                    !props.isLanding && <Social />
                 }
                 <Switch>
                     <Route exact path="/" render={(props) => <Landing isMobile={isMobile} {...props} title="Landing" />} />
