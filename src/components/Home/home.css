@@ -102,12 +102,22 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .product-cover > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.product-cover > img:hover {
+    opacity: 1;
+    transform: scale(1.2, 1.2);
+    transform-origin: center center;
+    transition: transform 0.5s, opacity 0.5s;
 }
 
 .product-name {

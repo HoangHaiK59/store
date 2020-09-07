@@ -90,7 +90,7 @@ const Container = (props) => {
                     <Navbar isMobile={isMobile} isAuth={props.isAuth} />
                 </Header>
             }
-            <Content style={{position: 'relative'}}>
+            <Content style={{position: 'relative', minHeight: '100vh'}}>
                 {
                     // !props.isLanding && <Marketing />
                     !props.isLanding && <Sidebar />
