@@ -25,9 +25,7 @@ export default class Dress extends React.Component {
         .then(result => {
             if(result.data.success) {
                 const { data } = result.data;
-                let dresses = data.map(item => ({...item, images: item.images.split(';').map(value => JSON.parse(value) )}));
-                //console.log(data, dresses)
-                this.setState({ dresses })
+                this.setState({ dresses: data })
             }
         })
         .catch(error => console.log(error))
@@ -41,7 +39,9 @@ export default class Dress extends React.Component {
         const { dresses } = this.state;
         return (
             dresses.length > 0 ? <Content items={dresses} handleClick={this.handleClick.bind(this)}/>: 
-            <Spin />
+            <div className="d-flex justify-content-center">
+                <Spin />
+            </div>
         )
     }
 }

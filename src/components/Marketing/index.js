@@ -18,8 +18,7 @@ class Marketing extends React.Component {
         .then(result => {
             if(result.data.success) {
                 const { data } = result.data;
-                let products = data.map(item => ({...item, images: item.images.split(';').map(value => JSON.parse(value) )}));
-                this.setState({ products })
+                this.setState({ products: data })
             }
         })
         .catch(error => console.log(error))

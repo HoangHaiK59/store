@@ -1,82 +1,49 @@
 import React from 'react';
 import { Spin } from 'antd';
 import Content from '../Content';
+import  queryString from 'querystring';
+import { instance } from '../../utils/axios';
 
 export default class Jean extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            categoryId: '98BDCFF4-B0F3-4E30-A97F-93D19E279460',
-            products: [
-                {
-                    id: 1,
-                    name: 'Product 1',
-                    image: 'https://i.imgur.com/GXy9UIG.jpg',
-                    price: 300000
-                },
-                {
-                    id: 2,
-                    name: 'Product 2',
-                    image: 'https://i.imgur.com/Wj6dytl.jpg',
-                    price: 300000
-                },
-                {
-                    id: 3,
-                    name: 'Product 3',
-                    image: 'https://i.imgur.com/9qf6WyB.jpg',
-                    price: 300000
-                },
-                {
-                    id: 4,
-                    name: 'Product 4',
-                    image: 'https://i.imgur.com/ijWScLn.jpg',
-                    price: 300000
-                },
-                {
-                    id: 5,
-                    name: 'Product 5',
-                    image: 'https://i.imgur.com/gXTbY7M.jpg',
-                    price: 300000
-                },
-                {
-                    id: 6,
-                    name: 'Product 6',
-                    image: 'https://i.imgur.com/qqBB3Dz.jpg',
-                    price: 300000
-                },
-                {
-                    id: 7,
-                    name: 'Product 7',
-                    image: 'https://i.imgur.com/Wfm7IHE.jpg',
-                    price: 300000
-                },
-                {
-                    id: 8,
-                    name: 'Product 8',
-                    image: 'https://i.imgur.com/lcbpc1a.jpg',
-                    price: 300000
-                },
-                {
-                    id: 9,
-                    name: 'Product 9',
-                    image: 'https://i.imgur.com/bXrraSH.jpg',
-                    price: 300000
-                }
-            ]
+            catId: '98bdcff4-b0f3-4e30-a97f-93d19e279460',
+            products: [],
+            offSet: 0,
+            pageSize: 20
         }
         document.title = 'Quần jean'
+    }
+    
+    getJeans() {
+        const { catId, offSet, pageSize } = this.state;
+        const query = queryString.stringify({catId, offSet, pageSize});
+        instance.get(`GetProductByCategory?${query}`)
+        .then(response => {
+            if(response.data.success) {
+                const { data } = response.data;
+                this.setState({ products: data })
+            }
+        })
     }
 
     handleClick(id) {
         this.props.history.push(`/product/${id}`);
     }
 
+    componentDidMount() {
+        this.getJeans();
+    }
+
     render() {
         const { products } = this.state;
         return (
             products.length > 0 ? <Content items={products} handleClick={this.handleClick.bind(this)} />:
-            <Spin/>
+            <div className="d-flex justify-content-center">
+                <Spin />
+            </div>
         )
     }
 }

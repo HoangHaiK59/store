@@ -22,7 +22,6 @@ const Content = ({ items, handleClick }) => {
             return val;
         }
     })
-    console.log(products)
     return (
         <div className='collection-container'>
             <div className="nm-row">

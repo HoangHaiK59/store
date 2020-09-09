@@ -30,16 +30,17 @@ class Home extends React.Component {
     }
 
     getProducts() {
-        instance.get(`GetProductByCategory?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}&catId=${this.state.catId}`)
-            .then(result => {
-                if (result.data.success) {
-                    const { data } = result.data;
-                    let products = data.map(item => ({ ...item, images: item.images.split(';').map(value => JSON.parse(value)) }));
-                    //console.log(data, dresses)
-                    this.setState({ products })
-                }
+        instance.get(`GetProducts?offSet=${this.state.offSet}&pageSize=${this.state.pageSize}`, {
+        }).then(response => {
+            if (response.data.success) {
+                const { data } = response.data;
+
+                this.setState({ products: data });
+            }
+        })
+            .catch(error => {
+                console.log(error)
             })
-            .catch(error => console.log(error))
     }
 
     componentDidMount() {
@@ -122,7 +123,9 @@ class Home extends React.Component {
     render() {
         return (
             this.state.products.length > 0 ? <Content items={this.state.products}  handleClick={this.handleClick.bind(this)}/>:
-            <Spin/>
+            <div className="d-flex justify-content-center">
+                <Spin />
+            </div>
         )
     }
 }

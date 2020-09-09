@@ -52,11 +52,11 @@ class Product extends React.Component {
                 if (result.data.success) {
                     const { data } = result.data;
                     let product = {
-                        ...data, images: data.images.split(';').map((value, id) => {
+                        ...data, images: data.images.map((value, id) => {
                             if (id === 0) {
-                                return { ...JSON.parse(value), active: true }
+                                return { ...value, active: true }
                             } else {
-                                return { ...JSON.parse(value), active: false }
+                                return { ...value, active: false }
                             }
                         }), size: data.size.split(',')
                     };
@@ -116,7 +116,7 @@ class Product extends React.Component {
                                                 span={1}
                                                 className='product-color'
                                                 onClick={() => this.handleChangeColor(image.color)}
-                                                style={{ backgroundColor: image.color, marginLeft: id > 0 ? '5px' : 0 }}></Button>)
+                                                style={{ backgroundColor: image.color, marginLeft: id > 0 ? '5px' : 0 }}>{id}</Button>)
                                         }
                                     </Row>
                                 </Col>
