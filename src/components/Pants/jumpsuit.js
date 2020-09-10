@@ -14,6 +14,7 @@ export default class JumpSuit extends React.Component {
             offSet: 0,
             pageSize: 20
         }
+        document.title = 'Quần áo bộ'
     }
 
 

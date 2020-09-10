@@ -5,7 +5,7 @@ import { history } from '../../helper/history';
 import { Link } from 'react-router-dom';
 export default function Sidebar(props) {
     return (
-        <div className="shop-header">
+        <div className="shop-header" style={props.isSticky ? {margin: '52px 0'}: null}>
             <div className="shop-menu">
                 <div className="nm-row">
                     <div className='col-md-12'>

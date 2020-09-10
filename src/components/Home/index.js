@@ -35,7 +35,7 @@ class Home extends React.Component {
             if (response.data.success) {
                 const { data } = response.data;
 
-                this.setState({ products: data });
+                this.setState(state => ({ products: state.products.concat(data) }));
             }
         })
             .catch(error => {
@@ -45,6 +45,23 @@ class Home extends React.Component {
 
     componentDidMount() {
         this.getProducts();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.isSticky !== this.props.isSticky) {
+            let offSet = this.state.offSet + this.state.pageSize;
+            instance.get(`GetProducts?offSet=${offSet}&pageSize=${this.state.pageSize}`, {
+            }).then(response => {
+                if (response.data.success) {
+                    const { data } = response.data;
+    
+                    this.setState(state => ({offSet, products: state.products.concat(data) }));
+                }
+            })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
     }
 
 

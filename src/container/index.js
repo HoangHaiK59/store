@@ -90,17 +90,17 @@ const Container = (props) => {
                     <Navbar isMobile={isMobile} isAuth={props.isAuth} />
                 </Header>
             }
-            <Content style={{position: 'relative', minHeight: '80vh'}}>
+            <Content style={{position: 'relative', minHeight: '100vh'}}>
                 {
                     // !props.isLanding && <Marketing />
-                    !props.isLanding && <Sidebar />
+                    !props.isLanding && <Sidebar isSticky={isSticky}/>
                 }
                 {
                     !props.isLanding && <Social />
                 }
                 <Switch>
-                    <Route exact path="/" render={(props) => <Landing isMobile={isMobile} {...props} title="Landing" />} />
-                    <Route exact path="/home" render={(props) => <Home isMobile={isMobile} {...props} title="Store" />} />
+                    <Route exact path="/" render={(props) => <Landing  isMobile={isMobile} {...props} title="Landing" />} />
+                    <Route exact path="/home" render={(props) => <Home isSticky={isSticky} isMobile={isMobile} {...props} title="Store" />} />
                     <Route exact path="/product/:id" render={(props) => <Product isMobile={isMobile} {...props} />} />
                     <Route exact path="/tops" render={(props) => <Tops isMobile={isMobile} {...props} />} />
                     <Route exact path="/jacket" render={(props) => <Jacket isMobile={isMobile} {...props} />} />
