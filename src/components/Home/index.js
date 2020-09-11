@@ -17,7 +17,7 @@ class Home extends React.Component {
             dimension: {
                 width: 0,
                 height: 0
-            }
+            },
         };
         document.title = 'SHU';
         this.formater = new Intl.NumberFormat('vn', {
@@ -48,7 +48,8 @@ class Home extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevProps.isSticky !== this.props.isSticky) {
+        console.log(this.props)
+        if(!prevProps.isLoad && this.props.isLoad) {
             let offSet = this.state.offSet + this.state.pageSize;
             instance.get(`GetProducts?offSet=${offSet}&pageSize=${this.state.pageSize}`, {
             }).then(response => {

@@ -54,6 +54,7 @@ const useDetect = () => {
 const Container = (props) => {
     const { isSticky, element } = useSticky();
     const [scrollPosition, setScrollPosition] = React.useState(0);
+    const [isLoad, setIsLoad] = React.useState(false);
     const { isMobile } = useDetect();
     React.useEffect(() => {
         function calScrollDistance() {
@@ -61,8 +62,14 @@ const Container = (props) => {
             const windowHeight = window.innerHeight;
             const docHeight = getDocHeight();
             const totalDocScrollLength = docHeight - windowHeight;
-            const scrollPostion = Math.floor(scrollTop / totalDocScrollLength * 100);
-            setScrollPosition(scrollPostion)
+            const scrollPostionCal = Math.floor(scrollTop / totalDocScrollLength * 100);
+            console.log(scrollPostionCal)
+            if(scrollPostionCal === 100) {
+                setIsLoad(true)
+            } else {
+                setIsLoad(false)
+            }
+            setScrollPosition(scrollPostionCal)
         }
 
         function getDocHeight() {
@@ -100,7 +107,7 @@ const Container = (props) => {
                 }
                 <Switch>
                     <Route exact path="/" render={(props) => <Landing  isMobile={isMobile} {...props} title="Landing" />} />
-                    <Route exact path="/home" render={(props) => <Home isSticky={isSticky} isMobile={isMobile} {...props} title="Store" />} />
+                    <Route exact path="/home" render={(props) => <Home isLoad={isLoad} isMobile={isMobile} {...props} title="Store" />} />
                     <Route exact path="/product/:id" render={(props) => <Product isMobile={isMobile} {...props} />} />
                     <Route exact path="/tops" render={(props) => <Tops isMobile={isMobile} {...props} />} />
                     <Route exact path="/jacket" render={(props) => <Jacket isMobile={isMobile} {...props} />} />
