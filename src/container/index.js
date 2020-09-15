@@ -29,6 +29,7 @@ import Marketing from '../components/Marketing';
 import Sidebar from '../components/Sidebar';
 import { Layout } from 'antd';
 import Social from '../components/Social';
+import Tabbar from '../components/Mobile/Tabbar';
 
 const { Header, Content } = Layout;
 
@@ -89,7 +90,8 @@ const Container = (props) => {
         listenToScrollEvent();
     }, []);
 
-    return <div ref={element} className="root-container">
+    return !isMobile ?
+    <div ref={element} className="root-container">
         <Layout>
             <Progress scroll={scrollPosition + '%'} />
             {
@@ -131,7 +133,8 @@ const Container = (props) => {
                 !props.isLanding && <Footer isMobile={isMobile} />
             }
         </Layout>
-    </div>
+    </div>: 
+    <Tabbar element={element} />
 }
 
 // <div ref={element} className="root-container">

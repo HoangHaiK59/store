@@ -1,5 +1,6 @@
 import React from 'react';
 import { TabBar } from 'antd-mobile';
+import { Flex } from 'antd-mobile';
 
 export default class Tabbar extends React.Component {
     constructor(props) {
@@ -21,11 +22,12 @@ export default class Tabbar extends React.Component {
 
     render() {
         return (
-            <div style={{ height: 400 }}>
+            <Flex ref={this.props.element} style={{ height: '100%' }}>
                 <TabBar
                     unselectedTintColor="#949494"
                     tintColor="#33A3F4"
                     barTintColor="white"
+                    tabBarPosition="bottom"
                 >
                     <TabBar.Item
                         title="Life"
@@ -133,7 +135,7 @@ export default class Tabbar extends React.Component {
                     </TabBar.Item>
 
                 </TabBar>
-            </div>
+            </Flex>
         )
     }
 }
