@@ -29,7 +29,6 @@ import Marketing from '../components/Marketing';
 import Sidebar from '../components/Sidebar';
 import { Layout } from 'antd';
 import Social from '../components/Social';
-import Tabbar from '../components/Mobile/Tabbar';
 
 const { Header, Content } = Layout;
 
@@ -64,7 +63,6 @@ const Container = (props) => {
             const docHeight = getDocHeight();
             const totalDocScrollLength = docHeight - windowHeight;
             const scrollPostionCal = Math.floor(scrollTop / totalDocScrollLength * 100);
-            console.log(scrollPostionCal)
             if(scrollPostionCal === 100) {
                 setIsLoad(true)
             } else {
@@ -90,8 +88,7 @@ const Container = (props) => {
         listenToScrollEvent();
     }, []);
 
-    return !isMobile ?
-    <div ref={element} className="root-container">
+    return <div ref={element} className="root-container">
         <Layout>
             <Progress scroll={scrollPosition + '%'} />
             {
@@ -102,7 +99,7 @@ const Container = (props) => {
             <Content style={{position: 'relative', minHeight: '100vh'}}>
                 {
                     // !props.isLanding && <Marketing />
-                    !props.isLanding && <Sidebar isSticky={isSticky}/>
+                    !props.isLanding && <Sidebar/>
                 }
                 {
                     !props.isLanding && <Social />
@@ -133,8 +130,7 @@ const Container = (props) => {
                 !props.isLanding && <Footer isMobile={isMobile} />
             }
         </Layout>
-    </div>: 
-    <Tabbar element={element} />
+    </div>
 }
 
 // <div ref={element} className="root-container">

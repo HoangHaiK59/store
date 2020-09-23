@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Dropdown, Drawer, Button, Badge } from 'antd';
+import { Menu, Dropdown, Drawer, Button, Badge, Row, Col } from 'antd';
 import { DownOutlined, MenuOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import './navbar.css';
 import { Link } from 'react-router-dom';
@@ -90,59 +90,58 @@ const Navbar = (props) => {
                             <div className="header-logo">
                                 <Link to="/home"><h3>SHU</h3></Link>
                             </div>
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <div className="d-flex" style={{ paddingLeft: '45px' }}>
-                                        <div>
-                                            <div className="header-navbar_item">
-                                                <Link to="/category" className="header-navbar_item-style">Category</Link>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className="header-navbar_item">
-                                                <Link to="/category" className="header-navbar_item-style">Pages</Link>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className="header-navbar_item">
-                                                <Link to="/admin" className="header-navbar_item-style">Admin</Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="row">
-                                        <div className="col-md-12" style={{ padding: '0px 0px' }}>
-                                            <div className="d-flex justify-content-end" style={{ paddingRight: '50px' }}>
+                            <Row >
+                                <Col span={12}>
+                                    <div className="nm-row">
+                                        <div className="d-flex justify-content-start flex-row" style={{paddingLeft: '30px'}}>
+                                            <div>
                                                 <div className="header-navbar_item">
-                                                    {
-                                                        props.isAuth ? <Dropdown overlay={userMenu} trigger={['click']}>
-                                                            <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
-                                                                {props.user.firstName + ' ' + props.user.lastName}  <DownOutlined />
-                                                            </Link>
-                                                        </Dropdown>
-                                                            : <Link to='/login' className="header-navbar_item-style">Login</Link>
-                                                    }
+                                                    <Link to="/category" className="header-navbar_item-style">Category</Link>
                                                 </div>
+                                            </div>
+                                            <div>
                                                 <div className="header-navbar_item">
-                                                    <Badge count={5}>
-                                                        <Link to="/cart" className="header-navbar_item-style"><ShoppingCartOutlined size={18} /></Link>
-                                                    </Badge>
+                                                    <Link to="/category" className="header-navbar_item-style">Pages</Link>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="header-navbar_item">
+                                                    <Link to="/admin" className="header-navbar_item-style">Admin</Link>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                </Col>
+                                <Col span={12}>
+
+                                    <div className="d-flex justify-content-end" style={{paddingRight: '30px'}}>
+                                        <div className="header-navbar_item">
+                                            {
+                                                props.isAuth ? <Dropdown overlay={userMenu} trigger={['click']}>
+                                                    <Link to='' className="ant-dropdown-link header-navbar_item-style" onClick={e => e.preventDefault()}>
+                                                        {props.user.firstName + ' ' + props.user.lastName}  <DownOutlined />
+                                                    </Link>
+                                                </Dropdown>
+                                                    : <Link to='/login' className="header-navbar_item-style">Login</Link>
+                                            }
+                                        </div>
+                                        <div className="header-navbar_item">
+                                            <Badge count={5}>
+                                                <Link to="/cart" className="header-navbar_item-style"><ShoppingCartOutlined size={18} /></Link>
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                </Col>
+                            </Row>
                         </div>
                     </div>
                 </div>
             </div> :
             <>
-                <Button icon={<MenuOutlined style={{ color: '#fff' }} />} type="default" style={{ backgroundColor: '#000', border: 'none' }} onClick={showMobileNav}>
+                <Button icon={<MenuOutlined style={{ color: '#000', fontSize: '2rem' }} />} type="default" style={{ border: 'none' }} onClick={showMobileNav}>
                 </Button>
                 <Drawer
-                    style={{ minHeight: '100vh' }}
+                    style={{ minHeight: '100vh', fontSize: '2rem' }}
                     placement="left"
                     closable={false}
                     onClose={onClose}

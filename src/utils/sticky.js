@@ -5,7 +5,7 @@ const useSticky = () => {
     const element = useRef(null);
 
     const handleScroll = useCallback(() => {
-        window.scrollY > element.current.getBoundingClientRect().bottom  ? setSticky(true): setSticky(false)
+        window.scrollY > element.current.getBoundingClientRect().bottom / 8  ? setSticky(true): setSticky(false)
     }, [])
 
     const debounce = useCallback((func, wait = 20, immediate = true) => {

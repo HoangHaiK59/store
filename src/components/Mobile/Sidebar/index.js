@@ -11,7 +11,6 @@ class Sidebar extends React.Component {
     }
 
     onOpenChange(...args) {
-        console.log(args)
         this.setState({open: !this.state.open})
     }
 

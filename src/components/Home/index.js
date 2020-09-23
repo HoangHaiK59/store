@@ -47,7 +47,6 @@ class Home extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(this.props)
         if(!prevProps.isLoad && this.props.isLoad) {
             let offSet = this.state.offSet + this.state.pageSize;
             instance.get(`GetProducts?offSet=${offSet}&pageSize=${this.state.pageSize}`, {
